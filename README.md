@@ -83,30 +83,32 @@ This section mirrors the implementation in `src/rbm.py` and explains the math fl
 
 ### 1) Model definition
 
-We use a Bernoulli-Bernoulli RBM with visible vector v in {0,1}^V and hidden vector h in {0,1}^H.
+We use a Bernoulli-Bernoulli RBM with visible vector \(v \in \{0,1\}^V\) and hidden vector \(h \in \{0,1\}^H\).
 
 Energy:
-```
+$$
 E(v, h) = - v^T W h - b^T v - c^T h
-```
+$$
 where:
 - W is V x H weight matrix
 - b is visible bias
 - c is hidden bias
 
 The joint distribution is:
-```
-P(v, h) = exp(-E(v, h)) / Z
-```
+$$
+P(v, h) = \frac{\exp(-E(v, h))}{Z}
+$$
 Z is the partition function.
 
 ### 2) Conditional probabilities
 
 Because RBM has bipartite structure:
-```
-P(h_j = 1 | v) = sigmoid( (v W)_j + c_j )
-P(v_i = 1 | h) = sigmoid( (h W^T)_i + b_i )
-```
+$$
+P(h_j = 1 \mid v) = \sigma\big((v W)_j + c_j\big)
+$$
+$$
+P(v_i = 1 \mid h) = \sigma\big((h W^T)_i + b_i\big)
+$$
 
 These are implemented in:
 - `sample_h()` and `sample_v()` in `src/rbm.py`
@@ -114,16 +116,16 @@ These are implemented in:
 ### 3) Free energy
 
 Marginal over h gives free energy:
-```
-F(v) = - b^T v - sum_j log(1 + exp((v W)_j + c_j))
-```
+$$
+F(v) = - b^T v - \sum_j \log\big(1 + \exp((v W)_j + c_j)\big)
+$$
 
 ### 4) Log-likelihood gradient
 
 The gradient for W is:
-```
-grad_W = E_data[v h^T] - E_model[v h^T]
-```
+$$
+\nabla_W = \mathbb{E}_{\text{data}}[v h^T] - \mathbb{E}_{\text{model}}[v h^T]
+$$
 This is the difference between:
 - Positive phase: expectation under data distribution
 - Negative phase: expectation under model distribution
@@ -132,25 +134,29 @@ This is the difference between:
 
 We approximate the negative phase by running a k-step Gibbs chain:
 
-```
-v0 -> h0 -> v1 -> h1 -> ... -> vk -> hk
-```
+$$
+v_0 \rightarrow h_0 \rightarrow v_1 \rightarrow h_1 \rightarrow \cdots \rightarrow v_k \rightarrow h_k
+$$
 
 Update rules (using probabilities):
-```
-W += lr * (v0^T h0_prob - vk_prob^T hk_prob) / batch
-b += lr * mean(v0 - vk_prob)
-c += lr * mean(h0_prob - hk_prob)
-```
+$$
+W \leftarrow W + \eta \frac{v_0^T h_0^{\text{prob}} - (v_k^{\text{prob}})^T h_k^{\text{prob}}}{\text{batch}}
+$$
+$$
+b \leftarrow b + \eta \, \text{mean}(v_0 - v_k^{\text{prob}})
+$$
+$$
+c \leftarrow c + \eta \, \text{mean}(h_0^{\text{prob}} - h_k^{\text{prob}})
+$$
 
 This corresponds to `contrastive_divergence()` in `src/rbm.py`.
 
 ### 6) Reconstruction loss (monitoring)
 
 We track:
-```
-L = BCE(vk_prob, v0)
-```
+$$
+L = \mathrm{BCE}(v_k^{\text{prob}}, v_0)
+$$
 as a stability/convergence signal (not the exact negative log-likelihood).
 
 ## Conceptual Framing
