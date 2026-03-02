@@ -87,9 +87,9 @@ We use a Bernoulli-Bernoulli RBM with visible vector v in {0,1}^V and hidden vec
 
 Energy:
 
-$$
+```math
 E(v, h) = - v^T W h - b^T v - c^T h
-$$
+```
 where:
 - W is V x H weight matrix
 - b is visible bias
@@ -97,32 +97,32 @@ where:
 
 The joint distribution is:
 
-$$
+```math
 P(v, h) = \frac{\exp(-E(v, h))}{Z}
-$$
+```
 Z is the partition function, and the marginals are:
 
-$$
+```math
 P(v) = \sum_h P(v, h), \quad P(h) = \sum_v P(v, h)
-$$
+```
 
 ### 2) Conditional probabilities
 
 Because RBM has bipartite structure:
 
-$$
+```math
 P(h_j = 1 \mid v) = \sigma((v W)_j + c_j)
-$$
+```
 
-$$
+```math
 P(v_i = 1 \mid h) = \sigma((h W^T)_i + b_i)
-$$
+```
 
 Derivation sketch for the hidden conditional:
 
-$$
+```math
 P(h_j = 1 \mid v) = \frac{\exp(v^T W_{:,j} + c_j)}{1 + \exp(v^T W_{:,j} + c_j)}
-$$
+```
 
 These are implemented in:
 - `sample_h()` and `sample_v()` in `src/rbm.py`
@@ -131,89 +131,88 @@ These are implemented in:
 
 Marginal over h gives free energy:
 
-$$
+```math
 F(v) = - b^T v - \sum_j \log(1 + \exp((v W)_j + c_j))
-$$
+```
 
 Derivation:
 
-$$
+```math
 P(v) = \frac{1}{Z} \sum_h \exp(-E(v,h))
-$$
+```
 
-$$
+```math
 \sum_h \exp(-E(v,h)) = \exp(b^T v) \prod_j (1 + \exp((vW)_j + c_j))
-$$
+```
 Therefore:
 
-$$
+```math
 P(v) = \frac{\exp(-F(v))}{Z}
-$$
+```
 
 ### 4) Log-likelihood gradient
 
 We maximize log-likelihood:
 
-$$
+```math
 \mathcal{L} = \sum_{v \in \text{data}} \log P(v)
-$$
+```
 For one data vector v:
 
-$$
+```math
 \nabla_W \log P(v) = -\nabla_W F(v) - \nabla_W \log Z
-$$
+```
 The first term is the positive phase:
 
-$$
+```math
 -\nabla_W F(v) = v \, \mathbb{E}_{P(h \mid v)}[h]^T
-$$
+```
 The second term is the negative phase:
 
-$$
+```math
 \nabla_W \log Z = \mathbb{E}_{P(v,h)}[v h^T]
-$$
+```
 
 So the gradient for W is:
 
-$$
+```math
 \nabla_W = \mathbb{E}_{data}[v h^T] - \mathbb{E}_{model}[v h^T]
-$$
+```
 This is the difference between:
 - Positive phase: expectation under data distribution
 - Negative phase: expectation under model distribution
 
 Similarly for biases:
 
-$$
+```math
 \nabla_b = \mathbb{E}_{data}[v] - \mathbb{E}_{model}[v]
-$$
+```
 
-$$
+```math
 \nabla_c = \mathbb{E}_{data}[h] - \mathbb{E}_{model}[h]
-$$
+```
 
 ### 5) Contrastive Divergence (CD-k)
 
 We approximate the negative phase by running a k-step Gibbs chain:
 
-
-$$
+```math
 v_0 \rightarrow h_0 \rightarrow v_1 \rightarrow h_1 \rightarrow \cdots \rightarrow v_k \rightarrow h_k
-$$
+```
 
 Update rules (using probabilities):
 
-$$
+```math
 W \leftarrow W + \eta \frac{v_0^T h_0^{prob} - (v_k^{prob})^T h_k^{prob}}{batch}
-$$
+```
 
-$$
+```math
 b \leftarrow b + \eta \, mean(v_0 - v_k^{prob})
-$$
+```
 
-$$
+```math
 c \leftarrow c + \eta \, mean(h_0^{prob} - h_k^{prob})
-$$
+```
 
 Interpretation:
 - v_0, h_0 are from the data-driven positive phase
@@ -226,9 +225,9 @@ This corresponds to `contrastive_divergence()` in `src/rbm.py`.
 
 We track:
 
-$$
+```math
 L = BCE(v_k^{prob}, v_0)
-$$
+```
 as a stability/convergence signal (not the exact negative log-likelihood).
 
 ## Conceptual Framing
