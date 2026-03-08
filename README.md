@@ -77,83 +77,88 @@ Artifacts are saved under `artifacts/`:
 - `metrics/latent_summary.json`
 - `rbm_model.pt`
 
-## Model Pipeline and Training Architecture
+## Model Architecture and Training Pipeline
 
-This section explains the end-to-end system architecture used in this project:
-MovieLens dataset → RBM recommender → Hyperbolic neural dynamics.
+This section explains the full recommendation architecture used in this project, from MovieLens data to RBM representation learning and then to hyperbolic neural dynamics.
 
 ### 1. Data Representation
 
-The MovieLens dataset is structured as user ratings with timestamps. It is converted into a user–movie interaction matrix.
+The MovieLens dataset is converted into a user–movie interaction matrix.
 
-Shape: 2000 × 1320
+- Shape: 2000 × 1320
+- Rows represent users
+- Columns represent movies
+- Each row is one training sample
 
-Rows = users  
-Columns = movies
+The 2000×1320 matrix is the training dataset, not a neural network layer.
+The RBM visible layer size is determined by the number of movies, which is 1320.
 
-Each row represents a single user's interaction vector and becomes one training sample.
+### 2. Full Recommendation Pipeline
 
-Important clarification:
-The 2000×1320 matrix is NOT a neural network layer.
-It is the training dataset.
+```text
+Recommendation System Architecture
 
-The RBM visible layer size equals the number of movies (1320).
-
-### 2. System Architecture
-
-MovieLens Dataset  
+MovieLens Dataset
 (rating.csv)
 
-↓
+        │
+        ▼
 
-User–Movie Interaction Matrix  
+User–Movie Interaction Matrix
 2000 × 1320
 
-↓
+(each row = one user)
 
-RBM Visible Layer  
-v ∈ {0,1}^{1320}
+        │
+        ▼
 
-(each node represents one movie)
+RBM Visible Layer
+1320 movie units
 
-↓
+● ● ● ● ● ● ● ●
 
-Weight Matrix  
-W ∈ ℝ^{1320 × K}
+        │
+        │ weight matrix W
+        ▼
 
-↓
+RBM Hidden Layer
+latent preference factors
 
-Hidden Layer  
-h ∈ {0,1}^K
+○ ○ ○ ○ ○ ○
 
-(latent user preference factors)
+        │
+        ▼
 
-↓
+RBM Reconstruction
 
-RBM Reconstruction  
-v̂ ∈ ℝ^{1320}
+predicted movie preference
 
-(predicted preference probabilities)
-
-↓
+        │
+        ▼
 
 Hyperbolic Mapping
 
-z = cosh(t₀) ± u sinh(t₀)
+z = cosh(t0) ± u sinh(t0)
 
-↓
+        │
+        ▼
 
 Hyperbolic Weighted Sum
 
-Iₖ = Σ wₖⱼ zⱼ
+Ik = Σ wkj zj
 
-↓
+        │
+        ▼
 
 Activation g(z)
 
-↓
+        │
+        ▼
 
-Stable / Equilibrium State
+Stable Equilibrium State
+
+(final recommendation)
+```
 
 The RBM learns latent user preference factors from the visible movie ratings.
 The hidden layer captures abstract taste features.
@@ -218,6 +223,43 @@ Hyperbolic-valued states introduce exponential geometry that promotes convergenc
 
 The hyperbolic energy landscape forms stable attractor basins.
 This helps the system reach equilibrium states more reliably.
+
+### Why Hyperbolic Dynamics Can Be More Stable than Euclidean Dynamics
+
+Using hyperbolic-valued states instead of standard real-valued states can promote more stable convergence in iterative updates. The geometry can reduce oscillatory update behavior and can form stronger attractor-like dynamics that pull trajectories toward equilibrium. This is an intuition rather than a guarantee, but it helps motivate why hyperbolic dynamics are explored in this project.
+
+```text
+Euclidean / Real-Valued Dynamics
+--------------------------------
+
+state update trajectory:
+
+x0  →  x1  →  x2  →  x3  →  x4
+ \        ↘      ↗      ↘
+  \        unstable oscillation
+   \_____________________________
+
+Result:
+- trajectories may oscillate
+- updates may wander
+- convergence can be slow or unstable
+
+
+Hyperbolic Dynamics
+-------------------
+
+state update trajectory:
+
+z0  →   z1   →   z2   →   z3
+  \        \        \
+   \        \        \
+    \________\________\____  attractor basin
+
+Result:
+- trajectories are pulled into a stable basin
+- updates contract toward equilibrium
+- convergence is more reliable
+```
 
 ### Final Summary
 
