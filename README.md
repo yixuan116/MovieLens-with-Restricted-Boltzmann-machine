@@ -77,6 +77,157 @@ Artifacts are saved under `artifacts/`:
 - `metrics/latent_summary.json`
 - `rbm_model.pt`
 
+## Model Pipeline and Training Architecture
+
+This section explains the end-to-end system architecture used in this project:
+MovieLens dataset → RBM recommender → Hyperbolic neural dynamics.
+
+### 1. Data Representation
+
+The MovieLens dataset is structured as user ratings with timestamps. It is converted into a user–movie interaction matrix.
+
+Shape: 2000 × 1320
+
+Rows = users  
+Columns = movies
+
+Each row represents a single user's interaction vector and becomes one training sample.
+
+Important clarification:
+The 2000×1320 matrix is NOT a neural network layer.
+It is the training dataset.
+
+The RBM visible layer size equals the number of movies (1320).
+
+### 2. System Architecture
+
+MovieLens Dataset  
+(rating.csv)
+
+↓
+
+User–Movie Interaction Matrix  
+2000 × 1320
+
+↓
+
+RBM Visible Layer  
+v ∈ {0,1}^{1320}
+
+(each node represents one movie)
+
+↓
+
+Weight Matrix  
+W ∈ ℝ^{1320 × K}
+
+↓
+
+Hidden Layer  
+h ∈ {0,1}^K
+
+(latent user preference factors)
+
+↓
+
+RBM Reconstruction  
+v̂ ∈ ℝ^{1320}
+
+(predicted preference probabilities)
+
+↓
+
+Hyperbolic Mapping
+
+z = cosh(t₀) ± u sinh(t₀)
+
+↓
+
+Hyperbolic Weighted Sum
+
+Iₖ = Σ wₖⱼ zⱼ
+
+↓
+
+Activation g(z)
+
+↓
+
+Stable / Equilibrium State
+
+The RBM learns latent user preference factors from the visible movie ratings.
+The hidden layer captures abstract taste features.
+The reconstruction step predicts missing movie preferences.
+
+The hyperbolic mapping converts binary states into hyperbolic-valued states.
+The hyperbolic network dynamics compute stable equilibrium states.
+
+### 3. RBM Training Loop
+
+Input vector (one user)
+
+v
+
+↓
+
+Hidden activation
+
+h = σ(Wᵀv + b)
+
+↓
+
+Reconstruction
+
+v̂ = σ(Wh + a)
+
+↓
+
+Contrastive Divergence
+
+ΔW = v hᵀ − v̂ ĥᵀ
+
+↓
+
+Update weights
+
+W ← W + ηΔW
+
+RBM training alternates between visible and hidden layers.
+The model learns weights that minimize reconstruction error.
+
+This process discovers latent preference structures in the movie space.
+
+### 4. Energy Landscape Intuition
+
+Real-valued energy landscape
+
+  ~ oscillatory surface
+
+multiple unstable regions
+
+Hyperbolic energy landscape
+
+  \        /
+   \      /
+    \____/
+
+stable attractor basin
+
+Traditional real-valued networks can exhibit oscillatory dynamics.
+Hyperbolic-valued states introduce exponential geometry that promotes convergence.
+
+The hyperbolic energy landscape forms stable attractor basins.
+This helps the system reach equilibrium states more reliably.
+
+### Final Summary
+
+The recommendation system pipeline is:
+
+MovieLens Data  
+→ RBM latent preference learning  
+→ Hyperbolic state transformation  
+→ Stable equilibrium recommendation
+
 ## RBM Math Walkthrough (Full Derivation)
 
 This section mirrors the implementation in `src/rbm.py` and expands the math flow into a complete derivation.
