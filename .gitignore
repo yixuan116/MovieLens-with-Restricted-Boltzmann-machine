@@ -1,9 +1,20 @@
-data/
-artifacts/
-.venv/
+# Large data files
+data/*.csv
+data/*.xlsx
+data/~$*
+data/processed/
+
+# PDFs
+*.pdf
+
+# Python
 __pycache__/
-*.pyc
-*.pt
-*.pth
-*.ipynb_checkpoints/
+*.py[cod]
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+.env
+
+# macOS
 .DS_Store
