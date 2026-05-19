@@ -1,5 +1,7 @@
 # Large data files
 data/*.csv
+data/*.pkl
+data/user_*_ratings.csv
 data/*.xlsx
 data/~$*
 data/processed/
