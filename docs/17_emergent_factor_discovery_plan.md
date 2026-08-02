@@ -4,7 +4,7 @@
 
 The current "personality" channel (`channelB2_personality.npy` = μᵢ − μ_global, built in [12b_encodingB_personality_prep.ipynb](../../../Users/yixuan/Boltzmann%20Machine%20in%20Movie%20Lens/rbm-recsys/notebooks/12b_encodingB_personality_prep.ipynb)) is a hand-designed scalar, not something the model discovered. In [14b_evaluation_5k.ipynb](../../../Users/yixuan/Boltzmann%20Machine%20in%20Movie%20Lens/rbm-recsys/notebooks/14b_evaluation_5k.ipynb) the resulting "Hyperbolic joint" model beats the plain Real RBM overall (RMSE 0.9027 vs 0.9423) and for generous/middle users, but **regresses for strict users** (RMSE 1.3010 vs 1.2731) — evidence the hand-picked personality scalar doesn't capture what actually drives that group's ratings.
 
-Goal of this work: stop assuming what "personality" is. Instead, treat the already-trained Real RBM (B1-only, never shown any personality signal) as ground truth for "what the model actually learned," and interpret its 128 hidden units post-hoc using real MovieLens metadata (movie side) and derived behavioral statistics (user side) — then use an ablation experiment to test whether the existing hyperbolic architecture is earning its keep beyond a naive per-user bias correction.
+Goal of this work: stop assuming what "personality" is. Instead, treat the already-trained Real RBM (B1-only, never shown any personality signal) as ground truth for "what the model actually learned," and interpret its 128 hidden units post-hoc using real MovieLens metadata (movie side) and derived behavioral statistics (user side) — then **build a new hyperbolic-part channel from whatever factor(s) Part 4 actually finds** (not from the hand-picked leniency guess) and validate it on the held-out 20% test set, alongside the existing hand-picked personality channel and a naive learned-bias baseline. No candidate — including leniency — is assumed correct going in; the test-set comparison is what decides.
 
 Theoretical grounding (confirmed via full read of the `Paper/` folder): Rumelhart, Hinton & Williams (1986, *Nature*) is the direct precedent for "hidden units self-organize into interpretable features, discoverable post-hoc." The specific movie/user metadata-correlation probing method has no exact precedent in the folder — closest are Koren/Bell/Volinsky (2009, recsys latent-factor interpretation) and Bau et al. (2017, Network Dissection), which should be cited as the methodological ancestors of this approach, though neither PDF is currently in `Paper/` (external references — see table below). The existing Kobayashi/Alpay hyperbolic-BM papers remain the correct citations for the *architecture* (why two channels can be trained independently and recombined), reframed per the user's own correction: they establish theoretical *legitimacy*, not empirically proven *maximization*.
 
@@ -36,7 +36,7 @@ Not used as theoretical support for this plan (checked, ruled out): `CAPB_2nd.pd
 - **Movie-side evidence**: genres + release year (`movie.csv`) + genome tag relevance (`genome_scores.csv`/`genome_tags.csv`) + user free-text tags (`tag.csv`). No director/actor/soundtrack fields exist in this dataset (would require external TMDB calls via `link.csv` — explicitly out of scope for now).
 - **User-side candidate factors** (kept separate, not pre-merged, since mean and variance are statistically independent axes): leniency (μᵢ−μ_global), extremity (rating std), activity (rating count), genre-preference entropy, contrarian score (signed bias + unsigned degree, vs. each movie's population mean), popularity bias (avg population rating-count of rated movies).
 - **Method**: Pearson correlation as the primary screening tool (cheap, matches project's existing analytical style, has real precedent) — with explicit acknowledgment of its blind spots (linear-only, no confound control, associational not causal). Partial correlation is used to control confounds; a probing regression checks whether a factor is concentrated in one unit or distributed across many.
-- **Ablation**: test whether the hyperbolic joint's improvement comes from the algebraic structure itself or just from "having any second per-user bias signal," by comparing against a naive learned-bias baseline.
+- **Validation**: whatever Part 4 finds gets built into an actual second channel and evaluated on the 20% test set — not just reported as a correlation. Four-way comparison: (1) Real RBM alone, (2) existing hand-picked personality channel (leniency), (3) naive learned-bias baseline, (4) a new channel trained on the factor(s) Part 4 actually identifies. This isolates two separate questions: does the hyperbolic algebra contribute beyond a plain bias correction, and was leniency ever the right signal to put in the second channel in the first place.
 
 ## Reusable code (exact sources — port, don't rewrite)
 
@@ -82,21 +82,27 @@ Not used as theoretical support for this plan (checked, ruled out): `CAPB_2nd.pd
 - Probing regression: each factor ~ full 128-dim `H1` (ridge regression, report R²) to flag whether a factor is concentrated in one unit or distributed across many — directly answers the earlier "is extremity just leniency again?" question empirically.
 - Output → `outputs/hidden_unit_user_factor_correlations_5k.csv` + a 128×6 correlation-strength heatmap (via the dataviz skill).
 
-**Part 5 — Synthesis**
+**Part 5 — Synthesis & Validation** (merged; this is the endpoint — no separate documentation part)
+
+*5a — Synthesis*
 - Combine Part 2 + Part 4 per unit into a human-readable summary (e.g. "Unit 42: top genome tags {…}, genre enrichment {…}, year skew …, correlates with contrarian_bias r=0.52 → reads as a contrarian-appeal factor").
 - Save → `outputs/hidden_unit_summary_5k.md`.
+- From this, identify which candidate factor(s) — if any — show real, distinct correlation with the hidden units. This determines what (if anything) gets built in 5b. If nothing clears the bar, that is a legitimate outcome and gets reported as such.
 
-**Part 6 — Ablation: hyperbolic joint vs. naive learned bias**
-- Existing baseline (reused, not recomputed): Real RBM RMSE/MAE = 0.9423/0.7537; Hyperbolic joint = 0.9027/0.6970 (overall + generous/strict/middle breakdown from 14b).
-- New comparator: fit a simple ridge regression predicting a per-user bias term from `μ_user` (train-only) and add it to `r1`; evaluate on the same `test_labels.csv`, same group breakdown.
-- Produce a 3-row comparison table (Real RBM / Hyperbolic joint / Real RBM + naive bias) — isolates whether the hyperbolic algebra contributes beyond a plain bias correction.
+*5b — Build the discovered channel*
+- Train a new second channel using whatever factor(s) 5a identifies as the input signal (same CD-1 training procedure already used for the existing personality channel, just with a different input) — this is a real trained model, not a guess.
+
+*5c — Four-way test-set validation*
+- Existing baseline (reused, not recomputed): Real RBM RMSE/MAE = 0.9423/0.7537; existing hand-picked personality channel = 0.9027/0.6970 (overall + generous/strict/middle breakdown from 14b).
+- Naive comparator: fit a simple ridge regression predicting a per-user bias term from `μ_user` (train-only) and add it to `r1`.
+- New comparator: the channel trained in 5b.
+- Evaluate all four on the same `test_labels.csv`, same group breakdown, same metrics.
+- Produce a 4-row comparison table (Real RBM / existing hand-picked personality / naive learned bias / discovered-factor channel) — isolates two questions: does the hyperbolic algebra contribute beyond a plain bias correction, and was leniency ever the right signal for the second channel.
 - Save → `outputs/ablation_hyperbolic_vs_bias_5k.csv`.
-
-**Part 7 — Documentation**
-- Append a short "Emergent Factor Discovery — Methodology & Citations" section to [docs/hhNN_paper_formulas.md](../../../Users/yixuan/Boltzmann%20Machine%20in%20Movie%20Lens/rbm-recsys/docs/hhNN_paper_formulas.md): cite Rumelhart et al. 1986, Koren/Bell/Volinsky 2009, Bau et al. 2017 for the probing methodology; restate the Kobayashi/Alpay citations with the corrected framing ("guarantees legitimacy of independent two-channel training," not "maximizes performance").
 
 ## Verification
 
 - Run the notebook top to bottom; all shape/consistency asserts must pass (128 units, 13,129 movies, 5,000 users, ~1,128 genome tags).
 - Sanity-check a few interpretable units by hand (e.g., confirm a unit whose top genome tags skew "animation/children" also shows a younger-than-average year skew and matching genre enrichment) before trusting the full 128-row table.
-- Regression check: confirm Part 6's "Real RBM" and "Hyperbolic joint" rows exactly reproduce 14b's existing numbers (0.9423/0.7537 and 0.9027/0.6970) — if they don't match, something in data loading was altered and must be fixed before trusting the new "naive bias" comparator.
+- Regression check: confirm Part 5c's "Real RBM" and "existing hand-picked personality" rows exactly reproduce 14b's existing numbers (0.9423/0.7537 and 0.9027/0.6970) — if they don't match, something in data loading was altered and must be fixed before trusting the naive-bias and discovered-channel comparators.
+- Part 5b must not be built, or trusted, until Part 5a has actually run and named a candidate — building the discovered channel before the discovery step exists would just reintroduce a guess under a new name.
