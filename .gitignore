@@ -3,7 +3,9 @@ data/*.csv
 data/*.pkl
 data/user_*_ratings.csv
 data/*.xlsx
+data/**/*.xlsx
 data/~$*
+data/**/~$*
 data/processed/
 
 # PDFs
@@ -17,6 +19,9 @@ __pycache__/
 dist/
 build/
 .env
+
+# Matplotlib runtime cache
+.mplconfig/
 
 # macOS
 .DS_Store

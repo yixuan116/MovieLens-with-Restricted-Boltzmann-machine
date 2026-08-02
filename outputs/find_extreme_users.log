@@ -1,0 +1,20 @@
+Pass 1/2 (Strategy 1): streaming rating.csv for movie stats …
+  Global Masterpieces: 4 movies (mean>4.3, n>100)
+  Global Disasters:    173 movies (mean<2.0, n>100)
+Pass 2/2 (Strategy 1): scanning contrarian ratings …
+
+=== Strategy 1: Ultimate Contrarians ===
+No users matched both criteria.
+  (Note: only 4 movies qualify as Global Masterpieces with mean>4.3 and n>100.)
+
+Pass 1 (Strategy 2): counting ratings per user …
+  Heavy users (>200 ratings): 26,599
+Pass 2 (Strategy 2): loading ratings for 26,599 heavy users …
+
+(Full log also at /Users/yixuan/Boltzmann Machine in Movie Lens/rbm-recsys/outputs/find_extreme_users.log)
+
+=== Strategy 2: Top 5 Temporal Taste-Shifters ===
+
+userId=33634  (total_ratings=233)
+  DROP  Mystery             early=4.50 → late=2.00  Δ=-2.50
+  RISE  War                 early=1.36 → late=3.88  Δ=+2.52
