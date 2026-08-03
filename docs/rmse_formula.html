@@ -1,0 +1,251 @@
+<title>RMSE — Root Mean Squared Error</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f4f6f4;
+    --surface: #ffffff;
+    --border: #e0e5e1;
+    --text: #1c2321;
+    --text-secondary: #565f5a;
+    --text-muted: #8a9591;
+    --accent: #1f6f5c;
+    --accent-soft: #e2f0ea;
+    --accent-strong: #144d40;
+    --mono-bg: #eef2ef;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --bg: #101614;
+      --surface: #171f1c;
+      --border: #2a3530;
+      --text: #eef2f0;
+      --text-secondary: #a9b5b0;
+      --text-muted: #71807a;
+      --accent: #56d6b3;
+      --accent-soft: #1c3b33;
+      --accent-strong: #8fe9cd;
+      --mono-bg: #1c2622;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #101614;
+    --surface: #171f1c;
+    --border: #2a3530;
+    --text: #eef2f0;
+    --text-secondary: #a9b5b0;
+    --text-muted: #71807a;
+    --accent: #56d6b3;
+    --accent-soft: #1c3b33;
+    --accent-strong: #8fe9cd;
+    --mono-bg: #1c2622;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 620px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 40px 44px 36px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 12px 32px -16px rgba(20,40,32,0.18);
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-size: 30px;
+    font-weight: 500;
+    margin: 6px 0 2px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    color: var(--text-secondary);
+    font-size: 14.5px;
+    margin: 0 0 28px;
+    line-height: 1.5;
+  }
+
+  .formula-block {
+    background: var(--accent-soft);
+    border-radius: 14px;
+    padding: 30px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    overflow-x: auto;
+  }
+
+  math {
+    font-size: 30px;
+    color: var(--accent-strong);
+  }
+
+  .terms {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 18px;
+    margin-bottom: 30px;
+  }
+
+  .term-symbol {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 15px;
+    color: var(--accent-strong);
+    background: var(--mono-bg);
+    padding: 2px 9px;
+    border-radius: 6px;
+    white-space: nowrap;
+    height: fit-content;
+  }
+
+  .term-def {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    padding-top: 2px;
+  }
+
+  .term-def b {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 0 24px;
+  }
+
+  .example {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .worked {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13.5px;
+    line-height: 1.9;
+    color: var(--text-secondary);
+    background: var(--mono-bg);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-variant-numeric: tabular-nums;
+    overflow-x: auto;
+  }
+
+  .worked .hl { color: var(--accent-strong); font-weight: 600; }
+
+  .result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .result-label {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+  }
+
+  .result-value {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent-strong);
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+
+<div class="card">
+  <div class="eyebrow">Evaluation metric</div>
+  <h1>Root Mean Squared Error</h1>
+  <p class="subtitle">How far the model's predicted rating lands from what the user actually gave — averaged across every held-out test rating.</p>
+
+  <div class="formula-block">
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mrow>
+        <mtext>RMSE</mtext>
+        <mo>=</mo>
+        <msqrt>
+          <mrow>
+            <mfrac>
+              <mn>1</mn>
+              <mi>n</mi>
+            </mfrac>
+            <munderover>
+              <mo>&#x2211;</mo>
+              <mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow>
+              <mi>n</mi>
+            </munderover>
+            <msup>
+              <mrow>
+                <mo>(</mo>
+                <msub><mover><mi>y</mi><mo>^</mo></mover><mi>i</mi></msub>
+                <mo>&#x2212;</mo>
+                <msub><mi>y</mi><mi>i</mi></msub>
+                <mo>)</mo>
+              </mrow>
+              <mn>2</mn>
+            </msup>
+          </mrow>
+        </msqrt>
+      </mrow>
+    </math>
+  </div>
+
+  <div class="terms">
+    <span class="term-symbol">n</span>
+    <span class="term-def"><b>Test-set size</b> — total held-out ratings scored (1,032,307 here)</span>
+    <span class="term-symbol">y&#8290;ᵢ</span>
+    <span class="term-def"><b>Actual rating</b> — what the user really gave that movie</span>
+    <span class="term-symbol">ŷ&#8290;ᵢ</span>
+    <span class="term-def"><b>Predicted rating</b> — what the model guessed</span>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="example">Worked example</div>
+  <div class="worked">
+    row 1:  actual <span class="hl">4.0</span>  →  predicted <span class="hl">3.5</span>  →  error² = 0.25<br/>
+    row 2:  actual <span class="hl">5.0</span>  →  predicted <span class="hl">3.0</span>  →  error² = 4.00<br/>
+    ...<br/>
+    average of all error² → square root
+  </div>
+
+  <div class="result-row">
+    <span class="result-label">Best model this round (existing personality channel)</span>
+    <span class="result-value">RMSE = 0.9027</span>
+  </div>
+</div>

@@ -98,17 +98,20 @@ Not used as theoretical support for this plan (checked, ruled out): `CAPB_2nd.pd
 - k-means clustering on `H1`'s PCA space: silhouette=0.57 at k=4, **but visually this is a continuous fan/simplex shape with no real density gaps — treat as k-means slicing a continuum, not as evidence of discrete user segments.** Do not cite "4 user clusters" as a finding.
 - Save → `outputs/h1_pca_scree_5k.png`, `outputs/h1_kmeans_pca_5k.png`.
 
-*5c — Build the discovered channel*
-- Train a new second channel using whatever factor(s) 5a/5b identify as the input signal (same CD-1 training procedure already used for the existing personality channel, just with a different input) — this is a real trained model, not a guess.
-- **Not yet triggered**: 5a found nothing; 5b found PC2=extremity cleanly but PC1 (the dominant 68% axis) is still only partially explained and the popularity confound on its genome-tag evidence is unchecked. Building 5c on PC2 alone would ignore the bigger, unresolved axis.
+*5c — Build the discovered channel(s)* — done in `notebooks/18_pc1_deep_dive_and_validation_5k.ipynb`
+- The popularity confound on PC1's genome tags was checked (survives — real, not a popularity artifact) and free-text tags were checked (mostly personal-bookkeeping noise, not usable). A joint ridge model combining all evidence (6 behavioral factors + year + top-15 genome tags) explains **R²=0.416 of PC1** (cross-validated, shuffled folds) — meaningfully more than any single marginal check, and higher than PC2's own single-factor r²=0.334. This clears the bar; PC1 is no longer "unresolved."
+- Two channels trained (identical CD-1 procedure/hyperparameters as the existing personality channel, only the input signal differs): one on `extremity` (PC2), one on the standardized joint-model prediction for PC1.
 
-*5d — Four-way test-set validation*
-- Existing baseline (reused, not recomputed): Real RBM RMSE/MAE = 0.9423/0.7537; existing hand-picked personality channel = 0.9027/0.6970 (overall + generous/strict/middle breakdown from 14b).
-- Naive comparator: fit a simple ridge regression predicting a per-user bias term from `μ_user` (train-only) and add it to `r1`.
-- New comparator: the channel trained in 5c.
-- Evaluate all four on the same `test_labels.csv`, same group breakdown, same metrics.
-- Produce a 4-row comparison table (Real RBM / existing hand-picked personality / naive learned bias / discovered-factor channel) — isolates two questions: does the hyperbolic algebra contribute beyond a plain bias correction, and was leniency ever the right signal for the second channel.
-- Save → `outputs/ablation_hyperbolic_vs_bias_5k.csv`.
+*5d — Test-set validation* — done, in the same notebook
+- **Regression check passed**: Real RBM and existing personality rows reproduce 14b exactly (0.9423/0.7537, 0.9027/0.6970).
+- **Five-way result**: Real RBM=0.9423, existing personality=**0.9027 (best overall)**, naive bias=0.9138, extremity channel=**1.1744 (worse than doing nothing — a negative result)**, PC1-combined channel=0.9240.
+- **Extremity's clean statistical correlation (r=-0.578) did not translate into a useful channel** — built and tested, it makes predictions substantially worse across every group. Correlation with a hidden dimension is not sufficient evidence that encoding it as an additive hyperbolic channel helps.
+- **PC1-combined channel is a real but partial win**: beats the plain Real RBM overall (0.9240 vs 0.9423), and on the original motivating failure mode — strict-user regression (Real RBM 1.2731, existing personality regresses to 1.3010) — it regresses the least of any two-channel approach (1.2870), though it still doesn't fully close the gap back to 1.2731. It does not beat the existing hand-picked personality channel overall (0.9240 vs 0.9027).
+- Saved → `outputs/ablation_hyperbolic_vs_bias_5k.csv`, `outputs/ablation_group_breakdown_5k.csv`.
+
+## Paper-writing note: how to frame the existing personality channel
+
+The existing hand-designed personality/leniency channel (12b/13b/14b) stays in the code and in this doc as an internal check — it is what confirms Part 5c/5d's pipeline computes `r1`/`v2` correctly (the regression check below depends on it) and it is the historical result that motivated this whole investigation (the strict-user regression). **It must not be written into the paper as a competing candidate the discovery process produced or endorses.** It was never found by Part 4/5a/5b's correlation analysis — it predates this investigation and was hand-specified, full stop. In the paper: cite it only as background/motivation (why the investigation started) and, if needed, as the regression-check baseline confirming the evaluation pipeline is correct — never present it in a results table alongside PC1/PC2 as if it were one of this work's discovered outcomes.
 
 ## Verification
 
