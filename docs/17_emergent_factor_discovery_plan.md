@@ -84,18 +84,28 @@ Not used as theoretical support for this plan (checked, ruled out): `CAPB_2nd.pd
 
 **Part 5 — Synthesis & Validation** (merged; this is the endpoint — no separate documentation part)
 
-*5a — Synthesis*
+*5a — Synthesis (hypothesis test against 6 named candidates)*
 - Combine Part 2 + Part 4 per unit into a human-readable summary (e.g. "Unit 42: top genome tags {…}, genre enrichment {…}, year skew …, correlates with contrarian_bias r=0.52 → reads as a contrarian-appeal factor").
 - Save → `outputs/hidden_unit_summary_5k.md`.
-- From this, identify which candidate factor(s) — if any — show real, distinct correlation with the hidden units. This determines what (if anything) gets built in 5b. If nothing clears the bar, that is a legitimate outcome and gets reported as such.
+- **Run (2026-08-02)**: none of the 6 candidates cleared the bar. leniency/contrarian_bias/extremity are "strong" on 43-77% of the 128 units (diffuse, not concentrated); activity/genre_entropy/popularity_bias never exceed |r|=0.27 anywhere. Verdict table → embedded in the notebook output, decision rule in `## Verification` below.
 
-*5b — Build the discovered channel*
-- Train a new second channel using whatever factor(s) 5a identifies as the input signal (same CD-1 training procedure already used for the existing personality channel, just with a different input) — this is a real trained model, not a guess.
+*5b — Unsupervised structure discovery (no pre-named candidates)*
+- PCA on `H1`: **run result — PC1=68%, PC2=25.5%, PC3=3.5% of variance; 3 components reach 95%.** The 128 raw units are almost entirely redundant — there are really only ~2-3 independent axes. This is *why* 5a's candidates read as diffuse: most units are echoing the same 2-3 underlying signals.
+- Characterize PC1–3 against the 6 known factors (sanity anchor) + against movie-side evidence not yet used elsewhere (release year, genome tags — vectorized per-user average tag-relevance profile via sparse matmul, not just top/bottom decile comparison).
+  - **PC2 (25.5%) = rating extremity, cleanly** (r=-0.578). Genome tags: confusing/plot twist/alternate endings/amnesia/memory loss — a "divisive, twist-heavy thriller" flavor, consistent with a polarized-rating axis.
+  - **PC1 (68%, the dominant axis) is only ~25% explained** by leniency+contrarian_bias combined (r≈0.49 each). Genome tags (r≈0.29-0.33): disappointing/graphic novel/too long/heroine in tight suit/waste of time/based on comic — reads as a mainstream-blockbuster/superhero-franchise-viewing axis, but **not yet confirmed against a movie-popularity confound** (these tags may just correlate with heavily-tagged blockbusters in general — same class of artifact as the Part 2 popularity fix, not yet checked here).
+  - PC3 (3.5%) reads as a smaller echo of PC1, not clearly an independent third axis.
+- k-means clustering on `H1`'s PCA space: silhouette=0.57 at k=4, **but visually this is a continuous fan/simplex shape with no real density gaps — treat as k-means slicing a continuum, not as evidence of discrete user segments.** Do not cite "4 user clusters" as a finding.
+- Save → `outputs/h1_pca_scree_5k.png`, `outputs/h1_kmeans_pca_5k.png`.
 
-*5c — Four-way test-set validation*
+*5c — Build the discovered channel*
+- Train a new second channel using whatever factor(s) 5a/5b identify as the input signal (same CD-1 training procedure already used for the existing personality channel, just with a different input) — this is a real trained model, not a guess.
+- **Not yet triggered**: 5a found nothing; 5b found PC2=extremity cleanly but PC1 (the dominant 68% axis) is still only partially explained and the popularity confound on its genome-tag evidence is unchecked. Building 5c on PC2 alone would ignore the bigger, unresolved axis.
+
+*5d — Four-way test-set validation*
 - Existing baseline (reused, not recomputed): Real RBM RMSE/MAE = 0.9423/0.7537; existing hand-picked personality channel = 0.9027/0.6970 (overall + generous/strict/middle breakdown from 14b).
 - Naive comparator: fit a simple ridge regression predicting a per-user bias term from `μ_user` (train-only) and add it to `r1`.
-- New comparator: the channel trained in 5b.
+- New comparator: the channel trained in 5c.
 - Evaluate all four on the same `test_labels.csv`, same group breakdown, same metrics.
 - Produce a 4-row comparison table (Real RBM / existing hand-picked personality / naive learned bias / discovered-factor channel) — isolates two questions: does the hyperbolic algebra contribute beyond a plain bias correction, and was leniency ever the right signal for the second channel.
 - Save → `outputs/ablation_hyperbolic_vs_bias_5k.csv`.
@@ -104,5 +114,5 @@ Not used as theoretical support for this plan (checked, ruled out): `CAPB_2nd.pd
 
 - Run the notebook top to bottom; all shape/consistency asserts must pass (128 units, 13,129 movies, 5,000 users, ~1,128 genome tags).
 - Sanity-check a few interpretable units by hand (e.g., confirm a unit whose top genome tags skew "animation/children" also shows a younger-than-average year skew and matching genre enrichment) before trusting the full 128-row table.
-- Regression check: confirm Part 5c's "Real RBM" and "existing hand-picked personality" rows exactly reproduce 14b's existing numbers (0.9423/0.7537 and 0.9027/0.6970) — if they don't match, something in data loading was altered and must be fixed before trusting the naive-bias and discovered-channel comparators.
-- Part 5b must not be built, or trusted, until Part 5a has actually run and named a candidate — building the discovered channel before the discovery step exists would just reintroduce a guess under a new name.
+- Regression check: confirm Part 5d's "Real RBM" and "existing hand-picked personality" rows exactly reproduce 14b's existing numbers (0.9423/0.7537 and 0.9027/0.6970) — if they don't match, something in data loading was altered and must be fixed before trusting the naive-bias and discovered-channel comparators.
+- Part 5c must not be built, or trusted, until Part 5a/5b have actually run and named a candidate — building the discovered channel before the discovery step exists would just reintroduce a guess under a new name. As of 2026-08-02, that condition isn't met yet (PC1 unresolved) — 5c stays unbuilt.
