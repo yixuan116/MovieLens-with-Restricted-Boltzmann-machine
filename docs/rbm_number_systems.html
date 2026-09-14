@@ -81,6 +81,34 @@
 
   .eyebrow span { color: var(--accent); }
 
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .collapse-toggle {
+    background: none;
+    border: 1px solid var(--border-strong);
+    color: var(--ink-soft);
+    font-size: 0.7rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .collapse-toggle:hover { background: var(--sys-r-soft); color: var(--accent); }
+  .collapse-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .collapse-toggle[aria-expanded="false"] { transform: rotate(-90deg); }
+
+  .section-head-2 .collapse-toggle { margin-left: auto; }
+
   .section-num {
     font-family: var(--mono);
     font-size: 0.78rem;
@@ -413,8 +441,13 @@
 
   <header class="page-header">
     <h1 class="page-title"><span class="section-num">01</span>&nbsp;&middot;&nbsp;4-Number-System RBM &mdash; Research Overview</h1>
-    <p class="eyebrow">MovieLens 20M &middot; <span>Comparative Study</span></p>
+    <div class="header-right">
+      <p class="eyebrow">MovieLens 20M &middot; <span>Comparative Study</span></p>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-1-body" aria-label="Collapse section 1">&#8964;</button>
+    </div>
   </header>
+
+  <div class="section-body" id="section-1-body">
 
   <p class="objective">Compare four number systems on RBMs: predict ratings, discover distinct <em>Hidden Features</em>.</p>
 
@@ -467,13 +500,17 @@
     <span>Squeeze the hidden layer to <strong>H&nbsp;=&nbsp;4</strong>. Which number system's features still understand the movies?</span>
   </div>
 
+  </div>
 
   <section class="section-2" id="section-2">
 
     <div class="section-head-2">
       <span class="section-num">02</span>
       <h2>Data Selection Methodology</h2>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-2-body" aria-label="Collapse section 2">&#8964;</button>
     </div>
+
+    <div class="section-body" id="section-2-body">
 
     <div class="funnel" id="funnel">
 
@@ -553,6 +590,8 @@
         </div>
 
       </div>
+    </div>
+
     </div>
 
   </section>
@@ -810,5 +849,18 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
 })();
 </script>
 
+<script>
+(function () {
+  document.querySelectorAll('.collapse-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var body = document.getElementById(btn.getAttribute('aria-controls'));
+      if (!body) return;
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      body.hidden = expanded;
+    });
+  });
+})();
+</script>
 </body>
 </html>
