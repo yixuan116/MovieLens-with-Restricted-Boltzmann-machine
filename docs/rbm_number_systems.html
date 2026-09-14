@@ -370,26 +370,32 @@
   }
 
 
-  .chart-sequence {
+  .chart-grid {
     display: flex;
     flex-direction: column;
-    gap: 2.2rem;
+    gap: 2rem;
     padding-top: 0.5rem;
   }
+
+  .chart-row {
+    display: grid;
+    gap: 2rem;
+  }
+  .chart-row.full { grid-template-columns: 1fr; }
+  .chart-row.split { grid-template-columns: 1fr 1fr; }
 
   .chart-block {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.4rem;
   }
 
   .chart-caption {
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 1.05rem;
-    color: var(--ink);
-    text-align: center;
-    text-wrap: balance;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+    text-align: left;
   }
 
   .chart-block img {
@@ -397,6 +403,10 @@
     height: auto;
     display: block;
     border: 1px solid var(--border-strong);
+  }
+
+  @media (max-width: 700px) {
+    .chart-row.split { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -513,31 +523,35 @@
     <p class="density-banner" id="density-banner">Density: <span id="density-value">0.00</span>%</p>
 
     <div id="section2-charts">
-      <div class="chart-sequence">
+      <div class="chart-grid">
 
-        <div class="chart-block">
-          <p class="chart-caption">Here&rsquo;s what 61.55% density looks like</p>
-          <img src="img/phase2_density_heatmap_sample.png" alt="Density sample: 100x100 densest corner of the 1000x1000 subset" loading="lazy">
+        <div class="chart-row full">
+          <div class="chart-block">
+            <p class="chart-caption">Here&rsquo;s what 61.55% density looks like</p>
+            <img src="img/phase2_density_heatmap_sample.png" alt="Density sample: 100x100 densest corner of the 1000x1000 subset" loading="lazy">
+          </div>
         </div>
 
-        <div class="chart-block">
-          <p class="chart-caption">Rating distribution peaks at 3.0 and 4.0</p>
-          <img src="img/phase2_rating_distribution.png" alt="Rating distribution across the dense subset" loading="lazy">
+        <div class="chart-row split">
+          <div class="chart-block">
+            <p class="chart-caption">Rating distribution peaks at 3.0 and 4.0</p>
+            <img src="img/phase2_rating_distribution.png" alt="Rating distribution across the dense subset" loading="lazy">
+          </div>
+          <div class="chart-block">
+            <p class="chart-caption">Selected movies sit in the popular head</p>
+            <img src="img/phase2_longtail_curve.png" alt="Long-tail curve: selected movies against all movies by popularity" loading="lazy">
+          </div>
         </div>
 
-        <div class="chart-block">
-          <p class="chart-caption">Selected movies sit in the popular head</p>
-          <img src="img/phase2_longtail_curve.png" alt="Long-tail curve: selected movies against all movies by popularity" loading="lazy">
-        </div>
-
-        <div class="chart-block">
-          <p class="chart-caption">All 19 genres represented</p>
-          <img src="img/phaseA_genre_frequency.png" alt="Genre frequency among the 1000 selected movies" loading="lazy">
-        </div>
-
-        <div class="chart-block">
-          <p class="chart-caption">Most users span 5+ years</p>
-          <img src="img/phaseB_user_timespan_years.png" alt="User time-span distribution across the dense subset" loading="lazy">
+        <div class="chart-row split">
+          <div class="chart-block">
+            <p class="chart-caption">All 19 genres represented</p>
+            <img src="img/phaseA_genre_frequency.png" alt="Genre frequency among the 1000 selected movies" loading="lazy">
+          </div>
+          <div class="chart-block">
+            <p class="chart-caption">Most users span 5+ years</p>
+            <img src="img/phaseB_user_timespan_years.png" alt="User time-span distribution across the dense subset" loading="lazy">
+          </div>
         </div>
 
       </div>
