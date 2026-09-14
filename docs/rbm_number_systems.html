@@ -223,6 +223,152 @@
     .sys-card:last-child { border-bottom: none; }
     .banner { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   }
+
+  /* ---------- section 2 : funnel ---------- */
+
+  .section-2 {
+    margin-top: 2.6rem;
+    padding-top: 2.2rem;
+    border-top: 1px solid var(--border-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 1.7rem;
+  }
+
+  .section-head-2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .section-head-2 h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin: 0;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .funnel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.5rem 0 0.75rem;
+  }
+
+  .funnel-layer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .funnel-layer.visible { opacity: 1; transform: translateY(0); }
+
+  .funnel-bar {
+    width: var(--w, 100%);
+    max-width: 720px;
+    background: var(--accent);
+    color: var(--bg);
+    text-align: center;
+    padding: 0.95rem 1.5rem;
+  }
+
+  .funnel-count {
+    font-family: var(--mono);
+    font-size: 1.02rem;
+    font-variant-numeric: tabular-nums;
+    display: block;
+  }
+
+  .funnel-label {
+    font-size: 0.76rem;
+    opacity: 0.85;
+    display: block;
+    margin-top: 0.25rem;
+  }
+
+  .funnel-filters {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 760px;
+  }
+
+  .filter-chip {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    border: 1px solid var(--border-strong);
+    background: var(--sys-r-soft);
+    color: var(--ink);
+    padding: 0.55rem 0.9rem;
+    font-size: 0.76rem;
+    line-height: 1.35;
+    max-width: 15.5rem;
+  }
+  .filter-chip.visible { opacity: 1; transform: translateY(0); }
+
+  .filter-chip small {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-faint);
+    margin-top: 0.2rem;
+  }
+
+  .filter-chip.tint-d { background: var(--sys-d-soft); color: var(--sys-d); }
+  .filter-chip.tint-c { background: var(--sys-c-soft); color: var(--sys-c); }
+  .filter-chip.tint-d small, .filter-chip.tint-c small { color: inherit; opacity: 0.72; }
+
+  .funnel-arrow {
+    font-family: var(--mono);
+    color: var(--ink-faint);
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .funnel-arrow.visible { opacity: 1; }
+
+  .funnel-note {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .funnel-note.visible { opacity: 1; transform: translateY(0); }
+
+  .density-banner {
+    text-align: center;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.45rem;
+    color: var(--accent);
+    padding-top: 0.3rem;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .density-banner.visible { opacity: 1; transform: translateY(0); }
+
+  #section2-charts {
+    min-height: 2rem;
+  }
+
+  @media (max-width: 620px) {
+    .funnel-bar { max-width: 100%; }
+    .filter-chip { max-width: 100%; }
+  }
+
 </style>
 </head>
 <body>
@@ -284,6 +430,158 @@
     <span>Squeeze the hidden layer to <strong>H&nbsp;=&nbsp;4</strong>. Which number system's features still understand the movies?</span>
   </div>
 
+
+  <section class="section-2" id="section-2">
+
+    <div class="section-head-2">
+      <span class="section-num">02</span>
+      <h2>Data Selection Methodology</h2>
+    </div>
+
+    <div class="funnel" id="funnel">
+
+      <div class="funnel-layer" id="layer-1" style="--w: 100%;">
+        <div class="funnel-bar">
+          <span class="funnel-count"><span id="count-users-raw">0</span>&nbsp;users &times; <span id="count-movies-raw">0</span>&nbsp;movies</span>
+          <span class="funnel-label">MovieLens 20M raw</span>
+        </div>
+      </div>
+
+      <div class="funnel-filters" id="funnel-filters">
+        <div class="filter-chip">
+          Rating count &isin; [100, 3000]
+          <small>remove bots &amp; inactive</small>
+        </div>
+        <div class="filter-chip tint-d">
+          Genre coverage &ge; 8 of 19
+          <small>ensure taste diversity for &#120123;</small>
+        </div>
+        <div class="filter-chip tint-c">
+          Timestamp span &gt; 1 year
+          <small>ensure temporal depth for &#8450;</small>
+        </div>
+      </div>
+
+      <div class="funnel-arrow" id="arrow-1">&darr;</div>
+
+      <div class="funnel-layer" id="layer-2" style="--w: 55%;">
+        <div class="funnel-bar">
+          <span class="funnel-count"><span id="count-qualified">138,493</span> qualified users</span>
+        </div>
+      </div>
+
+      <div class="funnel-note" id="funnel-note">Top 1000 by activity</div>
+      <div class="funnel-arrow" id="arrow-2">&darr;</div>
+
+      <div class="funnel-layer" id="layer-3" style="--w: 24%;">
+        <div class="funnel-bar">
+          <span class="funnel-count">1,000 users &times; 1,000 movies</span>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="density-banner" id="density-banner">Density: <span id="density-value">0.00</span>%</p>
+
+    <div id="section2-charts"></div>
+
+  </section>
+
 </main>
+<script>
+(function () {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function animateCount(el, start, end, duration, decimals) {
+    if (!el) return;
+    if (reduceMotion || duration <= 0) {
+      el.textContent = decimals ? end.toFixed(decimals) : Math.round(end).toLocaleString();
+      return;
+    }
+    var t0 = performance.now();
+    function step(now) {
+      var p = Math.min((now - t0) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      var val = start + (end - start) * eased;
+      el.textContent = decimals ? val.toFixed(decimals) : Math.round(val).toLocaleString();
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = decimals ? end.toFixed(decimals) : Math.round(end).toLocaleString();
+    }
+    requestAnimationFrame(step);
+  }
+
+  function revealFunnel() {
+    var layer1 = document.getElementById('layer-1');
+    var chips = document.querySelectorAll('#funnel-filters .filter-chip');
+    var arrow1 = document.getElementById('arrow-1');
+    var layer2 = document.getElementById('layer-2');
+    var note = document.getElementById('funnel-note');
+    var arrow2 = document.getElementById('arrow-2');
+    var layer3 = document.getElementById('layer-3');
+    var densityBanner = document.getElementById('density-banner');
+
+    var usersEl = document.getElementById('count-users-raw');
+    var moviesEl = document.getElementById('count-movies-raw');
+    var qualifiedEl = document.getElementById('count-qualified');
+    var densityEl = document.getElementById('density-value');
+
+    var step = reduceMotion ? 0 : 500;
+    var t = 0;
+
+    setTimeout(function () {
+      if (layer1) layer1.classList.add('visible');
+      animateCount(usersEl, 0, 138493, reduceMotion ? 0 : 1000);
+      animateCount(moviesEl, 0, 27278, reduceMotion ? 0 : 1000);
+    }, t);
+
+    chips.forEach(function (chip, i) {
+      t += step;
+      (function (chipEl, delay) {
+        setTimeout(function () { chipEl.classList.add('visible'); }, delay);
+      })(chip, t);
+    });
+
+    t += step + 300;
+    setTimeout(function () { if (arrow1) arrow1.classList.add('visible'); }, t);
+
+    t += reduceMotion ? 0 : 250;
+    setTimeout(function () {
+      if (layer2) layer2.classList.add('visible');
+      animateCount(qualifiedEl, 138493, 13953, reduceMotion ? 0 : 1200);
+    }, t);
+
+    t += reduceMotion ? 0 : 1000;
+    setTimeout(function () { if (note) note.classList.add('visible'); }, t);
+
+    t += reduceMotion ? 0 : 400;
+    setTimeout(function () { if (arrow2) arrow2.classList.add('visible'); }, t);
+
+    t += reduceMotion ? 0 : 300;
+    setTimeout(function () { if (layer3) layer3.classList.add('visible'); }, t);
+
+    t += reduceMotion ? 0 : 500;
+    setTimeout(function () {
+      if (densityBanner) densityBanner.classList.add('visible');
+      animateCount(densityEl, 0, 61.55, reduceMotion ? 0 : 1000, 2);
+    }, t);
+  }
+
+  var target = document.getElementById('section-2');
+  if (target && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          revealFunnel();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+    observer.observe(target);
+  } else if (target) {
+    revealFunnel();
+  }
+})();
+</script>
+
 </body>
 </html>
