@@ -348,8 +348,8 @@
   }
 
   .bar-default { fill: var(--border-strong); }
-  .bar-mode { fill: var(--sys-f); }
-  .bar-four { fill: var(--accent); }
+  .bar-four-matrix { fill: var(--accent); }
+  .bar-four-rumble { fill: #d98a3d; }
 
   .bar-tick-label {
     font-family: var(--mono);
@@ -364,48 +364,54 @@
     fill: var(--ink);
   }
 
-  .distwalk-bridge {
+  .distwalk-connector {
     flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.15rem;
-    padding-top: 1.6rem;
+    gap: 0.3rem;
+    width: 5.5rem;
+    padding-top: 3.6rem;
   }
 
-  .bridge-pct {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--accent);
-    white-space: nowrap;
+  .connector-line {
+    width: 100%;
+    height: 0;
+    border-top: 1px dashed var(--border-strong);
   }
 
-  .bridge-line {
-    width: 1px;
-    height: 0.6rem;
-    background: var(--border-strong);
-  }
-
-  .bridge-label {
+  .connector-label {
     font-family: var(--mono);
     font-size: 0.62rem;
     color: var(--ink-faint);
-    white-space: nowrap;
+    text-align: center;
+    line-height: 1.3;
   }
 
-  .distwalk-annotation {
+  .distwalk-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .distwalk-row {
     font-size: 0.8rem;
-    line-height: 1.5;
+    line-height: 1.45;
     color: var(--ink-soft);
-    max-width: 78ch;
+    margin: 0;
+  }
+
+  .distwalk-footnote {
+    font-size: 0.74rem;
+    line-height: 1.45;
+    color: var(--ink-faint);
     margin: 0;
   }
 
   @media (max-width: 640px) {
     .distwalk-charts { flex-direction: column; }
-    .distwalk-bridge { flex-direction: row; padding-top: 0; }
-    .bridge-line { width: 1.2rem; height: 1px; }
+    .distwalk-connector { flex-direction: row; width: auto; padding-top: 0.2rem; }
+    .connector-line { width: 1.5rem; }
   }
 
   .probe-layout {
@@ -1383,23 +1389,20 @@
               <text class="bar-tick-label" x="151.5" y="144.0" text-anchor="middle">3.0</text>
               <rect class="bar-default" x="168.0" y="104.7" width="21" height="27.3"/>
               <text class="bar-tick-label" x="178.5" y="144.0" text-anchor="middle">3.5</text>
-              <rect class="bar-four" x="195.0" y="49.9" width="21" height="82.1"/>
+              <rect class="bar-four-matrix" x="195.0" y="49.9" width="21" height="82.1"/>
               <text class="bar-pct-label" x="205.5" y="45.9" text-anchor="middle">24.4%</text>
               <text class="bar-tick-label" x="205.5" y="144.0" text-anchor="middle">4.0</text>
               <rect class="bar-default" x="222.0" y="73.0" width="21" height="59.0"/>
               <text class="bar-tick-label" x="232.5" y="144.0" text-anchor="middle">4.5</text>
-              <rect class="bar-mode" x="249.0" y="20.9" width="21" height="111.1"/>
-              <text class="bar-pct-label" x="259.5" y="16.9" text-anchor="middle">33.0%</text>
+              <rect class="bar-default" x="249.0" y="20.9" width="21" height="111.1"/>
               <text class="bar-tick-label" x="259.5" y="144.0" text-anchor="middle">5.0</text>
             </svg>
           </div>
 
-          <div class="distwalk-bridge" aria-hidden="true">
-            <span class="bridge-pct">24.4%</span>
-            <span class="bridge-line"></span>
-            <span class="bridge-label">rating&nbsp;=&nbsp;4.0</span>
-            <span class="bridge-line"></span>
-            <span class="bridge-pct">23.9%</span>
+          <div class="distwalk-connector" aria-hidden="true">
+            <span class="connector-line"></span>
+            <span class="connector-label">4.0 = shared intersection (&#8776;24%)</span>
+            <span class="connector-line"></span>
           </div>
 
           <div class="distwalk-chart">
@@ -1416,12 +1419,11 @@
               <text class="bar-tick-label" x="97.5" y="144.0" text-anchor="middle">2.0</text>
               <rect class="bar-default" x="114.0" y="109.0" width="21" height="23.0"/>
               <text class="bar-tick-label" x="124.5" y="144.0" text-anchor="middle">2.5</text>
-              <rect class="bar-mode" x="141.0" y="23.6" width="21" height="108.4"/>
-              <text class="bar-pct-label" x="151.5" y="19.6" text-anchor="middle">32.2%</text>
+              <rect class="bar-default" x="141.0" y="23.6" width="21" height="108.4"/>
               <text class="bar-tick-label" x="151.5" y="144.0" text-anchor="middle">3.0</text>
               <rect class="bar-default" x="168.0" y="86.1" width="21" height="45.9"/>
               <text class="bar-tick-label" x="178.5" y="144.0" text-anchor="middle">3.5</text>
-              <rect class="bar-four" x="195.0" y="51.3" width="21" height="80.7"/>
+              <rect class="bar-four-rumble" x="195.0" y="51.3" width="21" height="80.7"/>
               <text class="bar-pct-label" x="205.5" y="47.3" text-anchor="middle">23.9%</text>
               <text class="bar-tick-label" x="205.5" y="144.0" text-anchor="middle">4.0</text>
               <rect class="bar-default" x="222.0" y="123.3" width="21" height="8.7"/>
@@ -1433,7 +1435,12 @@
 
         </div>
 
-        <p class="distwalk-annotation">Rating 4.0 is the intersection: both movies have &asymp;24% of users at this score. For The Matrix (mean 4.13), a 4.0 is casual consensus. For Rumble in the Bronx (mean 3.12), a 4.0 is a strong endorsement &mdash; same number, different intent. Fix the rating, vary the popularity: this is the controlled experiment below.</p>
+        <div class="distwalk-rows">
+          <p class="distwalk-row">The Matrix at 4.0: below its mean (4.13). Casual agreement in a crowd of 5-star votes.</p>
+          <p class="distwalk-row">Rumble at 4.0: far above its mean (3.12). A strong endorsement from a niche fan.</p>
+        </div>
+
+        <p class="distwalk-footnote">Same normalized input (a&nbsp;=&nbsp;0.778). Opposite behavioral meaning. This is the gap that &#8477; cannot see and &#120123; encodes through the popularity dimension b.</p>
 
       </div>
 
