@@ -389,6 +389,14 @@
     line-height: 1.3;
   }
 
+  .distwalk-caption {
+    font-size: 0.74rem;
+    line-height: 1.45;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin: 0;
+  }
+
   .distwalk-layer-tag {
     display: block;
     font-family: var(--mono);
@@ -1457,6 +1465,8 @@
 
         </div>
 
+        <p class="distwalk-caption">Each bar above is the raw distribution of ratings a movie received. a normalizes one rating at a time out of that distribution; it doesn't touch the distribution's shape.</p>
+
         <p class="distwalk-layer">
           <span class="distwalk-layer-tag">Layer 1 &middot; symmetric base rate</span>
           Why 4.0, not 3.0? 4.0 lands at 24.4% (Matrix) vs 23.9% (Rumble). Nearly identical starting weight. 3.0 doesn't: 10.0% vs 32.2%. A lopsided pivot, not a fair comparison.
@@ -1489,7 +1499,7 @@
 
           <div class="probe-info">
             <button type="button" class="probe-info-trigger" aria-describedby="probe-b-tooltip">What is b?<span aria-hidden="true">&nbsp;&#9432;</span></button>
-            <div class="probe-info-tooltip" id="probe-b-tooltip" role="tooltip">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated. Fixed per movie, independent of the rating itself.</div>
+            <div class="probe-info-tooltip" id="probe-b-tooltip" role="tooltip">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated. Ranked by how many people rated it, not by how they rated it. Fixed per movie, independent of the rating itself.</div>
           </div>
 
           <div class="probe-slider-block">
