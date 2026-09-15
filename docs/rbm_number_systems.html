@@ -287,6 +287,198 @@
     .banner { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   }
 
+  /* ---------- section 01b : input representation probe ---------- */
+
+  .section-1b {
+    margin-top: 2.6rem;
+    padding-top: 2.2rem;
+    border-top: 1px solid var(--border-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+  }
+
+  .probe-subtitle {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .probe-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 290px) 1fr;
+    gap: 1.6rem;
+    align-items: start;
+  }
+
+  .probe-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .probe-movie-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .probe-movie-btn {
+    text-align: left;
+    font-family: var(--sans);
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    padding: 0.6rem 0.8rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .probe-movie-btn:hover { border-color: var(--accent); }
+  .probe-movie-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .probe-movie-btn.active { background: var(--ink); border-color: var(--ink); }
+  .probe-movie-btn.active .probe-movie-name,
+  .probe-movie-btn.active .probe-movie-meta { color: var(--bg); }
+
+  .probe-movie-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .probe-movie-meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+  }
+
+  .probe-slider-block {
+    border-top: 1px solid var(--border);
+    padding-top: 0.9rem;
+  }
+
+  .probe-slider-label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+  .probe-slider-label span { color: var(--ink); font-weight: 600; }
+
+  #probe-rating-slider {
+    width: 100%;
+    accent-color: var(--accent);
+  }
+
+  .probe-formula {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    margin: 0.6rem 0 0;
+  }
+  .probe-formula span { color: var(--ink-soft); font-weight: 600; }
+
+  .probe-viz {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .probe-panel {
+    border: 1px solid var(--border-strong);
+    padding: 1rem 1.2rem 1.1rem;
+  }
+
+  .probe-panel.panel-d {
+    background: #222;
+    border-color: #222;
+    color: #fff;
+  }
+
+  .probe-panel-head {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    margin: 0 0 0.8rem;
+    color: var(--ink-soft);
+  }
+  .panel-d .probe-panel-head { color: #cfcfcf; }
+
+  .probe-bar-row {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr 4.2rem;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .probe-bar-tag {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+  }
+  .panel-d .probe-bar-tag { color: #b7b7b7; }
+
+  .probe-bar-track {
+    position: relative;
+    height: 1.15rem;
+    background: var(--border);
+    overflow: hidden;
+  }
+  .track-d { background: #3a3a3a; }
+
+  .probe-bar-zero {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.45);
+    z-index: 2;
+  }
+  .track-r .probe-bar-zero { display: none; }
+
+  .probe-bar-fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    transition: left 0.4s cubic-bezier(0.22, 1, 0.36, 1), width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .fill-r { left: 0; background: var(--ink-faint); }
+  .fill-plus { background: #6f9bc2; }
+  .fill-minus { background: #d98a3d; }
+
+  .probe-bar-val {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    text-align: right;
+    color: var(--ink-soft);
+  }
+  .panel-d .probe-bar-val { color: #e6e6e6; }
+
+  .probe-formula-pair {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: #9a9a9a;
+    margin: 0.5rem 0 0.7rem;
+  }
+
+  .probe-annotation {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: var(--ink-faint);
+    margin: 0.6rem 0 0;
+  }
+  .panel-d .probe-annotation { color: #d5d5d5; }
+
+  @media (max-width: 700px) {
+    .probe-layout { grid-template-columns: 1fr; }
+  }
+
   /* ---------- section 2 : funnel ---------- */
 
   .section-2 {
@@ -1005,6 +1197,84 @@
 
   </div>
 
+  <section class="section-1b" id="section-01b">
+
+    <div class="section-head-2">
+      <h2><span class="section-num">01b</span>&nbsp;&middot;&nbsp;Input Representation Probe: One Rating, Two Algebras</h2>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01b-body" aria-label="Collapse section 01b">&#8964;</button>
+    </div>
+
+    <div class="section-body" id="section-01b-body">
+
+      <p class="probe-subtitle">Same user, same 4.0 rating, same movie. The only difference: how the number system encodes it before training begins.</p>
+
+      <div class="probe-layout">
+
+        <div class="probe-controls">
+
+          <div class="probe-movie-picker" id="probe-movie-picker" role="group" aria-label="Choose movie">
+            <button type="button" class="probe-movie-btn active" data-movie="matrix" data-b="1" aria-pressed="true">
+              <span class="probe-movie-name">The Matrix (1999)</span>
+              <span class="probe-movie-meta">Rank 1 / 977 ratings / b&nbsp;=&nbsp;+1.0</span>
+            </button>
+            <button type="button" class="probe-movie-btn" data-movie="rumble" data-b="-1" aria-pressed="false">
+              <span class="probe-movie-name">Rumble in the Bronx (1995)</span>
+              <span class="probe-movie-meta">Rank 1000 / 426 ratings / b&nbsp;=&nbsp;&minus;1.0</span>
+            </button>
+          </div>
+
+          <div class="probe-slider-block">
+            <label class="probe-slider-label" for="probe-rating-slider">Rating: <span id="probe-rating-value">4.0</span></label>
+            <input type="range" id="probe-rating-slider" min="0.5" max="5.0" step="0.5" value="4.0">
+            <p class="probe-formula">a = (rating &minus; 0.5) / 4.5 = <span id="probe-a-value">0.7778</span></p>
+          </div>
+
+        </div>
+
+        <div class="probe-viz">
+
+          <div class="probe-panel panel-r">
+            <p class="probe-panel-head">&#8477; Real</p>
+            <div class="probe-bar-row">
+              <span class="probe-bar-tag">a</span>
+              <div class="probe-bar-track track-r">
+                <div class="probe-bar-fill fill-r" id="probe-bar-a"></div>
+              </div>
+              <span class="probe-bar-val" id="probe-val-a">0.7778</span>
+            </div>
+            <p class="probe-annotation">Popularity is invisible. Both movies produce identical input.</p>
+          </div>
+
+          <div class="probe-panel panel-d">
+            <p class="probe-panel-head">&#120123; Hyperbolic</p>
+            <div class="probe-bar-row">
+              <span class="probe-bar-tag">e&#8330;</span>
+              <div class="probe-bar-track track-d">
+                <div class="probe-bar-zero"></div>
+                <div class="probe-bar-fill fill-plus" id="probe-bar-plus"></div>
+              </div>
+              <span class="probe-bar-val" id="probe-val-plus">+0.8889</span>
+            </div>
+            <div class="probe-bar-row">
+              <span class="probe-bar-tag">e&#8331;</span>
+              <div class="probe-bar-track track-d">
+                <div class="probe-bar-zero"></div>
+                <div class="probe-bar-fill fill-minus" id="probe-bar-minus"></div>
+              </div>
+              <span class="probe-bar-val" id="probe-val-minus">&minus;0.1111</span>
+            </div>
+            <p class="probe-formula-pair">e&#8330; = (a + b) / 2&nbsp;&nbsp;&nbsp;e&#8331; = (a &minus; b) / 2</p>
+            <p class="probe-annotation" id="probe-d-annotation">Mainstream gravity dominates e&#8330;. The e&#8331; channel is suppressed.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
   <section class="section-2" id="section-2">
 
     <div class="section-head-2">
@@ -1508,6 +1778,80 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       body.hidden = expanded;
     });
   });
+})();
+</script>
+
+<script>
+(function () {
+  var picker = document.getElementById("probe-movie-picker");
+  var slider = document.getElementById("probe-rating-slider");
+  if (!picker || !slider) return;
+
+  var ratingLabel = document.getElementById("probe-rating-value");
+  var aLabel = document.getElementById("probe-a-value");
+  var barA = document.getElementById("probe-bar-a");
+  var valA = document.getElementById("probe-val-a");
+  var barPlus = document.getElementById("probe-bar-plus");
+  var valPlus = document.getElementById("probe-val-plus");
+  var barMinus = document.getElementById("probe-bar-minus");
+  var valMinus = document.getElementById("probe-val-minus");
+  var dAnnotation = document.getElementById("probe-d-annotation");
+
+  var currentB = 1;
+
+  function fmt4(x) {
+    var sign = x >= 0 ? (x === 0 ? "" : "+") : "−";
+    return sign + Math.abs(x).toFixed(4);
+  }
+
+  function positionDiverging(fillEl, value) {
+    var half = 50;
+    if (value >= 0) {
+      fillEl.style.left = "50%";
+      fillEl.style.width = (value * half) + "%";
+    } else {
+      fillEl.style.left = (50 + value * half) + "%";
+      fillEl.style.width = (-value * half) + "%";
+    }
+  }
+
+  function render() {
+    var rating = parseFloat(slider.value);
+    var a = (rating - 0.5) / 4.5;
+    var ePlus = (a + currentB) / 2;
+    var eMinus = (a - currentB) / 2;
+
+    ratingLabel.textContent = rating.toFixed(1);
+    aLabel.textContent = a.toFixed(4);
+
+    barA.style.left = "0";
+    barA.style.width = (a * 100) + "%";
+    valA.textContent = a.toFixed(4);
+
+    positionDiverging(barPlus, ePlus);
+    positionDiverging(barMinus, eMinus);
+    valPlus.textContent = fmt4(ePlus);
+    valMinus.textContent = fmt4(eMinus);
+
+    dAnnotation.textContent = currentB > 0
+      ? "Mainstream gravity dominates e₊. The e₋ channel is suppressed."
+      : "e₊ collapses. Niche signal dominates e₋.";
+  }
+
+  picker.querySelectorAll(".probe-movie-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      picker.querySelectorAll(".probe-movie-btn").forEach(function (b) {
+        b.classList.toggle("active", b === btn);
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      currentB = parseFloat(btn.getAttribute("data-b"));
+      render();
+    });
+  });
+
+  slider.addEventListener("input", render);
+
+  render();
 })();
 </script>
 <script>
