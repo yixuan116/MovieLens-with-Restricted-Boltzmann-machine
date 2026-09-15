@@ -305,6 +305,109 @@
     margin: 0;
   }
 
+  /* distribution walk */
+
+  .distwalk {
+    border: 1px solid var(--border);
+    padding: 1rem 1.2rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .distwalk-charts {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .distwalk-chart {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .distwalk-title {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 0.4rem;
+  }
+
+  .distwalk-meta {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.68rem;
+    color: var(--ink-faint);
+  }
+
+  .distwalk-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .bar-default { fill: var(--border-strong); }
+  .bar-mode { fill: var(--sys-f); }
+  .bar-four { fill: var(--accent); }
+
+  .bar-tick-label {
+    font-family: var(--mono);
+    font-size: 7.5px;
+    fill: var(--ink-faint);
+  }
+
+  .bar-pct-label {
+    font-family: var(--mono);
+    font-size: 8.5px;
+    font-weight: 600;
+    fill: var(--ink);
+  }
+
+  .distwalk-bridge {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    padding-top: 1.6rem;
+  }
+
+  .bridge-pct {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .bridge-line {
+    width: 1px;
+    height: 0.6rem;
+    background: var(--border-strong);
+  }
+
+  .bridge-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .distwalk-annotation {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 78ch;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .distwalk-charts { flex-direction: column; }
+    .distwalk-bridge { flex-direction: row; padding-top: 0; }
+    .bridge-line { width: 1.2rem; height: 1px; }
+  }
+
   .probe-layout {
     display: grid;
     grid-template-columns: minmax(220px, 290px) 1fr;
@@ -1257,6 +1360,82 @@
     <div class="section-body" id="section-01b-body">
 
       <p class="probe-subtitle">Same user, same 4.0 rating, same movie. The only difference: how the number system encodes it before training begins.</p>
+
+      <div class="distwalk">
+
+        <div class="distwalk-charts">
+
+          <div class="distwalk-chart">
+            <p class="distwalk-title" id="distwalk-matrix-title">The Matrix (1999) <span class="distwalk-meta">n=977, mean=4.13</span></p>
+            <svg class="distwalk-svg" viewBox="0 0 276 152" role="img" aria-labelledby="distwalk-matrix-title">
+              <line x1="0" y1="132" x2="276" y2="132" stroke="var(--border-strong)" stroke-width="1"/>
+              <rect class="bar-default" x="6.0" y="130.3" width="21" height="1.7"/>
+              <text class="bar-tick-label" x="16.5" y="144.0" text-anchor="middle">0.5</text>
+              <rect class="bar-default" x="33.0" y="129.6" width="21" height="2.4"/>
+              <text class="bar-tick-label" x="43.5" y="144.0" text-anchor="middle">1.0</text>
+              <rect class="bar-default" x="60.0" y="129.9" width="21" height="2.1"/>
+              <text class="bar-tick-label" x="70.5" y="144.0" text-anchor="middle">1.5</text>
+              <rect class="bar-default" x="87.0" y="120.6" width="21" height="11.4"/>
+              <text class="bar-tick-label" x="97.5" y="144.0" text-anchor="middle">2.0</text>
+              <rect class="bar-default" x="114.0" y="125.8" width="21" height="6.2"/>
+              <text class="bar-tick-label" x="124.5" y="144.0" text-anchor="middle">2.5</text>
+              <rect class="bar-default" x="141.0" y="98.2" width="21" height="33.8"/>
+              <text class="bar-tick-label" x="151.5" y="144.0" text-anchor="middle">3.0</text>
+              <rect class="bar-default" x="168.0" y="104.7" width="21" height="27.3"/>
+              <text class="bar-tick-label" x="178.5" y="144.0" text-anchor="middle">3.5</text>
+              <rect class="bar-four" x="195.0" y="49.9" width="21" height="82.1"/>
+              <text class="bar-pct-label" x="205.5" y="45.9" text-anchor="middle">24.4%</text>
+              <text class="bar-tick-label" x="205.5" y="144.0" text-anchor="middle">4.0</text>
+              <rect class="bar-default" x="222.0" y="73.0" width="21" height="59.0"/>
+              <text class="bar-tick-label" x="232.5" y="144.0" text-anchor="middle">4.5</text>
+              <rect class="bar-mode" x="249.0" y="20.9" width="21" height="111.1"/>
+              <text class="bar-pct-label" x="259.5" y="16.9" text-anchor="middle">33.0%</text>
+              <text class="bar-tick-label" x="259.5" y="144.0" text-anchor="middle">5.0</text>
+            </svg>
+          </div>
+
+          <div class="distwalk-bridge" aria-hidden="true">
+            <span class="bridge-pct">24.4%</span>
+            <span class="bridge-line"></span>
+            <span class="bridge-label">rating&nbsp;=&nbsp;4.0</span>
+            <span class="bridge-line"></span>
+            <span class="bridge-pct">23.9%</span>
+          </div>
+
+          <div class="distwalk-chart">
+            <p class="distwalk-title" id="distwalk-rumble-title">Rumble in the Bronx (1995) <span class="distwalk-meta">n=426, mean=3.12</span></p>
+            <svg class="distwalk-svg" viewBox="0 0 276 152" role="img" aria-labelledby="distwalk-rumble-title">
+              <line x1="0" y1="132" x2="276" y2="132" stroke="var(--border-strong)" stroke-width="1"/>
+              <rect class="bar-default" x="6.0" y="127.3" width="21" height="4.7"/>
+              <text class="bar-tick-label" x="16.5" y="144.0" text-anchor="middle">0.5</text>
+              <rect class="bar-default" x="33.0" y="119.3" width="21" height="12.7"/>
+              <text class="bar-tick-label" x="43.5" y="144.0" text-anchor="middle">1.0</text>
+              <rect class="bar-default" x="60.0" y="124.9" width="21" height="7.1"/>
+              <text class="bar-tick-label" x="70.5" y="144.0" text-anchor="middle">1.5</text>
+              <rect class="bar-default" x="87.0" y="95.6" width="21" height="36.4"/>
+              <text class="bar-tick-label" x="97.5" y="144.0" text-anchor="middle">2.0</text>
+              <rect class="bar-default" x="114.0" y="109.0" width="21" height="23.0"/>
+              <text class="bar-tick-label" x="124.5" y="144.0" text-anchor="middle">2.5</text>
+              <rect class="bar-mode" x="141.0" y="23.6" width="21" height="108.4"/>
+              <text class="bar-pct-label" x="151.5" y="19.6" text-anchor="middle">32.2%</text>
+              <text class="bar-tick-label" x="151.5" y="144.0" text-anchor="middle">3.0</text>
+              <rect class="bar-default" x="168.0" y="86.1" width="21" height="45.9"/>
+              <text class="bar-tick-label" x="178.5" y="144.0" text-anchor="middle">3.5</text>
+              <rect class="bar-four" x="195.0" y="51.3" width="21" height="80.7"/>
+              <text class="bar-pct-label" x="205.5" y="47.3" text-anchor="middle">23.9%</text>
+              <text class="bar-tick-label" x="205.5" y="144.0" text-anchor="middle">4.0</text>
+              <rect class="bar-default" x="222.0" y="123.3" width="21" height="8.7"/>
+              <text class="bar-tick-label" x="232.5" y="144.0" text-anchor="middle">4.5</text>
+              <rect class="bar-default" x="249.0" y="122.5" width="21" height="9.5"/>
+              <text class="bar-tick-label" x="259.5" y="144.0" text-anchor="middle">5.0</text>
+            </svg>
+          </div>
+
+        </div>
+
+        <p class="distwalk-annotation">Rating 4.0 is the intersection: both movies have &asymp;24% of users at this score. For The Matrix (mean 4.13), a 4.0 is casual consensus. For Rumble in the Bronx (mean 3.12), a 4.0 is a strong endorsement &mdash; same number, different intent. Fix the rating, vary the popularity: this is the controlled experiment below.</p>
+
+      </div>
 
       <div class="probe-layout">
 
