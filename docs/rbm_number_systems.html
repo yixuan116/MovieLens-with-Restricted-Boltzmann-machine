@@ -566,7 +566,7 @@
     border-top: 1px solid var(--border-strong);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.3rem;
   }
 
   .block-heading {
@@ -578,142 +578,156 @@
     margin: 0 0 0.9rem;
   }
 
-  /* decomposition flow diagram */
+  /* compact formula block */
 
-  .decomp-flow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    padding: 0.5rem 0;
-  }
-
-  .flow-box {
-    border: 1px solid var(--border-strong);
-    background: var(--surface, var(--bg));
-    padding: 0.9rem 1.1rem;
+  .formula-compact {
     text-align: center;
+    padding: 0.3rem 0;
+  }
+
+  .formula-compact .formula-line {
     font-family: var(--mono);
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     color: var(--ink);
-    line-height: 1.5;
-    min-width: 9rem;
   }
 
-  .flow-box .flow-label {
-    display: block;
-    font-size: 0.65rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-bottom: 0.3rem;
-  }
-
-  .flow-box .flow-sub {
-    display: block;
-    font-family: var(--sans);
-    font-size: 0.72rem;
-    letter-spacing: 0.02em;
-    text-transform: none;
-    color: var(--ink-faint);
-    margin-top: 0.3rem;
-  }
-
-  .flow-arrow {
-    font-family: var(--mono);
-    font-size: 1.1rem;
-    color: var(--ink-faint);
-  }
-
-  .flow-split {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .flow-box.channel-plus {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .flow-box.channel-plus .flow-sub { color: var(--accent); opacity: 0.8; }
-
-  .flow-box.channel-minus {
-    border-color: #d98a3d;
-    color: #d98a3d;
-  }
-  .flow-box.channel-minus .flow-sub { color: #d98a3d; opacity: 0.8; }
-
-  /* encoding example table */
-
-  .encode-table-wrap {
-    max-width: 620px;
-    margin: 0.4rem auto 0;
-    overflow-x: auto;
-  }
-
-  table.encode-example {
-    width: 100%;
-    border-collapse: collapse;
+  .formula-compact .formula-sub {
     font-size: 0.85rem;
-  }
-
-  table.encode-example th {
-    text-align: left;
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    font-weight: 500;
-    padding: 0.5rem 0.8rem;
-    border-bottom: 1px solid var(--border-strong);
-  }
-
-  table.encode-example td {
-    padding: 0.6rem 0.8rem;
-    border-bottom: 1px solid var(--border);
     color: var(--ink-soft);
-    font-family: var(--mono);
+    margin: 0.4rem auto 0;
+    max-width: 62ch;
   }
 
-  table.encode-example td:first-child {
-    font-family: var(--sans);
-    color: var(--ink);
+  .formula-compact .e-plus { color: var(--accent); }
+  .formula-compact .e-minus { color: #d98a3d; }
+
+  /* simulator */
+
+  .simulator {
+    border: 1px solid var(--border-strong);
+    padding: 1.3rem 1.4rem 1.5rem;
   }
 
-  /* two-column blocks */
-
-  .two-col {
+  .sim-channels {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
   }
 
-  .col-block {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
+  .sim-channel {
+    text-align: center;
+    padding: 0.6rem 0.5rem;
   }
 
-  .col-block img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border: 1px solid var(--border-strong);
+  .sim-channel .sim-channel-name {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin: 0 0 0.2rem;
   }
 
-  .col-caption {
+  .sim-channel .sim-channel-pop {
+    font-size: 0.74rem;
+    color: var(--ink-faint);
+  }
+
+  .sim-channel.minus .sim-channel-name { color: #d98a3d; }
+  .sim-channel.plus .sim-channel-name { color: var(--accent); }
+
+  .sim-track {
+    position: relative;
+    height: 2.6rem;
+    background: linear-gradient(to right, #f8f1e3, #eef2f5);
+    border: 1px solid var(--border);
+    margin-bottom: 1.1rem;
+  }
+
+  .sim-track::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border-strong);
+  }
+
+  .sim-chip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--ink);
+    color: var(--bg);
     font-family: var(--mono);
     font-size: 0.76rem;
-    color: var(--ink-faint);
-    text-align: center;
-    margin: 0;
+    padding: 0.35rem 0.7rem;
+    white-space: nowrap;
+    transition: left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 2;
   }
 
-  .col-caption strong {
+  .sim-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .sim-btn {
+    font-family: var(--sans);
+    font-size: 0.82rem;
     color: var(--ink);
-    font-weight: 600;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    padding: 0.5rem 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .sim-btn:hover { background: var(--sys-r-soft); border-color: var(--accent); }
+  .sim-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .sim-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .sim-readout {
+    display: flex;
+    justify-content: center;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    min-height: 1.4em;
+  }
+
+  .sim-readout b { color: var(--ink); font-weight: 600; }
+  .sim-readout .ep-val { color: var(--accent); }
+  .sim-readout .em-val { color: #d98a3d; }
+
+  .sim-outlier {
+    display: none;
+    margin: 0.9rem auto 0;
+    max-width: 46rem;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: #b4654a;
+    background: #f7e3dc;
+    border: 1px solid #b4654a;
+    padding: 0.6rem 0.9rem;
+  }
+  .sim-outlier.visible { display: block; }
+
+  /* case notes */
+
+  .case-notes {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--ink-faint);
+    max-width: 74ch;
+    margin: 0 auto;
+    text-align: center;
   }
 
   /* scorecard */
@@ -757,9 +771,7 @@
   }
 
   @media (max-width: 700px) {
-    .two-col { grid-template-columns: 1fr; }
-    .decomp-flow { flex-direction: column; }
-    .flow-arrow { transform: rotate(90deg); }
+    .sim-channels { grid-template-columns: 1fr; }
   }
 
 </style>
@@ -1038,86 +1050,51 @@
   </section>
 
 
-  <section class="section-4" id="section-4">
+    <section class="section-4" id="section-4">
 
     <div class="section-head-2">
-      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Hyperbolic Number RBM &mdash; Latent Feature Discovery</h2>
+      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Hyperbolic Decoupling: One Rating, Two Channels</h2>
       <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-4-body" aria-label="Collapse section 4">&#8964;</button>
     </div>
 
     <div class="section-body" id="section-4-body">
 
-      <div>
-        <p class="block-heading">Idempotent decomposition</p>
-
-        <div class="decomp-flow">
-          <div class="flow-box">
-            <span class="flow-label">input</span>
-            rating = 4.0<br>+ popularity rank
-          </div>
-          <span class="flow-arrow">&rarr;</span>
-          <div class="flow-box">
-            z = a + bj
-            <span class="flow-sub">j&sup2; = +1</span>
-          </div>
-          <span class="flow-arrow">&rarr;</span>
-          <div class="flow-split">
-            <div class="flow-box channel-plus">
-              e&#8330; = (a+b)/2
-              <span class="flow-sub">Consensus channel</span>
-            </div>
-            <div class="flow-box channel-minus">
-              e&#8331; = (a&minus;b)/2
-              <span class="flow-sub">Divergence channel</span>
-            </div>
-          </div>
-        </div>
-
-        <p class="split-statement">Same rating, different encoding. A 4-star blockbuster and a 4-star cult classic land in opposite channels.</p>
-
-        <div class="encode-table-wrap">
-          <table class="encode-example">
-            <thead>
-              <tr><th>Movie</th><th>Popularity</th><th>e&#8330;</th><th>e&#8331;</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>The Matrix (1999) &mdash; blockbuster</td><td>977 ratings</td><td>+0.8889</td><td>&minus;0.1111</td></tr>
-              <tr><td>Rumble in the Bronx (1995) &mdash; cult</td><td>426 ratings</td><td>&minus;0.1111</td><td>+0.8889</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="formula-compact">
+        <p class="formula-line">z = a + bj, j&sup2; = +1&nbsp;&nbsp;&rarr;&nbsp;&nbsp;<span class="e-plus">e&#8330; = (a+b)/2</span>,&nbsp; <span class="e-minus">e&#8331; = (a&minus;b)/2</span></p>
+        <p class="formula-sub">Split-complex algebra routes the same rating into a Consensus channel (e&#8330;) and a Divergence channel (e&#8331;).</p>
       </div>
 
-      <div class="two-col">
-        <div class="col-block">
-          <p class="block-heading">Popularity separation</p>
-          <img src="img/dRBM_popularity_separation.png" alt="Popularity separation: W_plus vs W_minus mean top-10 popularity per hidden unit" loading="lazy">
-          <p class="col-caption">128/128 units verified. W&#8330; mean=909.7, W&#8331; mean=449.3</p>
-        </div>
-        <div class="col-block">
-          <p class="block-heading">What each channel learned</p>
-          <img src="img/dRBM_hidden_unit_top_movies.png" alt="Top-10 movies for the 3 most genre-concentrated hidden units, each channel" loading="lazy">
-          <p class="col-caption">W&#8330; = <strong>Blockbusters</strong> &middot; W&#8331; = <strong>Deep cuts</strong></p>
-        </div>
-      </div>
-
-      <div>
-        <p class="block-heading">The phantom singularity &amp; outlier detection</p>
-        <div class="two-col">
-          <div class="col-block">
-            <img src="img/dRBM_pca_genre_scatter.png" alt="PCA before outlier correction, PC1 near 100 percent of variance" loading="lazy">
-            <p class="col-caption">Before: 100% PC1 &mdash; too good to be true?</p>
+      <div class="simulator">
+        <div class="sim-channels">
+          <div class="sim-channel minus">
+            <p class="sim-channel-name">e&#8331; Divergence</p>
+            <p class="sim-channel-pop">Mean Popularity 449.3</p>
           </div>
-          <div class="col-block">
-            <img src="img/dRBM_pca_genre_scatter_normalized.png" alt="PCA after row-normalization, healthy multi-dimensional spread" loading="lazy">
-            <p class="col-caption">After: healthy multi-dimensional structure</p>
+          <div class="sim-channel plus">
+            <p class="sim-channel-name">e&#8330; Consensus</p>
+            <p class="sim-channel-pop">Mean Popularity 909.7</p>
           </div>
         </div>
-        <p class="split-statement" style="font-size: 1rem; max-width: 68ch;">Initial PCA showed 100.0% variance on PC1, suggesting a unique Minkowski metric collapse. Ablation against the &#8477; baseline disproved this: the collapse was caused by gradient explosions on a handful of movies (e.g. Speed 2: Cruise Control, weight norm 29.75 vs. a median of 0.17). After row-normalizing, the hyperbolic latent space shows a genuine multi-dimensional taste profile.</p>
+
+        <div class="sim-track">
+          <div class="sim-chip" id="sim-chip">click a movie</div>
+        </div>
+
+        <div class="sim-buttons" id="sim-buttons">
+          <button type="button" class="sim-btn" data-movie="matrix">The Matrix</button>
+          <button type="button" class="sim-btn" data-movie="shawshank">Shawshank Redemption</button>
+          <button type="button" class="sim-btn" data-movie="rumble">Rumble in the Bronx</button>
+          <button type="button" class="sim-btn" data-movie="mississippi">Mississippi Burning</button>
+          <button type="button" class="sim-btn" data-movie="speed2">Speed 2: Cruise Control</button>
+        </div>
+
+        <p class="sim-readout" id="sim-readout">a = &mdash; &nbsp; b = &mdash; &nbsp; e&#8330; = &mdash; &nbsp; e&#8331; = &mdash;</p>
+        <p class="sim-outlier" id="sim-outlier">&#9888; Outlier &mdash; weight norm 29.75 vs. median 0.17. This movie broke our initial PCA.</p>
       </div>
 
+      <p class="case-notes">Initial PCA showed 100% PC1 &mdash; seemingly a Minkowski metric singularity. Cross-check against &#8477; baseline exposed the truth: gradient explosion on a handful of movies. After cleanup, the dual-channel popularity separation (128/128 units, W&#8330;=909.7 vs W&#8331;=449.3) remains the genuine structural discovery.</p>
+
       <div>
-        <p class="block-heading">Prediction scorecard</p>
         <div class="scorecard-row">
           <div class="scorecard-card">
             <p class="scorecard-label">&#8477; Real Baseline</p>
@@ -1128,7 +1105,7 @@
             <p class="scorecard-numbers"><span>RMSE 0.9523</span><span>MAE 0.7187</span></p>
           </div>
         </div>
-        <p class="split-statement" style="font-size: 1rem; max-width: 60ch;">&#120123; trades raw accuracy for structural insight. The dual-channel decomposition reveals popularity hierarchies invisible to flat &#8477; geometry.</p>
+        <p class="case-notes">&#120123; trades raw accuracy for structural decomposition invisible to flat &#8477;.</p>
       </div>
 
     </div>
@@ -1474,5 +1451,51 @@ var TIMELINE_DATA = {"users":[{"userId":78740,"train_dates":["2006-12-28","2006-
 })();
 </script>
 
+<script>
+(function () {
+  var MOVIES = {
+    matrix:       { name: "The Matrix (1999)",            a: 0.7778, b: 1.0000,  ep: 0.8889,  em: -0.1111, pop: 977 },
+    shawshank:    { name: "Shawshank Redemption (1994)",   a: 0.7778, b: 0.9720,  ep: 0.8749,  em: -0.0971, pop: 944 },
+    rumble:       { name: "Rumble in the Bronx (1995)",    a: 0.7778, b: -1.0000, ep: -0.1111, em: 0.8889,  pop: 426 },
+    mississippi:  { name: "Mississippi Burning (1988)",    a: 0.7778, b: -0.9059, ep: -0.0641, em: 0.8418,  pop: 437 },
+    speed2:       { name: "Speed 2: Cruise Control (1997)", a: 0.7778, b: -0.8539, ep: -0.0380, em: 0.8158, pop: 445, outlier: true }
+  };
+
+  function fmt(x) {
+    var sign = x >= 0 ? "+" : "";
+    return sign + x.toFixed(4);
+  }
+
+  function selectMovie(key) {
+    var m = MOVIES[key];
+    if (!m) return;
+
+    var chip = document.getElementById("sim-chip");
+    var readout = document.getElementById("sim-readout");
+    var outlier = document.getElementById("sim-outlier");
+    var buttons = document.querySelectorAll("#sim-buttons .sim-btn");
+
+    buttons.forEach(function (btn) {
+      btn.classList.toggle("active", btn.getAttribute("data-movie") === key);
+    });
+
+    var posPct = (m.b + 1) / 2 * 100;
+    chip.style.left = posPct + "%";
+    chip.textContent = m.name;
+
+    readout.innerHTML = "a = <b>" + m.a.toFixed(4) + "</b> &nbsp; b = <b>" + fmt(m.b) +
+      "</b> &nbsp; e&#8330; = <b class=\"ep-val\">" + fmt(m.ep) +
+      "</b> &nbsp; e&#8331; = <b class=\"em-val\">" + fmt(m.em) + "</b> &nbsp; (popularity " + m.pop + ")";
+
+    outlier.classList.toggle("visible", !!m.outlier);
+  }
+
+  document.querySelectorAll("#sim-buttons .sim-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      selectMovie(btn.getAttribute("data-movie"));
+    });
+  });
+})();
+</script>
 </body>
 </html>
