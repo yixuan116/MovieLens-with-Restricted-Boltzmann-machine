@@ -354,6 +354,13 @@
     color: var(--ink-faint);
   }
 
+  .probe-b-note {
+    font-size: 0.76rem;
+    line-height: 1.45;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+
   .probe-slider-block {
     border-top: 1px solid var(--border);
     padding-top: 0.9rem;
@@ -1222,6 +1229,8 @@
               <span class="probe-movie-meta">Rank 1000 / 426 ratings / b&nbsp;=&nbsp;&minus;1.0</span>
             </button>
           </div>
+
+          <p class="probe-b-note">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated &mdash; fixed per movie, independent of the rating itself.</p>
 
           <div class="probe-slider-block">
             <label class="probe-slider-label" for="probe-rating-slider">Rating: <span id="probe-rating-value">4.0</span></label>
