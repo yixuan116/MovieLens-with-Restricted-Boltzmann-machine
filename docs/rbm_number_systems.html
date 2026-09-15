@@ -350,7 +350,7 @@
   .bar-default { fill: var(--border-strong); }
   .bar-mode { fill: var(--sys-f); }
   .bar-four-matrix { fill: var(--accent); }
-  .bar-four-rumble { fill: #d98a3d; }
+  .bar-four-rumble { fill: #e67e22; }
 
   .bar-tick-label {
     font-family: var(--mono);
@@ -1385,7 +1385,7 @@
 
     <div class="section-body" id="section-01b-body">
 
-      <p class="probe-subtitle">Same user, same 4.0 rating, same movie. The only difference: how the number system encodes it before training begins.</p>
+      <p class="probe-subtitle">Same 4.0 rating, two different movies. The only variable: how the number system encodes popularity before training begins.</p>
 
       <div class="distwalk">
 
@@ -1459,16 +1459,16 @@
 
         <p class="distwalk-layer">
           <span class="distwalk-layer-tag">Layer 1 &middot; symmetric base rate</span>
-          Why 4.0, not 3.0? 4.0 lands at 24.4% (Matrix) vs 23.9% (Rumble) &mdash; nearly identical starting weight. 3.0 doesn't: 10.0% vs 32.2% &mdash; a lopsided pivot, not a fair comparison.
+          Why 4.0, not 3.0? 4.0 lands at 24.4% (Matrix) vs 23.9% (Rumble). Nearly identical starting weight. 3.0 doesn't: 10.0% vs 32.2%. A lopsided pivot, not a fair comparison.
         </p>
 
         <div class="distwalk-rows">
-          <p class="distwalk-layer-tag">Layer 2 &middot; reversed relative position &mdash; the real point</p>
+          <p class="distwalk-layer-tag">Layer 2 &middot; reversed relative position. The real point</p>
           <p class="distwalk-row">The Matrix at 4.0: below its mean (4.13). Casual agreement in a crowd of 5-star votes.</p>
           <p class="distwalk-row">Rumble at 4.0: far above its mean (3.12). A strong endorsement from a niche fan.</p>
         </div>
 
-        <p class="distwalk-footnote">Same normalized input (a&nbsp;=&nbsp;0.778) &mdash; opposite meaning inside each distribution. &#8477; can't see that difference; &#120123;'s popularity dimension b is what tears it apart.</p>
+        <p class="distwalk-footnote">Same normalized input (a&nbsp;=&nbsp;0.778). Opposite meaning inside each distribution. &#8477; can't see that difference; &#120123;'s popularity dimension b is what tears it apart.</p>
 
       </div>
 
@@ -1489,7 +1489,7 @@
 
           <div class="probe-info">
             <button type="button" class="probe-info-trigger" aria-describedby="probe-b-tooltip">What is b?<span aria-hidden="true">&nbsp;&#9432;</span></button>
-            <div class="probe-info-tooltip" id="probe-b-tooltip" role="tooltip">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated &mdash; fixed per movie, independent of the rating itself.</div>
+            <div class="probe-info-tooltip" id="probe-b-tooltip" role="tooltip">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated. Fixed per movie, independent of the rating itself.</div>
           </div>
 
           <div class="probe-slider-block">
@@ -1498,7 +1498,7 @@
             <p class="probe-formula">a = (rating &minus; 0.5) / 4.5 = <span id="probe-a-value">0.7778</span></p>
             <div class="probe-info">
               <button type="button" class="probe-info-trigger" aria-describedby="probe-a-tooltip">How &amp; why?<span aria-hidden="true">&nbsp;&#9432;</span></button>
-              <div class="probe-info-tooltip" id="probe-a-tooltip" role="tooltip">MovieLens ratings run 0.5&ndash;5.0; min-max normalizing to (rating&minus;0.5)/4.5 maps that onto [0, 1]. Two reasons: the RBM's visible layer reconstructs through a sigmoid, bounded to (0,1) &mdash; a raw 4.0 would saturate it &mdash; and it puts a on the same scale as b ([&minus;1, +1]) so neither swamps the other in e&#8330;/e&#8331;.</div>
+              <div class="probe-info-tooltip" id="probe-a-tooltip" role="tooltip">MovieLens ratings run 0.5 to 5.0; min-max normalizing to (rating&minus;0.5)/4.5 maps that onto [0, 1]. Two reasons: the RBM's visible layer reconstructs through a sigmoid, bounded to (0,1). A raw 4.0 would saturate it. And it puts a on the same scale as b ([&minus;1, +1]) so neither swamps the other in e&#8330;/e&#8331;.</div>
             </div>
           </div>
 
