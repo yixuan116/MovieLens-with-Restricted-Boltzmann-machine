@@ -1,0 +1,13 @@
+{
+  "start_date": "2026-09-05",
+  "end_date": null,
+  "project_label": "Computational Economics + Machine Learning Research",
+  "repos": [
+    { "path": "..", "name": "RBM MovieLens (Hyperbolic Number Systems)" }
+  ],
+  "claude_projects_dir": "~/.claude/projects",
+  "session_gap_minutes": 90,
+  "min_block_minutes": 20,
+  "round_to_minutes": 15,
+  "git_author_filter": null
+}
