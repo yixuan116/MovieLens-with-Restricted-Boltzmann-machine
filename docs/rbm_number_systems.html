@@ -569,15 +569,6 @@
     gap: 1.3rem;
   }
 
-  .block-heading {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin: 0 0 0.9rem;
-  }
-
   /* compact formula block */
 
   .formula-compact {
@@ -795,7 +786,7 @@
     .sim-channels { grid-template-columns: 1fr; }
   }
 
-  /* evidence cards (Block 3 / Block 4) */
+  /* evidence cards */
 
   .evidence-card {
     border: 1px solid var(--border-strong);
@@ -1158,14 +1149,10 @@
 
     <div class="section-body" id="section-4-body">
 
-      <p class="block-heading">Block 1 &middot; Idempotent decomposition</p>
-
       <div class="formula-compact">
         <p class="formula-line">z = a + bj, j&sup2; = +1&nbsp;&nbsp;&rarr;&nbsp;&nbsp;<span class="e-plus">e&#8330; = (a+b)/2</span>,&nbsp; <span class="e-minus">e&#8331; = (a&minus;b)/2</span></p>
         <p class="formula-sub">Split-complex algebra routes the same rating into a Consensus channel (e&#8330;) and a Divergence channel (e&#8331;). The Matrix (b=+1.0) &rarr; e&#8330;=+0.8889, e&#8331;=&minus;0.1111. Rumble in the Bronx (b=&minus;1.0) &rarr; e&#8330;=&minus;0.1111, e&#8331;=+0.8889 &mdash; same a, opposite channel.</p>
       </div>
-
-      <p class="block-heading">Block 2 &middot; Dual-channel simulator</p>
 
       <div class="simulator">
         <div class="sim-channels">
@@ -1196,8 +1183,6 @@
         <p class="sim-outlier" id="sim-outlier">&#9888; Outlier Alert &mdash; weight norm 29.75 vs median 0.17 &mdash; gradient explosion detected</p>
       </div>
 
-      <p class="block-heading">Block 3 &middot; Evidence Card A &mdash; Popularity Decoupling</p>
-
       <div class="evidence-card">
         <p class="evidence-title">Top-10 movies per hidden unit, by mean popularity</p>
         <img class="evidence-img" src="img/dRBM_popularity_separation.png" alt="D-RBM popularity separation: W-plus vs W-minus bar chart">
@@ -1214,8 +1199,6 @@
           </div>
         </div>
       </div>
-
-      <p class="block-heading">Block 4 &middot; Evidence Card B &mdash; The Phantom Singularity</p>
 
       <div class="evidence-card">
         <p class="evidence-title">PCA of hidden-unit weight vectors, genre-colored</p>
@@ -1238,12 +1221,10 @@
           <div class="compare-col sys-d">
             <p class="compare-col-label">&#120123; Hyperbolic</p>
             <p class="compare-col-body">The pre-cleanup 100% PC1 wall was <b>not</b> a real hyperbolic effect &mdash; it was a gradient-explosion artifact on a handful of movies (weight-row norm 29.75 vs. median 0.17), confirmed by the fact that &#8477; never produces it. Once fixed, the real structure is a healthy 54.3%/52.2% split.</p>
-            <p class="compare-col-tag">The singularity was the bug, not the discovery &mdash; the decoupling in Card A is.</p>
+            <p class="compare-col-tag">The singularity was the bug, not the discovery &mdash; the popularity split above is.</p>
           </div>
         </div>
       </div>
-
-      <p class="block-heading">Block 5 &middot; Scorecard</p>
 
       <div>
         <div class="scorecard-row">
