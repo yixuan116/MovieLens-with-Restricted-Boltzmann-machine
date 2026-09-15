@@ -557,6 +557,211 @@
     color: var(--border-strong);
   }
 
+
+  /* ---------- section 4 ---------- */
+
+  .section-4 {
+    margin-top: 2.6rem;
+    padding-top: 2.2rem;
+    border-top: 1px solid var(--border-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .block-heading {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.9rem;
+  }
+
+  /* decomposition flow diagram */
+
+  .decomp-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 0;
+  }
+
+  .flow-box {
+    border: 1px solid var(--border-strong);
+    background: var(--surface, var(--bg));
+    padding: 0.9rem 1.1rem;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.5;
+    min-width: 9rem;
+  }
+
+  .flow-box .flow-label {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.3rem;
+  }
+
+  .flow-box .flow-sub {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--ink-faint);
+    margin-top: 0.3rem;
+  }
+
+  .flow-arrow {
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    color: var(--ink-faint);
+  }
+
+  .flow-split {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .flow-box.channel-plus {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .flow-box.channel-plus .flow-sub { color: var(--accent); opacity: 0.8; }
+
+  .flow-box.channel-minus {
+    border-color: #d98a3d;
+    color: #d98a3d;
+  }
+  .flow-box.channel-minus .flow-sub { color: #d98a3d; opacity: 0.8; }
+
+  /* encoding example table */
+
+  .encode-table-wrap {
+    max-width: 620px;
+    margin: 0.4rem auto 0;
+    overflow-x: auto;
+  }
+
+  table.encode-example {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  table.encode-example th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid var(--border-strong);
+  }
+
+  table.encode-example td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-soft);
+    font-family: var(--mono);
+  }
+
+  table.encode-example td:first-child {
+    font-family: var(--sans);
+    color: var(--ink);
+  }
+
+  /* two-column blocks */
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .col-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .col-block img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--border-strong);
+  }
+
+  .col-caption {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--ink-faint);
+    text-align: center;
+    margin: 0;
+  }
+
+  .col-caption strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* scorecard */
+
+  .scorecard-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .scorecard-card {
+    border: 1px solid var(--border-strong);
+    padding: 1.2rem 1.8rem;
+    text-align: center;
+    min-width: 14rem;
+  }
+
+  .scorecard-card.highlight {
+    border-color: var(--accent);
+    background: var(--sys-r-soft);
+  }
+
+  .scorecard-label {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-faint);
+    margin: 0 0 0.5rem;
+  }
+
+  .scorecard-numbers {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--ink);
+  }
+
+  @media (max-width: 700px) {
+    .two-col { grid-template-columns: 1fr; }
+    .decomp-flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+
 </style>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 </head>
@@ -826,6 +1031,104 @@
           <span class="stat-value">0/1000</span>
           <span class="stat-label">leakage</span>
         </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="section-4" id="section-4">
+
+    <div class="section-head-2">
+      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Hyperbolic Number RBM &mdash; Latent Feature Discovery</h2>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-4-body" aria-label="Collapse section 4">&#8964;</button>
+    </div>
+
+    <div class="section-body" id="section-4-body">
+
+      <div>
+        <p class="block-heading">Idempotent decomposition</p>
+
+        <div class="decomp-flow">
+          <div class="flow-box">
+            <span class="flow-label">input</span>
+            rating = 4.0<br>+ popularity rank
+          </div>
+          <span class="flow-arrow">&rarr;</span>
+          <div class="flow-box">
+            z = a + bj
+            <span class="flow-sub">j&sup2; = +1</span>
+          </div>
+          <span class="flow-arrow">&rarr;</span>
+          <div class="flow-split">
+            <div class="flow-box channel-plus">
+              e&#8330; = (a+b)/2
+              <span class="flow-sub">Consensus channel</span>
+            </div>
+            <div class="flow-box channel-minus">
+              e&#8331; = (a&minus;b)/2
+              <span class="flow-sub">Divergence channel</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="split-statement">Same rating, different encoding. A 4-star blockbuster and a 4-star cult classic land in opposite channels.</p>
+
+        <div class="encode-table-wrap">
+          <table class="encode-example">
+            <thead>
+              <tr><th>Movie</th><th>Popularity</th><th>e&#8330;</th><th>e&#8331;</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>The Matrix (1999) &mdash; blockbuster</td><td>977 ratings</td><td>+0.8889</td><td>&minus;0.1111</td></tr>
+              <tr><td>Rumble in the Bronx (1995) &mdash; cult</td><td>426 ratings</td><td>&minus;0.1111</td><td>+0.8889</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="col-block">
+          <p class="block-heading">Popularity separation</p>
+          <img src="img/dRBM_popularity_separation.png" alt="Popularity separation: W_plus vs W_minus mean top-10 popularity per hidden unit" loading="lazy">
+          <p class="col-caption">128/128 units verified. W&#8330; mean=909.7, W&#8331; mean=449.3</p>
+        </div>
+        <div class="col-block">
+          <p class="block-heading">What each channel learned</p>
+          <img src="img/dRBM_hidden_unit_top_movies.png" alt="Top-10 movies for the 3 most genre-concentrated hidden units, each channel" loading="lazy">
+          <p class="col-caption">W&#8330; = <strong>Blockbusters</strong> &middot; W&#8331; = <strong>Deep cuts</strong></p>
+        </div>
+      </div>
+
+      <div>
+        <p class="block-heading">The phantom singularity &amp; outlier detection</p>
+        <div class="two-col">
+          <div class="col-block">
+            <img src="img/dRBM_pca_genre_scatter.png" alt="PCA before outlier correction, PC1 near 100 percent of variance" loading="lazy">
+            <p class="col-caption">Before: 100% PC1 &mdash; too good to be true?</p>
+          </div>
+          <div class="col-block">
+            <img src="img/dRBM_pca_genre_scatter_normalized.png" alt="PCA after row-normalization, healthy multi-dimensional spread" loading="lazy">
+            <p class="col-caption">After: healthy multi-dimensional structure</p>
+          </div>
+        </div>
+        <p class="split-statement" style="font-size: 1rem; max-width: 68ch;">Initial PCA showed 100.0% variance on PC1, suggesting a unique Minkowski metric collapse. Ablation against the &#8477; baseline disproved this: the collapse was caused by gradient explosions on a handful of movies (e.g. Speed 2: Cruise Control, weight norm 29.75 vs. a median of 0.17). After row-normalizing, the hyperbolic latent space shows a genuine multi-dimensional taste profile.</p>
+      </div>
+
+      <div>
+        <p class="block-heading">Prediction scorecard</p>
+        <div class="scorecard-row">
+          <div class="scorecard-card">
+            <p class="scorecard-label">&#8477; Real Baseline</p>
+            <p class="scorecard-numbers"><span>RMSE 0.8431</span><span>MAE 0.6481</span></p>
+          </div>
+          <div class="scorecard-card highlight">
+            <p class="scorecard-label">&#120123; Hyperbolic</p>
+            <p class="scorecard-numbers"><span>RMSE 0.9523</span><span>MAE 0.7187</span></p>
+          </div>
+        </div>
+        <p class="split-statement" style="font-size: 1rem; max-width: 60ch;">&#120123; trades raw accuracy for structural insight. The dual-channel decomposition reveals popularity hierarchies invisible to flat &#8477; geometry.</p>
       </div>
 
     </div>
