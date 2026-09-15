@@ -379,8 +379,8 @@
     top: 100%;
     left: 0;
     margin-top: 0.5rem;
-    width: 19rem;
-    max-width: 70vw;
+    width: 21rem;
+    max-width: 75vw;
     background: var(--ink);
     color: var(--bg);
     font-size: 0.76rem;
@@ -1284,7 +1284,7 @@
             <p class="probe-formula">a = (rating &minus; 0.5) / 4.5 = <span id="probe-a-value">0.7778</span></p>
             <div class="probe-info">
               <button type="button" class="probe-info-trigger" aria-describedby="probe-a-tooltip">How &amp; why?<span aria-hidden="true">&nbsp;&#9432;</span></button>
-              <div class="probe-info-tooltip" id="probe-a-tooltip" role="tooltip">MovieLens ratings run 0.5&ndash;5.0. Min-max normalizing to (rating&minus;0.5)/4.5 maps that onto [0, 1] &mdash; the same scale b already lives on ([&minus;1, +1]). Without this step, a's raw magnitude would swamp b when they're combined in e&#8330;/e&#8331;.</div>
+              <div class="probe-info-tooltip" id="probe-a-tooltip" role="tooltip">MovieLens ratings run 0.5&ndash;5.0; min-max normalizing to (rating&minus;0.5)/4.5 maps that onto [0, 1]. Two reasons: the RBM's visible layer reconstructs through a sigmoid, bounded to (0,1) &mdash; a raw 4.0 would saturate it &mdash; and it puts a on the same scale as b ([&minus;1, +1]) so neither swamps the other in e&#8330;/e&#8331;.</div>
             </div>
           </div>
 
