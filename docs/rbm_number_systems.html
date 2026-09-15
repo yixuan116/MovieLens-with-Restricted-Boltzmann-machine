@@ -354,13 +354,13 @@
     color: var(--ink-faint);
   }
 
-  .probe-b-info {
+  .probe-info {
     position: relative;
     display: inline-block;
     align-self: flex-start;
   }
 
-  .probe-b-trigger {
+  .probe-info-trigger {
     font-family: var(--mono);
     font-size: 0.72rem;
     color: var(--ink-faint);
@@ -370,11 +370,11 @@
     cursor: help;
     transition: color 0.15s ease, border-color 0.15s ease;
   }
-  .probe-b-trigger:hover,
-  .probe-b-trigger:focus-visible { color: var(--accent); border-color: var(--accent); }
-  .probe-b-trigger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .probe-info-trigger:hover,
+  .probe-info-trigger:focus-visible { color: var(--accent); border-color: var(--accent); }
+  .probe-info-trigger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  .probe-b-tooltip {
+  .probe-info-tooltip {
     position: absolute;
     top: 100%;
     left: 0;
@@ -392,15 +392,15 @@
     transition: opacity 0.15s ease, transform 0.15s ease;
     z-index: 6;
   }
-  .probe-b-info:hover .probe-b-tooltip,
-  .probe-b-info:focus-within .probe-b-tooltip {
+  .probe-info:hover .probe-info-tooltip,
+  .probe-info:focus-within .probe-info-tooltip {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .probe-b-tooltip { transition: opacity 0.15s ease; transform: none; }
+    .probe-info-tooltip { transition: opacity 0.15s ease; transform: none; }
   }
 
   .probe-slider-block {
@@ -429,6 +429,7 @@
     margin: 0.6rem 0 0;
   }
   .probe-formula span { color: var(--ink-soft); font-weight: 600; }
+  .probe-formula + .probe-info { margin-top: 0.6rem; }
 
   .probe-viz {
     display: flex;
@@ -1272,15 +1273,19 @@
             </button>
           </div>
 
-          <div class="probe-b-info">
-            <button type="button" class="probe-b-trigger" aria-describedby="probe-b-tooltip">What is b?<span aria-hidden="true">&nbsp;&#9432;</span></button>
-            <div class="probe-b-tooltip" id="probe-b-tooltip" role="tooltip">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated &mdash; fixed per movie, independent of the rating itself.</div>
+          <div class="probe-info">
+            <button type="button" class="probe-info-trigger" aria-describedby="probe-b-tooltip">What is b?<span aria-hidden="true">&nbsp;&#9432;</span></button>
+            <div class="probe-info-tooltip" id="probe-b-tooltip" role="tooltip">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated &mdash; fixed per movie, independent of the rating itself.</div>
           </div>
 
           <div class="probe-slider-block">
             <label class="probe-slider-label" for="probe-rating-slider">Rating: <span id="probe-rating-value">4.0</span></label>
             <input type="range" id="probe-rating-slider" min="0.5" max="5.0" step="0.5" value="4.0">
             <p class="probe-formula">a = (rating &minus; 0.5) / 4.5 = <span id="probe-a-value">0.7778</span></p>
+            <div class="probe-info">
+              <button type="button" class="probe-info-trigger" aria-describedby="probe-a-tooltip">How &amp; why?<span aria-hidden="true">&nbsp;&#9432;</span></button>
+              <div class="probe-info-tooltip" id="probe-a-tooltip" role="tooltip">MovieLens ratings run 0.5&ndash;5.0. Min-max normalizing to (rating&minus;0.5)/4.5 maps that onto [0, 1] &mdash; the same scale b already lives on ([&minus;1, +1]). Without this step, a's raw magnitude would swamp b when they're combined in e&#8330;/e&#8331;.</div>
+            </div>
           </div>
 
         </div>
