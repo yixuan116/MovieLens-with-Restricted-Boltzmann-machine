@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Research Timesheet</title><style>
+:root {
+  --ink: #16181c; --ink-soft: #4b4f57; --ink-faint: #7c8087;
+  --border: #d8d4c8; --bg: #fbfaf7; --accent: #33506c; --stripe: #f2f0ea;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: "Georgia", "Times New Roman", serif;
+  background: var(--bg); color: var(--ink);
+  max-width: 920px; margin: 0 auto; padding: 2.2rem 1.6rem 4rem;
+  line-height: 1.45;
+}
+h1 { font-size: 1.4rem; margin: 0 0 0.2rem; }
+.subtitle { color: var(--ink-soft); font-size: 0.92rem; margin: 0 0 1.2rem; }
+.method {
+  font-size: 0.78rem; color: var(--ink-faint); border: 1px solid var(--border);
+  padding: 0.7rem 0.9rem; margin-bottom: 1.6rem; background: #fff;
+}
+.week-heading {
+  font-size: 0.95rem; font-weight: bold; margin: 1.8rem 0 0.4rem;
+  border-bottom: 2px solid var(--ink); padding-bottom: 0.2rem;
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 0.3rem; }
+th, td { border: 1px solid var(--border); padding: 0.35rem 0.5rem; text-align: left; vertical-align: top; }
+th { background: var(--stripe); font-weight: bold; }
+tr:nth-child(even) td { background: #fdfdfb; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+tr.subtotal td { font-weight: bold; background: var(--stripe); }
+.evidence { font-family: "Courier New", monospace; font-size: 0.74rem; color: var(--ink-soft); }
+.signature-block {
+  margin: 2rem 0 1rem; padding-top: 1rem; border-top: 1px dashed var(--border);
+  display: flex; gap: 3rem; font-size: 0.85rem;
+}
+.sig-line { flex: 1; }
+.sig-rule { border-bottom: 1px solid var(--ink); height: 1.6rem; margin-bottom: 0.2rem; }
+.grand-total { margin-top: 2rem; font-size: 0.95rem; font-weight: bold; }
+@media print {
+  body { padding: 0; }
+  .week-heading { break-before: auto; }
+  table { break-inside: avoid; }
+}
+</style></head><body><h1>Research Activity Timesheet</h1><p class="subtitle">Computational Economics + Machine Learning Research &middot; 2026-09-05 to 2026-09-15 &middot; generated 2026-09-15 16:56</p><p class="method">Method: each row is a real working session reconstructed from git commit timestamps and Claude Code session activity in the matching repository's working directory. Consecutive activity within the configured session-gap window is merged into one session; a session's Hours is (last activity &minus; first activity) in that session, floored at the configured minimum block and rounded to the nearest quarter hour. Every row cites at least one git commit hash as evidence. Hours are computed from real commit and session timestamps (see method note above); they are not normalized to any fixed weekly target.</p><div class="week-heading">Week of 2026-09-07 to 2026-09-13</div><table><tr><th>Date</th><th>Time Block</th><th class="num">Hours</th><th>Project</th><th>Task Description</th><th>Evidence (commit)</th></tr><tr><td>Tue 2026-09-08</td><td>14:53&ndash;14:53</td><td class="num">0.25</td><td>RBM MovieLens (Hyperbolic Number Systems)</td><td>Add delta-E quadrant diagnostic (notebooks 23-24, selective-update script)</td><td class="evidence">099b03b</td></tr><tr><td>Sat 2026-09-12</td><td>13:32&ndash;13:49</td><td class="num">0.25</td><td>RBM MovieLens (Hyperbolic Number Systems)</td><td>Fix delta-E unit mismatch with per-quadrant calibration; add 4-Number-System RBM data prep</td><td class="evidence">f529003</td></tr><tr><td>Sat 2026-09-12</td><td>21:25&ndash;21:32</td><td class="num">0.25</td><td>RBM MovieLens (Hyperbolic Number Systems)</td><td>Add genre-hierarchy and user-timespan charts to notebook 25</td><td class="evidence">b23f324</td></tr><tr class="subtotal"><td colspan="2">Weekly subtotal</td><td class="num">0.75</td><td colspan="3"></td></tr></table><div class="week-heading">Week of 2026-09-14 to 2026-09-20</div><table><tr><th>Date</th><th>Time Block</th><th class="num">Hours</th><th>Project</th><th>Task Description</th><th>Evidence (commit)</th></tr><tr><td>Mon 2026-09-14</td><td>10:44&ndash;13:22</td><td class="num">2.75</td><td>RBM MovieLens (Hyperbolic Number Systems)</td><td>Add 4-Number-System RBM research overview page for GitHub Pages; Fix header spacing and hyperbolic symbol on number-systems page; Rephrase three card questions to be presupposition-free; Add Section 2: scroll-triggered data-funnel animation; Embed existing notebook charts into Section 2&#x27;s narrative; Rework Section 2 chart layout: heatmap full-width, then two 2-column rows; Replace Section 2&#x27;s static PNGs with interactive Plotly charts; Add collapse/expand toggle to each section; Redesign Section 1 cards: SVG visual front, hover callout for text; Add Section 3: Chronological Train/Test Split; Trim &quot;No future leakage.&quot; from Section 3&#x27;s lead statement</td><td class="evidence">376cb6f, b26c6a3, c5ed18e, ca3f0f1, 9a07eb5, 73aa902, d81b6cf, 3db53ad, 84b17f1, f3269d8, 3579e29</td></tr><tr><td>Mon 2026-09-14</td><td>21:35&ndash;22:20</td><td class="num">0.75</td><td>RBM MovieLens (Hyperbolic Number Systems)</td><td>Add Section 4: D-RBM latent feature discovery, plus notebooks 26-27; Rebuild Section 4 as an interactive dual-channel simulator; Rewrite Section 4 into 5-block evidence layout with verified numbers; Make Section 4 Block 2 fully dynamic: flight animation + outlier alert</td><td class="evidence">4710cff, ef9cb2b, 7d932d4, 8851e8f</td></tr><tr><td>Tue 2026-09-15</td><td>11:53&ndash;13:36</td><td class="num">1.75</td><td>RBM MovieLens (Hyperbolic Number Systems)</td><td>Remove Block N labels from Section 4, let content flow narratively; Add Section 01b: input representation probe (R vs D encoding); Explain b in Section 01b: popularity rank mapped to [-1,1]; Turn b explanation in Section 01b into a hover callout; Add hover callout explaining the a formula (how + why) in Section 01b; Add sigmoid-saturation reason to a&#x27;s callout in Section 01b; Add Distribution Walk block to Section 01b; Revise Distribution Walk block: color-coded 4.0 bars, dashed connector; Restore mode-bar highlight and add two-layer logic to Distribution Walk; Section 01b: new subtitle, strip em/en dashes, distinct Rumble orange</td><td class="evidence">ca10152, c3e239d, 2d9ab0d, 9378c43, 131f491, 29dc5a5, eaaad25, c956886, c5a372a, 40e205a</td></tr><tr><td>Tue 2026-09-15</td><td>16:12&ndash;16:56</td><td class="num">0.75</td><td>RBM MovieLens (Hyperbolic Number Systems)</td><td>Clarify b (count, not average) and a (per-rating, not distribution) in Section 01b; Replace Distribution Walk caption with a minimal icon diagram; Move Distribution Walk diagram explanation into a hover callout; Add Phase 4 Step 5: sanity-check rank-1000 against full-dataset popularity; Add rank-vs-full-dataset sanity check chart to Section 01b; Add research timesheet generator</td><td class="evidence">2757901, dffd1e6, e2bdd1b, 263c7d6, 160c25f, 4826f2c</td></tr><tr class="subtotal"><td colspan="2">Weekly subtotal</td><td class="num">6.00</td><td colspan="3"></td></tr></table><div class="signature-block"><div class="sig-line"><div class="sig-rule"></div>Researcher signature &mdash; September 2026</div><div class="sig-line"><div class="sig-rule"></div>Date</div></div><p class="grand-total">Total hours, 2026-09-05 to 2026-09-15: 6.75</p></body></html>
