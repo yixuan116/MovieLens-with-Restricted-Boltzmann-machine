@@ -774,6 +774,84 @@
     .sim-channels { grid-template-columns: 1fr; }
   }
 
+  /* evidence cards (Block 3 / Block 4) */
+
+  .evidence-card {
+    border: 1px solid var(--border-strong);
+    padding: 1.3rem 1.4rem 1.5rem;
+  }
+
+  .evidence-card + .evidence-card { margin-top: 1.3rem; }
+
+  .evidence-title {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-faint);
+    margin: 0 0 0.9rem;
+    text-align: center;
+  }
+
+  .evidence-img { width: 100%; height: auto; display: block; border: 1px solid var(--border); }
+
+  .evidence-img-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+  }
+
+  .evidence-img-pair figure { margin: 0; }
+  .evidence-img-pair figcaption {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    margin-top: 0.35rem;
+  }
+
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+    margin-top: 1.1rem;
+  }
+
+  .compare-col {
+    border-top: 2px solid var(--border-strong);
+    padding-top: 0.8rem;
+  }
+
+  .compare-col.sys-r { border-top-color: var(--sys-r); }
+  .compare-col.sys-d { border-top-color: var(--sys-d); }
+
+  .compare-col-label {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+  }
+  .compare-col.sys-r .compare-col-label { color: var(--sys-r); }
+  .compare-col.sys-d .compare-col-label { color: var(--sys-d); }
+
+  .compare-col-body {
+    font-size: 0.83rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0 0 0.5rem;
+  }
+
+  .compare-col-tag {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  @media (max-width: 700px) {
+    .evidence-img-pair, .compare-row { grid-template-columns: 1fr; }
+  }
+
 </style>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 </head>
@@ -1059,10 +1137,14 @@
 
     <div class="section-body" id="section-4-body">
 
+      <p class="block-heading">Block 1 &middot; Idempotent decomposition</p>
+
       <div class="formula-compact">
         <p class="formula-line">z = a + bj, j&sup2; = +1&nbsp;&nbsp;&rarr;&nbsp;&nbsp;<span class="e-plus">e&#8330; = (a+b)/2</span>,&nbsp; <span class="e-minus">e&#8331; = (a&minus;b)/2</span></p>
-        <p class="formula-sub">Split-complex algebra routes the same rating into a Consensus channel (e&#8330;) and a Divergence channel (e&#8331;).</p>
+        <p class="formula-sub">Split-complex algebra routes the same rating into a Consensus channel (e&#8330;) and a Divergence channel (e&#8331;). The Matrix (b=+1.0) &rarr; e&#8330;=+0.8889, e&#8331;=&minus;0.1111. Rumble in the Bronx (b=&minus;1.0) &rarr; e&#8330;=&minus;0.1111, e&#8331;=+0.8889 &mdash; same a, opposite channel.</p>
       </div>
+
+      <p class="block-heading">Block 2 &middot; Dual-channel simulator</p>
 
       <div class="simulator">
         <div class="sim-channels">
@@ -1092,7 +1174,54 @@
         <p class="sim-outlier" id="sim-outlier">&#9888; Outlier &mdash; weight norm 29.75 vs. median 0.17. This movie broke our initial PCA.</p>
       </div>
 
-      <p class="case-notes">Initial PCA showed 100% PC1 &mdash; seemingly a Minkowski metric singularity. Cross-check against &#8477; baseline exposed the truth: gradient explosion on a handful of movies. After cleanup, the dual-channel popularity separation (128/128 units, W&#8330;=909.7 vs W&#8331;=449.3) remains the genuine structural discovery.</p>
+      <p class="block-heading">Block 3 &middot; Evidence Card A &mdash; Popularity Decoupling</p>
+
+      <div class="evidence-card">
+        <p class="evidence-title">Top-10 movies per hidden unit, by mean popularity</p>
+        <img class="evidence-img" src="img/dRBM_popularity_separation.png" alt="D-RBM popularity separation: W-plus vs W-minus bar chart">
+        <div class="compare-row">
+          <div class="compare-col sys-r">
+            <p class="compare-col-label">&#8477; Real</p>
+            <p class="compare-col-body">All 128 units hover around <b>mean 728.1</b> (std 58.2, CV 0.08) &mdash; a single undifferentiated band, barely above the dataset-wide baseline of 615.5.</p>
+            <p class="compare-col-tag">&#8477; sees genre, blind to popularity hierarchy.</p>
+          </div>
+          <div class="compare-col sys-d">
+            <p class="compare-col-label">&#120123; Hyperbolic</p>
+            <p class="compare-col-body">128/128 units split cleanly: <b>W&#8330;=909.7</b> (consensus, mainstream-heavy) vs <b>W&#8331;=449.3</b> (divergence, long-tail) &mdash; CV &#8776; 0.02, an order of magnitude tighter than &#8477;'s bands.</p>
+            <p class="compare-col-tag">&#120123; decouples mainstream gravity from long-tail signal.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="block-heading">Block 4 &middot; Evidence Card B &mdash; The Phantom Singularity</p>
+
+      <div class="evidence-card">
+        <p class="evidence-title">PCA of hidden-unit weight vectors, genre-colored</p>
+        <div class="evidence-img-pair">
+          <figure>
+            <img class="evidence-img" src="img/dRBM_pca_genre_scatter.png" alt="D-RBM PCA before outlier cleanup, PC1 near 100 percent">
+            <figcaption>Before: PC1 &#8776; 100% (outlier-driven wall)</figcaption>
+          </figure>
+          <figure>
+            <img class="evidence-img" src="img/dRBM_pca_genre_scatter_normalized.png" alt="D-RBM PCA after row-normalization, healthy spread">
+            <figcaption>After: row-normalized &rarr; PC1=54.3% (W&#8330;) / 52.2% (W&#8331;)</figcaption>
+          </figure>
+        </div>
+        <div class="compare-row">
+          <div class="compare-col sys-r">
+            <p class="compare-col-label">&#8477; Real</p>
+            <p class="compare-col-body">PC1=39.8%, PC2=23.0% &mdash; a normal, healthy spread. Speed 2: Cruise Control sits at the <b>72.7th percentile</b> of distance-from-centroid: mildly elevated, not exposed.</p>
+            <p class="compare-col-tag">&#8477; geometry never forces the anomaly into view.</p>
+          </div>
+          <div class="compare-col sys-d">
+            <p class="compare-col-label">&#120123; Hyperbolic</p>
+            <p class="compare-col-body">The pre-cleanup 100% PC1 wall was <b>not</b> a real hyperbolic effect &mdash; it was a gradient-explosion artifact on a handful of movies (weight-row norm 29.75 vs. median 0.17), confirmed by the fact that &#8477; never produces it. Once fixed, the real structure is a healthy 54.3%/52.2% split.</p>
+            <p class="compare-col-tag">The singularity was the bug, not the discovery &mdash; the decoupling in Card A is.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="block-heading">Block 5 &middot; Scorecard</p>
 
       <div>
         <div class="scorecard-row">
@@ -1105,7 +1234,7 @@
             <p class="scorecard-numbers"><span>RMSE 0.9523</span><span>MAE 0.7187</span></p>
           </div>
         </div>
-        <p class="case-notes">&#120123; trades raw accuracy for structural decomposition invisible to flat &#8477;.</p>
+        <p class="case-notes">&#8477; wins on raw RMSE. &#120123; wins on structural insight: popularity decoupling + anomaly detection &mdash; both invisible to flat Euclidean geometry.</p>
       </div>
 
     </div>
