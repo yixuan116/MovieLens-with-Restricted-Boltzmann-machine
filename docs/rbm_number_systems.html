@@ -481,6 +481,37 @@
     margin: 0;
   }
 
+  .rankcheck {
+    border: 1px solid var(--border);
+    padding: 1rem 1.2rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .rankcheck-title {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .rankcheck-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--border);
+  }
+
+  .rankcheck-caption {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--ink-faint);
+    max-width: 78ch;
+    margin: 0;
+  }
+
   @media (max-width: 640px) {
     .distwalk-charts { flex-direction: column; }
     .distwalk-connector { flex-direction: row; width: auto; padding-top: 0.2rem; }
@@ -1559,6 +1590,12 @@
 
         <p class="distwalk-footnote">Same normalized input (a&nbsp;=&nbsp;0.778). Opposite meaning inside each distribution. &#8477; can't see that difference; &#120123;'s popularity dimension b is what tears it apart.</p>
 
+      </div>
+
+      <div class="rankcheck">
+        <p class="rankcheck-title">Is rank 1000 actually niche?</p>
+        <img class="rankcheck-img" src="img/rank_vs_full_dataset.png" alt="Left: rank 1 to 1000 distribution within the dense subset. Right: both movies' popularity rank in the full MovieLens 20M dataset, both in the top 1.4 percent.">
+        <p class="rankcheck-caption">b's rank is computed only within these 1000 pre-selected movies. Put back in the full 20M-rating dataset, Rumble in the Bronx is rank 371 of 26,744 (top 1.39%). Mainstream, not long-tail.</p>
       </div>
 
       <div class="probe-layout">
