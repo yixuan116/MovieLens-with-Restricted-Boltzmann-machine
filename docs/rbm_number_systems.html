@@ -635,16 +635,20 @@
   .sim-channel.minus .sim-channel-name { color: #d98a3d; }
   .sim-channel.plus .sim-channel-name { color: var(--accent); }
 
-  .sim-track {
+  .sim-channel { transition: background 0.2s ease; }
+  .sim-channel.flash-minus { background: #f7e3dc; }
+  .sim-channel.flash-plus { background: var(--sys-r-soft); }
+
+  .sim-stage {
     position: relative;
-    height: 2.6rem;
+    height: 8.5rem;
     background: linear-gradient(to right, #f8f1e3, #eef2f5);
     border: 1px solid var(--border);
     margin-bottom: 1.1rem;
+    overflow: hidden;
   }
 
-  .sim-track::before {
-    content: "";
+  .stage-midline {
     position: absolute;
     left: 50%;
     top: 0;
@@ -653,9 +657,9 @@
     background: var(--border-strong);
   }
 
-  .sim-chip {
+  .sim-dot {
     position: absolute;
-    top: 50%;
+    top: 62%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--ink);
@@ -664,8 +668,25 @@
     font-size: 0.76rem;
     padding: 0.35rem 0.7rem;
     white-space: nowrap;
-    transition: left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 2;
+    border-radius: 999px;
+  }
+
+  .sim-dot.landed-plus { background: var(--accent); }
+  .sim-dot.landed-minus { background: #d98a3d; }
+
+  .sim-dot.outlier-pulse {
+    background: #b4654a;
+    animation: sim-pulse 0.35s ease-in-out infinite alternate;
+  }
+
+  @keyframes sim-pulse {
+    from { box-shadow: 0 0 0 0 rgba(180, 101, 74, 0.55); }
+    to { box-shadow: 0 0 0 0.6rem rgba(180, 101, 74, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sim-dot.outlier-pulse { animation: none; }
   }
 
   .sim-buttons {
@@ -1148,18 +1169,19 @@
 
       <div class="simulator">
         <div class="sim-channels">
-          <div class="sim-channel minus">
+          <div class="sim-channel minus" id="zone-minus">
             <p class="sim-channel-name">e&#8331; Divergence</p>
             <p class="sim-channel-pop">Mean Popularity 449.3</p>
           </div>
-          <div class="sim-channel plus">
+          <div class="sim-channel plus" id="zone-plus">
             <p class="sim-channel-name">e&#8330; Consensus</p>
             <p class="sim-channel-pop">Mean Popularity 909.7</p>
           </div>
         </div>
 
-        <div class="sim-track">
-          <div class="sim-chip" id="sim-chip">click a movie</div>
+        <div class="sim-stage" id="sim-stage">
+          <div class="stage-midline"></div>
+          <div class="sim-dot" id="sim-dot">click a movie</div>
         </div>
 
         <div class="sim-buttons" id="sim-buttons">
@@ -1171,7 +1193,7 @@
         </div>
 
         <p class="sim-readout" id="sim-readout">a = &mdash; &nbsp; b = &mdash; &nbsp; e&#8330; = &mdash; &nbsp; e&#8331; = &mdash;</p>
-        <p class="sim-outlier" id="sim-outlier">&#9888; Outlier &mdash; weight norm 29.75 vs. median 0.17. This movie broke our initial PCA.</p>
+        <p class="sim-outlier" id="sim-outlier">&#9888; Outlier Alert &mdash; weight norm 29.75 vs median 0.17 &mdash; gradient explosion detected</p>
       </div>
 
       <p class="block-heading">Block 3 &middot; Evidence Card A &mdash; Popularity Decoupling</p>
@@ -1203,8 +1225,8 @@
             <figcaption>Before: PC1 &#8776; 100% (outlier-driven wall)</figcaption>
           </figure>
           <figure>
-            <img class="evidence-img" src="img/dRBM_pca_genre_scatter_normalized.png" alt="D-RBM PCA after row-normalization, healthy spread">
-            <figcaption>After: row-normalized &rarr; PC1=54.3% (W&#8330;) / 52.2% (W&#8331;)</figcaption>
+            <img class="evidence-img" id="pca-after-img" src="img/dRBM_pca_genre_scatter_normalized.png" data-after-src="img/dRBM_pca_genre_scatter_normalized.png" data-before-src="img/dRBM_pca_genre_scatter.png" alt="D-RBM PCA after row-normalization, healthy spread">
+            <figcaption id="pca-after-caption">After: row-normalized &rarr; PC1=54.3% (W&#8330;) / 52.2% (W&#8331;)</figcaption>
           </figure>
         </div>
         <div class="compare-row">
@@ -1595,28 +1617,104 @@ var TIMELINE_DATA = {"users":[{"userId":78740,"train_dates":["2006-12-28","2006-
     return sign + x.toFixed(4);
   }
 
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var flightRAF = null;
+  var revertPcaTimer = null;
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function flyDot(dot, stage, targetSide, onDone) {
+    var stageRect = stage.getBoundingClientRect();
+    var startX = stageRect.width * 0.5;
+    var startY = stageRect.height * 0.62;
+    var endX = stageRect.width * (targetSide === "plus" ? 0.84 : 0.16);
+    var endY = stageRect.height * 0.62;
+    var ctrlX = stageRect.width * (targetSide === "plus" ? 0.67 : 0.33);
+    var ctrlY = stageRect.height * 0.12;
+
+    if (flightRAF) cancelAnimationFrame(flightRAF);
+
+    if (reduceMotion) {
+      dot.style.left = endX + "px";
+      dot.style.top = endY + "px";
+      onDone();
+      return;
+    }
+
+    var duration = 650;
+    var t0 = null;
+
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var t = Math.min(1, (ts - t0) / duration);
+      var e = easeOutCubic(t);
+      var x = (1 - e) * (1 - e) * startX + 2 * (1 - e) * e * ctrlX + e * e * endX;
+      var y = (1 - e) * (1 - e) * startY + 2 * (1 - e) * e * ctrlY + e * e * endY;
+      dot.style.left = x + "px";
+      dot.style.top = y + "px";
+      if (t < 1) {
+        flightRAF = requestAnimationFrame(step);
+      } else {
+        onDone();
+      }
+    }
+    flightRAF = requestAnimationFrame(step);
+  }
+
+  function flashZone(side) {
+    var zone = document.getElementById(side === "plus" ? "zone-plus" : "zone-minus");
+    var cls = side === "plus" ? "flash-plus" : "flash-minus";
+    zone.classList.add(cls);
+    setTimeout(function () { zone.classList.remove(cls); }, 500);
+  }
+
   function selectMovie(key) {
     var m = MOVIES[key];
     if (!m) return;
 
-    var chip = document.getElementById("sim-chip");
+    var dot = document.getElementById("sim-dot");
+    var stage = document.getElementById("sim-stage");
     var readout = document.getElementById("sim-readout");
     var outlier = document.getElementById("sim-outlier");
     var buttons = document.querySelectorAll("#sim-buttons .sim-btn");
+    var pcaImg = document.getElementById("pca-after-img");
+    var pcaCaption = document.getElementById("pca-after-caption");
 
     buttons.forEach(function (btn) {
       btn.classList.toggle("active", btn.getAttribute("data-movie") === key);
     });
 
-    var posPct = (m.b + 1) / 2 * 100;
-    chip.style.left = posPct + "%";
-    chip.textContent = m.name;
+    dot.classList.remove("landed-plus", "landed-minus", "outlier-pulse");
+    dot.style.left = "50%";
+    dot.style.top = "62%";
+    dot.textContent = "…";
+    outlier.classList.remove("visible");
+    if (revertPcaTimer) { clearTimeout(revertPcaTimer); revertPcaTimer = null; }
+    pcaImg.src = pcaImg.getAttribute("data-after-src");
+    pcaCaption.textContent = "After: row-normalized → PC1=54.3% (W₊) / 52.2% (W₋)";
 
-    readout.innerHTML = "a = <b>" + m.a.toFixed(4) + "</b> &nbsp; b = <b>" + fmt(m.b) +
-      "</b> &nbsp; e&#8330; = <b class=\"ep-val\">" + fmt(m.ep) +
-      "</b> &nbsp; e&#8331; = <b class=\"em-val\">" + fmt(m.em) + "</b> &nbsp; (popularity " + m.pop + ")";
+    var targetSide = m.ep > m.em ? "plus" : "minus";
 
-    outlier.classList.toggle("visible", !!m.outlier);
+    flyDot(dot, stage, targetSide, function () {
+      dot.classList.add(targetSide === "plus" ? "landed-plus" : "landed-minus");
+      dot.textContent = m.name;
+      flashZone(targetSide);
+
+      readout.innerHTML = "a = <b>" + m.a.toFixed(4) + "</b> &nbsp; b = <b>" + fmt(m.b) +
+        "</b> &nbsp; e&#8330; = <b class=\"ep-val\">" + fmt(m.ep) +
+        "</b> &nbsp; e&#8331; = <b class=\"em-val\">" + fmt(m.em) + "</b> &nbsp; (popularity " + m.pop + ")";
+
+      if (m.outlier) {
+        dot.classList.add("outlier-pulse");
+        outlier.classList.add("visible");
+        pcaImg.src = pcaImg.getAttribute("data-before-src");
+        pcaCaption.textContent = "Before: PC1 ≈ 100% (outlier-driven wall) — live from Speed 2 click";
+        revertPcaTimer = setTimeout(function () {
+          pcaImg.src = pcaImg.getAttribute("data-after-src");
+          pcaCaption.textContent = "After: row-normalized → PC1=54.3% (W₊) / 52.2% (W₋)";
+        }, 2000);
+      }
+    });
   }
 
   document.querySelectorAll("#sim-buttons .sim-btn").forEach(function (btn) {
