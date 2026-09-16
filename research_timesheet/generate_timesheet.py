@@ -259,6 +259,49 @@ def build_sessions(commits: list[dict], activity: list[dict], gap_minutes: int,
     return rows
 
 
+def load_manual_entries(path: Path, default_project: str, since: datetime, until: datetime):
+    """Read research_timesheet/manual_entries.json (a plain, version-controlled
+    file people can hand-edit or paste the page's "Export as JSON" output
+    into) and turn each entry into a row in the same shape build_sessions
+    produces, so it's a permanent, merged part of the report and its total
+    -- not a browser-only draft."""
+    if not path.exists():
+        return []
+    try:
+        entries = json.loads(path.read_text())
+    except json.JSONDecodeError as e:
+        print(f"  ! could not parse {path}: {e}", file=sys.stderr)
+        return []
+
+    rows = []
+    for e in entries:
+        try:
+            d = date_cls.fromisoformat(e["date"])
+            sh, sm = (int(x) for x in e["start"].split(":"))
+            eh, em = (int(x) for x in e["end"].split(":"))
+        except (KeyError, ValueError) as err:
+            print(f"  ! skipping malformed manual entry {e!r}: {err}", file=sys.stderr)
+            continue
+        start = datetime(d.year, d.month, d.day, sh, sm).astimezone()
+        end = datetime(d.year, d.month, d.day, eh, em).astimezone()
+        if end < start:
+            end += timedelta(days=1)
+        if not (since <= start <= until):
+            continue
+        hours = round(max((end - start).total_seconds() / 3600.0, 0), 2)
+        rows.append({
+            "date": start.date(),
+            "start": start,
+            "end": end,
+            "hours": hours,
+            "commits": [],
+            "evidence_kind": "manual",
+            "topic_preview": e.get("task", ""),
+            "project": e.get("project") or default_project,
+        })
+    return rows
+
+
 # ------------------------------------------------------------- html -----
 
 WEEKLY_TARGET_NOTE = (
@@ -377,6 +420,9 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
         "(never generated or reworded). " + WEEKLY_TARGET_NOTE + "</p>"
     )
 
+    body_parts.append(MANUAL_SECTION_HTML)
+    body_parts.append(MANUAL_SECTION_JS)
+
     current_month = None
     week_starts_sorted = sorted(weeks.keys())
     for wk_start in week_starts_sorted:
@@ -394,11 +440,13 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
         )
 
         commit_rows = [r for r in wk_rows if r["evidence_kind"] == "commit"]
-        chatlog_rows = [r for r in wk_rows if r["evidence_kind"] != "commit"]
+        chatlog_rows = [r for r in wk_rows if r["evidence_kind"] == "chatlog"]
+        manual_rows_wk = [r for r in wk_rows if r["evidence_kind"] == "manual"]
 
         for group_label, group_rows in (
             ("With commit", commit_rows),
             ("Without commit (chat log only)", chatlog_rows),
+            ("Manually logged", manual_rows_wk),
         ):
             if not group_rows:
                 continue
@@ -415,6 +463,9 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
                 if r["evidence_kind"] == "commit":
                     evidence = ", ".join(c["hash"][:7] for c in r["commits"])
                     tasks = "; ".join(dict.fromkeys(clean_subject(c["subject"]) for c in r["commits"]))
+                elif r["evidence_kind"] == "manual":
+                    evidence = "manual_entries.json"
+                    tasks = r.get("topic_preview") or ""
                 else:
                     evidence = f'chat log {r["start"].strftime("%H:%M")}–{r["end"].strftime("%H:%M")}'
                     tasks = r.get("topic_preview") or "(session logged; no message text captured)"
@@ -439,16 +490,13 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
     if current_month is not None:
         body_parts.append(render_signature_block(month_label(week_starts_sorted_month_anchor(current_month))))
 
-    body_parts.append(f'<p class="grand-total">Documented total (commits + chat log), {escape(start_label)} to {escape(end_label)}: {total_hours:.2f}</p>')
-    body_parts.append(MANUAL_SECTION_HTML)
+    body_parts.append(f'<p class="grand-total">Total hours, {escape(start_label)} to {escape(end_label)}: {total_hours:.2f}</p>')
 
     html = (
         "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">"
         "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
         f"<title>Research Timesheet</title><style>{CSS}</style></head><body>"
         + "".join(body_parts) +
-        f'<script>window.__documentedTotal = {total_hours};</script>'
-        + MANUAL_SECTION_JS +
         "</body></html>"
     )
     return html
@@ -456,16 +504,11 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
 
 MANUAL_SECTION_HTML = """
 <div class="manual-section">
-  <div class="week-heading">Additional Entries (typed in here, not derived from git/chat logs)</div>
-  <p class="manual-note">These rows are typed in directly and saved in this browser (localStorage) --
-  they are not backed by a commit hash or a logged chat timestamp. Use Export to copy them out as JSON
-  so they can be merged into the generator's data permanently.</p>
-  <table>
-    <tr><th>Date</th><th>Time Block</th><th class="num">Hours</th><th>Project</th><th>Task Description</th><th></th></tr>
-    <tbody id="manual-tbody"></tbody>
-    <tr class="subtotal"><td colspan="2">Additional entries subtotal</td>
-      <td class="num" id="manual-subtotal">0.00</td><td colspan="3"></td></tr>
-  </table>
+  <div class="week-heading">Add an entry</div>
+  <p class="manual-note">Type an entry below, then paste the Export output into
+  <code>research_timesheet/manual_entries.json</code> and rerun the script -- it becomes a permanent
+  "Manually logged" row in the week tables above and is included in the total, the same as any other row.
+  Until then it's just a draft saved in this browser.</p>
   <div class="manual-form">
     <input type="date" id="m-date">
     <input type="time" id="m-start" placeholder="start">
@@ -474,12 +517,17 @@ MANUAL_SECTION_HTML = """
     <input type="text" id="m-task" placeholder="Task description">
     <button type="button" id="m-add">Add entry</button>
   </div>
+  <table>
+    <tr><th>Date</th><th>Time Block</th><th class="num">Hours</th><th>Project</th><th>Task Description</th><th></th></tr>
+    <tbody id="manual-tbody"></tbody>
+    <tr class="subtotal"><td colspan="2">Draft subtotal (not yet in manual_entries.json)</td>
+      <td class="num" id="manual-subtotal">0.00</td><td colspan="3"></td></tr>
+  </table>
   <div class="manual-actions">
     <button type="button" id="m-export">Export as JSON</button>
-    <button type="button" id="m-clear">Clear all</button>
+    <button type="button" id="m-clear">Clear drafts</button>
   </div>
   <textarea id="manual-export" readonly></textarea>
-  <p class="grand-total" id="combined-total"></p>
 </div>
 """
 
@@ -530,9 +578,6 @@ MANUAL_SECTION_JS = """
       tbody.appendChild(tr);
     });
     document.getElementById("manual-subtotal").textContent = subtotal.toFixed(2);
-    var documented = window.__documentedTotal || 0;
-    document.getElementById("combined-total").textContent =
-      "Combined total (documented + additional): " + (documented + subtotal).toFixed(2);
   }
 
   document.getElementById("m-add").addEventListener("click", function () {
@@ -616,16 +661,26 @@ def main():
             s["project"] = repo_cfg["name"]
         all_rows.extend(sessions)
 
+    manual_path = HERE / "manual_entries.json"
+    manual_rows = load_manual_entries(manual_path, cfg["repos"][0]["name"] if cfg["repos"] else "", since, until)
+    if manual_rows:
+        print(f"  {len(manual_rows)} manually-logged entries from {manual_path.name}")
+    all_rows.extend(manual_rows)
+
     total_hours = round(sum(r["hours"] for r in all_rows), 2)
     print(f"\n{len(all_rows)} timesheet rows, {total_hours:.2f} total hours "
           f"({cfg['start_date']} to {cfg.get('end_date') or 'now'})")
 
     if args.dry_run:
         for r in sorted(all_rows, key=lambda r: r["start"]):
-            evidence = (", ".join(c["hash"][:7] for c in r["commits"]) if r["commits"]
-                        else f'chatlog {r["start"]:%H:%M}-{r["end"]:%H:%M}')
+            if r["commits"]:
+                ref = ", ".join(c["hash"][:7] for c in r["commits"])
+            elif r["evidence_kind"] == "manual":
+                ref = "manual entry"
+            else:
+                ref = f'chatlog {r["start"]:%H:%M}-{r["end"]:%H:%M}'
             print(f"  {r['start']:%Y-%m-%d %H:%M} - {r['end']:%H:%M}  {r['hours']:.2f}h  "
-                  f"{r['project']}  [{evidence}]")
+                  f"{r['project']}  [{ref}]")
         return
 
     html = render_html(cfg, all_rows)
