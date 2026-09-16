@@ -304,6 +304,8 @@
     max-width: 62ch;
     margin: 0;
   }
+  .probe-subtitle + .probe-subtitle { margin-top: 0.3rem; }
+  .probe-subtitle-italic { font-style: italic; }
 
   /* sticky rating/movie control bar */
 
@@ -2039,13 +2041,14 @@
   <section class="section-1b" id="section-01b">
 
     <div class="section-head-2">
-      <h2><span class="section-num">01b</span>&nbsp;&middot;&nbsp;Input Representation Probe: One Rating, Four Algebras</h2>
+      <h2><span class="section-num">01b</span>&nbsp;&middot;&nbsp;Input Representation Probe: Same Rating, Four Lenses</h2>
       <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01b-body" aria-label="Collapse section 01b">&#8964;</button>
     </div>
 
     <div class="section-body" id="section-01b-body">
 
-      <p class="probe-subtitle">Same 4.0 rating, two different movies. The only variable: how the number system encodes popularity before training begins.</p>
+      <p class="probe-subtitle">What can four algebras see in the same 4.0 rating that a single real number cannot?</p>
+      <p class="probe-subtitle probe-subtitle-italic">Control variables: two movies, one normalized input a = 0.7778 from rating 4.0. Everything else is held constant. Only the number system changes.</p>
 
       <div class="probe-sticky-bar" id="probe-sticky-bar">
         <div class="sticky-row">
