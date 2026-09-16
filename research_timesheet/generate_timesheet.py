@@ -122,15 +122,43 @@ def clean_subject(subject: str) -> str:
 
 # --------------------------------------------------------- claude logs ---
 
+def extract_preview(rec: dict) -> str | None:
+    """Pull real, unmodified text out of a user-message record (first text
+    block), for use as a factual topic label. Returns None for anything
+    that isn't plain text (tool results, images, etc.)."""
+    msg = rec.get("message") or {}
+    content = msg.get("content")
+    if isinstance(content, str):
+        text = content
+    elif isinstance(content, list):
+        text = None
+        for block in content:
+            if isinstance(block, dict) and block.get("type") == "text":
+                text = block.get("text")
+                break
+        if text is None:
+            return None
+    else:
+        return None
+    text = " ".join(text.split())
+    if not text or text.startswith("<"):
+        # System-injected notes (<ide_opened_file>, <system-reminder>, etc.),
+        # not something the person actually typed -- not a real topic label.
+        return None
+    return text[:140]
+
+
 def get_claude_activity(claude_projects_dir: Path, repo_path: Path, since: datetime, until: datetime):
-    """Return a sorted list of aware local-tz datetimes for every
-    user/assistant message whose `cwd` resolves to repo_path, across all
-    session .jsonl files under claude_projects_dir."""
+    """Return a sorted list of {dt, preview} for every user/assistant
+    message whose `cwd` resolves to repo_path, across all session .jsonl
+    files under claude_projects_dir. `preview` is the real message text
+    (truncated) for user messages, None for assistant messages -- it is
+    never generated or reworded, only lifted verbatim from the log."""
     if not claude_projects_dir.exists():
         return []
 
     repo_resolved = repo_path.resolve()
-    timestamps = []
+    points = []
 
     for jsonl_path in claude_projects_dir.glob("*/*.jsonl"):
         try:
@@ -149,21 +177,25 @@ def get_claude_activity(claude_projects_dir: Path, repo_path: Path, since: datet
                     if not cwd:
                         continue
                     try:
-                        if Path(cwd).resolve() != repo_resolved:
-                            continue
+                        cwd_resolved = Path(cwd).resolve()
                     except OSError:
+                        continue
+                    # A repo can get reorganized into a subdirectory mid-project;
+                    # sessions logged against the old parent cwd still belong to it.
+                    if cwd_resolved != repo_resolved and cwd_resolved != repo_resolved.parent:
                         continue
                     ts = rec.get("timestamp")
                     if not ts:
                         continue
                     dt = datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone()
                     if since <= dt <= until:
-                        timestamps.append(dt)
+                        preview = extract_preview(rec) if rec.get("type") == "user" else None
+                        points.append({"dt": dt, "preview": preview})
         except OSError:
             continue
 
-    timestamps.sort()
-    return timestamps
+    points.sort(key=lambda p: p["dt"])
+    return points
 
 
 # --------------------------------------------------------- clustering ----
@@ -172,45 +204,57 @@ def round_minutes(minutes: float, to: int) -> float:
     return round(minutes / to) * to
 
 
-def build_sessions(commits: list[dict], activity: list[datetime], gap_minutes: int,
+def build_sessions(commits: list[dict], activity: list[dict], gap_minutes: int,
                     min_minutes: int, round_minutes_to: int):
-    """Merge commit points and bare activity points into sessions (gap <=
-    gap_minutes stays in the same session). Return only sessions that
-    contain >=1 commit, since every row needs citable evidence."""
+    """Merge commit points and Claude activity points into sessions (gap <=
+    gap_minutes stays in the same session). Every session that has real
+    activity in it becomes a row: sessions with >=1 commit are evidenced by
+    the commit hash(es); sessions with only Claude activity and no commit
+    are still real, timestamped work -- evidenced by the session's own
+    logged time range and a topic line lifted verbatim from the first real
+    user message in that window (never generated or reworded)."""
     points = []
     for c in commits:
-        points.append((c["dt"], c))
-    for dt in activity:
-        points.append((dt, None))
+        points.append((c["dt"], c, None))
+    for a in activity:
+        points.append((a["dt"], None, a.get("preview")))
     points.sort(key=lambda p: p[0])
 
     sessions = []
     current = []
-    for dt, commit in points:
+    for dt, commit, preview in points:
         if current and (dt - current[-1][0]) > timedelta(minutes=gap_minutes):
             sessions.append(current)
             current = []
-        current.append((dt, commit))
+        current.append((dt, commit, preview))
     if current:
         sessions.append(current)
 
     rows = []
     for sess in sessions:
-        commits_in = [c for _, c in sess if c is not None]
-        if not commits_in:
-            continue
+        commits_in = [c for _, c, _ in sess if c is not None]
         start = sess[0][0]
         end = sess[-1][0]
         raw_minutes = max((end - start).total_seconds() / 60.0, 0)
         minutes = max(raw_minutes, min_minutes)
         minutes = max(round_minutes(minutes, round_minutes_to), round_minutes_to)
         hours = round(minutes / 60.0, 2)
+
+        if commits_in:
+            evidence_kind = "commit"
+        else:
+            evidence_kind = "chatlog"
+
+        first_preview = next((p for _, _, p in sess if p), None)
+
         rows.append({
             "date": start.date(),
             "start": start,
             "end": end,
             "hours": hours,
             "commits": commits_in,
+            "evidence_kind": evidence_kind,
+            "topic_preview": first_preview,
         })
     return rows
 
@@ -297,8 +341,10 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
         "timestamps and Claude Code session activity in the matching repository's working directory. "
         "Consecutive activity within the configured session-gap window is merged into one session; a "
         "session's Hours is (last activity &minus; first activity) in that session, floored at the "
-        "configured minimum block and rounded to the nearest quarter hour. Every row cites at least one "
-        "git commit hash as evidence. " + WEEKLY_TARGET_NOTE + "</p>"
+        "configured minimum block and rounded to the nearest quarter hour. Sessions that produced a commit "
+        "are evidenced by that commit's hash; sessions that did not are evidenced by the session's own logged "
+        "time range, with the Task Description lifted verbatim from the first real message in that window "
+        "(never generated or reworded). " + WEEKLY_TARGET_NOTE + "</p>"
     )
 
     current_month = None
@@ -319,13 +365,17 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
         body_parts.append("<table>")
         body_parts.append(
             "<tr><th>Date</th><th>Time Block</th><th class=\"num\">Hours</th>"
-            "<th>Project</th><th>Task Description</th><th>Evidence (commit)</th></tr>"
+            "<th>Project</th><th>Task Description</th><th>Evidence</th></tr>"
         )
         for r in wk_rows:
             date_str = r["start"].strftime("%a %Y-%m-%d")
             time_block = f'{r["start"].strftime("%H:%M")}&ndash;{r["end"].strftime("%H:%M")}'
-            hashes = ", ".join(c["hash"][:7] for c in r["commits"])
-            tasks = "; ".join(dict.fromkeys(clean_subject(c["subject"]) for c in r["commits"]))
+            if r["evidence_kind"] == "commit":
+                evidence = ", ".join(c["hash"][:7] for c in r["commits"])
+                tasks = "; ".join(dict.fromkeys(clean_subject(c["subject"]) for c in r["commits"]))
+            else:
+                evidence = f'chat log {r["start"].strftime("%H:%M")}–{r["end"].strftime("%H:%M")}'
+                tasks = r.get("topic_preview") or "(session logged; no message text captured)"
             body_parts.append(
                 "<tr>"
                 f"<td>{escape(date_str)}</td>"
@@ -333,7 +383,7 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
                 f'<td class="num">{r["hours"]:.2f}</td>'
                 f'<td>{escape(r["project"])}</td>'
                 f"<td>{escape(tasks)}</td>"
-                f'<td class="evidence">{escape(hashes)}</td>'
+                f'<td class="evidence">{escape(evidence)}</td>'
                 "</tr>"
             )
         body_parts.append(
@@ -409,12 +459,15 @@ def main():
 
     if args.dry_run:
         for r in sorted(all_rows, key=lambda r: r["start"]):
+            evidence = (", ".join(c["hash"][:7] for c in r["commits"]) if r["commits"]
+                        else f'chatlog {r["start"]:%H:%M}-{r["end"]:%H:%M}')
             print(f"  {r['start']:%Y-%m-%d %H:%M} - {r['end']:%H:%M}  {r['hours']:.2f}h  "
-                  f"{r['project']}  [{', '.join(c['hash'][:7] for c in r['commits'])}]")
+                  f"{r['project']}  [{evidence}]")
         return
 
     html = render_html(cfg, all_rows)
-    out_path = HERE / "index.html"
+    out_path = REPO_ROOT / cfg.get("output_path", "docs/research_timesheet.html")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(html)
     print(f"Wrote {out_path}")
 
