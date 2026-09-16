@@ -777,6 +777,17 @@
 
   /* ---------- section 01c (v2 candidate) ---------- */
 
+  .v2-hook {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.35rem;
+    color: var(--ink);
+    max-width: 70ch;
+    margin: 0 0 0.5rem;
+    line-height: 1.4;
+    text-wrap: balance;
+  }
+
   .v2-thesis {
     font-family: var(--serif);
     font-size: 1.15rem;
@@ -824,10 +835,28 @@
   .v2-interp-info { display: block; }
   .v2-info-trigger {
     display: inline-block;
-    margin-left: 0.3rem;
-    padding: 0.1rem 0.35rem;
-    font-size: 0.66rem;
-    vertical-align: middle;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .v2-info-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+  }
+
+  .v2-rank-tooltip {
+    width: 24rem;
+    max-width: 80vw;
+  }
+  .v2-rank-tooltip p { margin: 0; }
+  .v2-rank-tooltip-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .v2-dynamic-annotation {
@@ -849,6 +878,7 @@
   @media (max-width: 768px) {
     .v2-block .quad-pair { grid-template-columns: 1fr; }
     .v2-block .quad-card-pair { grid-template-columns: 1fr; gap: 0.8rem; }
+    .v2-hook { font-size: 1.12rem; }
     .v2-thesis { font-size: 1.02rem; }
     .v2-formula { font-size: 0.8rem; }
     .v2-block-title { font-size: 0.95rem; }
@@ -3900,7 +3930,8 @@
 
     <div class="section-body" id="section-01c-body">
 
-      <p class="v2-thesis">Fixed variable: a = (rating &minus; 0.5) / 4.5. Same two movies, same 4.0 rating. The only thing that changes is the algebra.</p>
+      <p class="v2-hook">What can four algebras see in the same 4.0 rating that a single real number cannot?</p>
+      <p class="v2-thesis">One rating (4.0), two movies, one normalized input a = 0.7778. Everything else is held constant. Only the number system changes.</p>
 
       <div class="distwalk">
 
@@ -4059,9 +4090,19 @@
       <div class="v2-block">
         <p class="v2-block-title">&#120123; Hyperbolic</p>
         <p class="v2-formula">z = a + bk, k<sup>2</sup> = +1 &nbsp;&rarr;&nbsp; e&#8330; = (a+b)/2, e&#8331; = (a&minus;b)/2</p>
-        <div class="probe-info v2-interp-info">
-          <p class="v2-interpretation">b is the movie's popularity rank in this 1000-movie subset, mapped to [&minus;1, +1]. Ranked by rating count, not score. <button type="button" class="probe-info-trigger v2-info-trigger" aria-describedby="v2-b-tooltip">details<span aria-hidden="true">&nbsp;&#9432;</span></button></p>
-          <div class="probe-info-tooltip" id="v2-b-tooltip" role="tooltip">b is linearly mapped from each movie's rank by rating count within this 1000-movie subset: +1 = most-rated (rank 1), &minus;1 = least-rated (rank 1000). Fixed per movie, independent of the rating value itself.</div>
+        <p class="v2-interpretation">b is the movie's popularity rank in this 1000-movie subset, mapped to [&minus;1, +1]. Ranked by rating count, not score.</p>
+        <div class="v2-info-row">
+          <div class="probe-info">
+            <button type="button" class="probe-info-trigger v2-info-trigger" aria-describedby="v2-b-tooltip">details<span aria-hidden="true">&nbsp;&#9432;</span></button>
+            <div class="probe-info-tooltip" id="v2-b-tooltip" role="tooltip">b is linearly mapped from each movie's rank by rating count within this 1000-movie subset: +1 = most-rated (rank 1), &minus;1 = least-rated (rank 1000). Fixed per movie, independent of the rating value itself.</div>
+          </div>
+          <div class="probe-info">
+            <button type="button" class="probe-info-trigger v2-info-trigger" aria-describedby="v2-rank-tooltip">Is rank 1000 actually niche?<span aria-hidden="true">&nbsp;&#9432;</span></button>
+            <div class="probe-info-tooltip v2-rank-tooltip" id="v2-rank-tooltip" role="tooltip">
+              <p>b's rank is computed within these 1000 pre-selected movies. In the full 20M dataset, Rumble in the Bronx is rank 371 of 26,744 (top 1.39%). Mainstream, not long-tail.</p>
+              <img class="v2-rank-tooltip-img" src="img/rank_vs_full_dataset.png" alt="Left: rank 1 to 1000 distribution within the dense subset. Right: both movies' popularity rank in the full MovieLens 20M dataset, both in the top 1.4 percent.">
+            </div>
+          </div>
         </div>
         <div class="quad-pair">
           <div class="quad-panel">
