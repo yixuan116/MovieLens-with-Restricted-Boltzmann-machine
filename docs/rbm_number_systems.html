@@ -534,15 +534,31 @@
   }
 
   .e2d-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .e2d-row-top {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.2rem;
   }
 
+  .e2d-row-bottom { display: flex; }
+
   .e2d-panel {
     border: 1px solid var(--border);
     padding: 0.9rem 1rem 0.6rem;
   }
+
+  .e2d-panel-square {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .e2d-svg-square { width: 100%; }
 
   .e2d-title {
     font-family: var(--mono);
@@ -579,8 +595,43 @@
     fill: var(--ink-faint);
   }
 
+  .c-ray { stroke: var(--border); stroke-width: 1; }
+  .c-axis { stroke: var(--border); stroke-width: 0.75; }
+  .c-ray-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    fill: var(--ink-faint);
+  }
+
+  .c-dot-matrix { fill: var(--accent); opacity: 0.55; }
+  .c-dot-rumble { fill: #e67e22; opacity: 0.55; }
+
+  .c-radius-circle {
+    fill: none;
+    stroke: var(--ink-faint);
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+    transition: r 0.15s ease;
+  }
+
+  .c-highlight-dot {
+    stroke: var(--bg);
+    stroke-width: 1.6;
+    transition: cx 0.15s ease, cy 0.15s ease;
+  }
+  .c-highlight-dot.movie-matrix { fill: var(--accent); }
+  .c-highlight-dot.movie-rumble { fill: #e67e22; }
+
+  .c-highlight-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--ink);
+    transition: x 0.15s ease, y 0.15s ease;
+  }
+
   @media (max-width: 700px) {
-    .e2d-grid { grid-template-columns: 1fr; }
+    .e2d-row-top { grid-template-columns: 1fr; }
   }
 
   .probe-layout {
@@ -730,7 +781,8 @@
     padding: 1rem 1.2rem 1.1rem;
   }
 
-  .probe-panel.panel-d {
+  .probe-panel.panel-d,
+  .probe-panel.panel-c {
     background: #222;
     border-color: #222;
     color: #fff;
@@ -743,7 +795,8 @@
     margin: 0 0 0.8rem;
     color: var(--ink-soft);
   }
-  .panel-d .probe-panel-head { color: #cfcfcf; }
+  .panel-d .probe-panel-head,
+  .panel-c .probe-panel-head { color: #cfcfcf; }
 
   .probe-bar-row {
     display: grid;
@@ -758,7 +811,8 @@
     font-size: 0.75rem;
     color: var(--ink-faint);
   }
-  .panel-d .probe-bar-tag { color: #b7b7b7; }
+  .panel-d .probe-bar-tag,
+  .panel-c .probe-bar-tag { color: #b7b7b7; }
 
   .probe-bar-track {
     position: relative;
@@ -789,6 +843,8 @@
   .fill-r { left: 0; background: var(--ink-faint); }
   .fill-plus { background: #6f9bc2; }
   .fill-minus { background: #d98a3d; }
+  .fill-c-re { background: var(--sys-c); }
+  .fill-c-im { background: var(--sys-f); }
 
   .probe-bar-val {
     font-family: var(--mono);
@@ -1538,7 +1594,7 @@
   <section class="section-1b" id="section-01b">
 
     <div class="section-head-2">
-      <h2><span class="section-num">01b</span>&nbsp;&middot;&nbsp;Input Representation Probe: One Rating, Two Algebras</h2>
+      <h2><span class="section-num">01b</span>&nbsp;&middot;&nbsp;Input Representation Probe: One Rating, Three Algebras</h2>
       <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01b-body" aria-label="Collapse section 01b">&#8964;</button>
     </div>
 
@@ -1666,6 +1722,7 @@
       <div class="e2d-section">
         <p class="e2d-heading">1000 movies, two geometries</p>
         <div class="e2d-grid">
+        <div class="e2d-row-top">
           <div class="e2d-panel">
             <p class="e2d-title">&#8477;: 1D, popularity invisible</p>
             <svg class="e2d-svg" viewBox="0 0 460 340" role="img" aria-label="R view: 1000 movies placed on a single normalized-rating axis by average score alone; nothing on this axis reveals that Matrix has 977 ratings and Rumble only 426.">
@@ -3723,6 +3780,1439 @@
             </svg>
           </div>
         </div>
+
+        <div class="e2d-row-bottom">
+          <div class="e2d-panel e2d-panel-square">
+            <p class="e2d-title">&#8450;: 2D, temporal decoded</p>
+            <svg class="e2d-svg e2d-svg-square" viewBox="0 0 460 460" role="img" aria-label="C view: The Matrix and Rumble in the Bronx ratings placed by weekday angle and rating magnitude; the highlighted point follows the rating slider and shows the currently selected movie's most common weekday at that rating.">
+          <line class="c-ray" x1="230.0" y1="230.0" x2="393.5" y2="230.0"/>
+          <text class="c-ray-label" x="413.1" y="230.0" text-anchor="middle">Mon</text>
+          <line class="c-ray" x1="230.0" y1="230.0" x2="331.9" y2="102.2"/>
+          <text class="c-ray-label" x="344.2" y="86.8" text-anchor="middle">Tue</text>
+          <line class="c-ray" x1="230.0" y1="230.0" x2="193.6" y2="70.6"/>
+          <text class="c-ray-label" x="189.3" y="51.5" text-anchor="middle">Wed</text>
+          <line class="c-ray" x1="230.0" y1="230.0" x2="82.7" y2="159.1"/>
+          <text class="c-ray-label" x="65.0" y="150.6" text-anchor="middle">Thu</text>
+          <line class="c-ray" x1="230.0" y1="230.0" x2="82.7" y2="300.9"/>
+          <text class="c-ray-label" x="65.0" y="309.4" text-anchor="middle">Fri</text>
+          <line class="c-ray" x1="230.0" y1="230.0" x2="193.6" y2="389.4"/>
+          <text class="c-ray-label" x="189.3" y="408.5" text-anchor="middle">Sat</text>
+          <line class="c-ray" x1="230.0" y1="230.0" x2="331.9" y2="357.8"/>
+          <text class="c-ray-label" x="344.2" y="373.2" text-anchor="middle">Sun</text>
+          <line class="c-axis" x1="42.0" y1="230.0" x2="418.0" y2="230.0"/>
+          <line class="c-axis" x1="230.0" y1="418.0" x2="230.0" y2="42.0"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="302.6" cy="233.6" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="205.4" cy="317.4" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="261.8" cy="274.2" r="2"/>
+          <circle class="c-dot-matrix" cx="205.4" cy="317.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="215.2" cy="282.5" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="196.5" cy="244.1" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="272.4" cy="289.0" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="217.4" cy="158.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="217.4" cy="158.4" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="226.8" cy="212.1" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="261.8" cy="274.2" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="266.1" cy="189.1" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="266.1" cy="189.1" r="2"/>
+          <circle class="c-dot-matrix" cx="284.4" cy="232.7" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="217.4" cy="158.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="226.8" cy="212.1" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="166.2" cy="195.2" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="266.1" cy="189.1" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="182.1" cy="203.9" r="2"/>
+          <circle class="c-dot-matrix" cx="272.4" cy="289.0" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="242.0" cy="216.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="211.1" cy="122.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="217.4" cy="158.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="205.4" cy="317.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="215.2" cy="282.5" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="248.1" cy="230.9" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="129.6" cy="272.3" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="225.1" cy="247.5" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="198.1" cy="212.6" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="254.0" cy="202.8" r="2"/>
+          <circle class="c-dot-matrix" cx="278.1" cy="175.5" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="182.1" cy="203.9" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="211.1" cy="122.7" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="205.4" cy="317.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="261.8" cy="274.2" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="129.6" cy="272.3" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="215.2" cy="282.5" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="196.5" cy="244.1" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="278.1" cy="175.5" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="215.2" cy="282.5" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="278.1" cy="175.5" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="163.0" cy="258.2" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="129.6" cy="272.3" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="284.4" cy="232.7" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="266.1" cy="189.1" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="278.1" cy="175.5" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="205.4" cy="317.4" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="272.4" cy="289.0" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="220.5" cy="176.3" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="220.5" cy="176.3" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="261.8" cy="274.2" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="254.0" cy="202.8" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="261.8" cy="274.2" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="214.0" cy="221.3" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="284.4" cy="232.7" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="278.1" cy="175.5" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="182.1" cy="203.9" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="205.4" cy="317.4" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="129.6" cy="272.3" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="205.4" cy="317.4" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="261.8" cy="274.2" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="211.1" cy="122.7" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="205.4" cy="317.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="182.1" cy="203.9" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="278.1" cy="175.5" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="179.8" cy="251.2" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="211.1" cy="122.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="223.7" cy="194.2" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="205.4" cy="317.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="213.3" cy="237.1" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="211.1" cy="122.7" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="129.6" cy="272.3" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="205.4" cy="317.4" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="220.5" cy="176.3" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="211.1" cy="122.7" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="211.1" cy="122.7" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="261.8" cy="274.2" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="284.4" cy="232.7" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="129.6" cy="272.3" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="211.1" cy="122.7" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="284.4" cy="232.7" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="102.4" cy="160.5" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="266.1" cy="189.1" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="182.1" cy="203.9" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="210.3" cy="299.9" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="215.2" cy="282.5" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="261.8" cy="274.2" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="290.1" cy="161.9" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="129.6" cy="272.3" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="182.1" cy="203.9" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="320.7" cy="234.5" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="211.1" cy="122.7" r="2"/>
+          <circle class="c-dot-matrix" cx="302.6" cy="233.6" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="185.7" cy="387.4" r="2"/>
+          <circle class="c-dot-matrix" cx="338.9" cy="235.4" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="207.9" cy="104.8" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="211.1" cy="122.7" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-matrix" cx="129.6" cy="272.3" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="304.2" cy="333.2" r="2"/>
+          <circle class="c-dot-matrix" cx="293.6" cy="318.5" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="314.8" cy="348.0" r="2"/>
+          <circle class="c-dot-matrix" cx="150.2" cy="186.6" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="325.4" cy="362.7" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="302.1" cy="148.3" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="357.0" cy="236.4" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="190.6" cy="369.9" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="314.1" cy="134.7" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="283.0" cy="303.7" r="2"/>
+          <circle class="c-dot-matrix" cx="134.3" cy="177.9" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="129.6" cy="272.3" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="214.2" cy="140.6" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="200.5" cy="334.9" r="2"/>
+          <circle class="c-dot-matrix" cx="375.1" cy="237.3" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="146.3" cy="265.3" r="2"/>
+          <circle class="c-dot-matrix" cx="112.8" cy="279.4" r="2"/>
+          <circle class="c-dot-matrix" cx="326.2" cy="121.1" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="393.3" cy="238.2" r="2"/>
+          <circle class="c-dot-matrix" cx="86.4" cy="151.8" r="2"/>
+          <circle class="c-dot-matrix" cx="338.2" cy="107.4" r="2"/>
+          <circle class="c-dot-matrix" cx="201.6" cy="69.0" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="79.3" cy="293.5" r="2"/>
+          <circle class="c-dot-matrix" cx="204.8" cy="86.9" r="2"/>
+          <circle class="c-dot-matrix" cx="118.3" cy="169.2" r="2"/>
+          <circle class="c-dot-matrix" cx="96.1" cy="286.4" r="2"/>
+          <circle class="c-dot-matrix" cx="195.5" cy="352.4" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="248.1" cy="229.1" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="118.3" cy="290.8" r="2"/>
+          <circle class="c-dot-rumble" cx="314.1" cy="325.3" r="2"/>
+          <circle class="c-dot-rumble" cx="215.2" cy="177.5" r="2"/>
+          <circle class="c-dot-rumble" cx="302.1" cy="311.7" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="314.1" cy="325.3" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="200.5" cy="125.1" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="134.3" cy="282.1" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="261.8" cy="185.8" r="2"/>
+          <circle class="c-dot-rumble" cx="220.5" cy="283.7" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="86.4" cy="308.2" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="338.9" cy="224.6" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="118.3" cy="290.8" r="2"/>
+          <circle class="c-dot-rumble" cx="225.1" cy="212.5" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="302.6" cy="226.4" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="338.9" cy="224.6" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="211.1" cy="337.3" r="2"/>
+          <circle class="c-dot-rumble" cx="163.0" cy="201.8" r="2"/>
+          <circle class="c-dot-rumble" cx="266.3" cy="228.2" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="200.5" cy="125.1" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="190.6" cy="90.1" r="2"/>
+          <circle class="c-dot-rumble" cx="261.8" cy="185.8" r="2"/>
+          <circle class="c-dot-rumble" cx="278.1" cy="284.5" r="2"/>
+          <circle class="c-dot-rumble" cx="134.3" cy="282.1" r="2"/>
+          <circle class="c-dot-rumble" cx="215.2" cy="177.5" r="2"/>
+          <circle class="c-dot-rumble" cx="314.1" cy="325.3" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="220.5" cy="283.7" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="182.1" cy="256.1" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="96.1" cy="173.6" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="242.0" cy="243.6" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="211.1" cy="337.3" r="2"/>
+          <circle class="c-dot-rumble" cx="302.1" cy="311.7" r="2"/>
+          <circle class="c-dot-rumble" cx="261.8" cy="185.8" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="302.1" cy="311.7" r="2"/>
+          <circle class="c-dot-rumble" cx="211.1" cy="337.3" r="2"/>
+          <circle class="c-dot-rumble" cx="163.0" cy="201.8" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="182.1" cy="256.1" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="163.0" cy="201.8" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="200.5" cy="125.1" r="2"/>
+          <circle class="c-dot-rumble" cx="220.5" cy="283.7" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="220.2" cy="195.0" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="338.9" cy="224.6" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="179.8" cy="208.8" r="2"/>
+          <circle class="c-dot-rumble" cx="261.8" cy="185.8" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="272.4" cy="171.0" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="134.3" cy="282.1" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="86.4" cy="308.2" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="118.3" cy="290.8" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="220.5" cy="283.7" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="182.1" cy="256.1" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="210.3" cy="160.1" r="2"/>
+          <circle class="c-dot-rumble" cx="102.4" cy="299.5" r="2"/>
+          <circle class="c-dot-rumble" cx="217.4" cy="301.6" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="134.3" cy="282.1" r="2"/>
+          <circle class="c-dot-rumble" cx="129.6" cy="187.7" r="2"/>
+          <circle class="c-dot-rumble" cx="210.3" cy="160.1" r="2"/>
+          <circle class="c-dot-rumble" cx="242.0" cy="243.6" r="2"/>
+          <circle class="c-dot-rumble" cx="201.6" cy="391.0" r="2"/>
+          <circle class="c-dot-rumble" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="278.1" cy="284.5" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="185.7" cy="72.6" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="266.3" cy="228.2" r="2"/>
+          <circle class="c-dot-rumble" cx="166.2" cy="264.8" r="2"/>
+          <circle class="c-dot-rumble" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="134.3" cy="282.1" r="2"/>
+          <circle class="c-dot-rumble" cx="215.2" cy="177.5" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="338.9" cy="224.6" r="2"/>
+          <circle class="c-dot-rumble" cx="185.7" cy="72.6" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="314.1" cy="325.3" r="2"/>
+          <circle class="c-dot-rumble" cx="198.1" cy="247.4" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="118.3" cy="290.8" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="338.9" cy="224.6" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="213.3" cy="222.9" r="2"/>
+          <circle class="c-dot-rumble" cx="129.6" cy="187.7" r="2"/>
+          <circle class="c-dot-rumble" cx="200.5" cy="125.1" r="2"/>
+          <circle class="c-dot-rumble" cx="190.6" cy="90.1" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="102.4" cy="299.5" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="190.6" cy="90.1" r="2"/>
+          <circle class="c-dot-rumble" cx="118.3" cy="290.8" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="134.3" cy="282.1" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="213.3" cy="222.9" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="118.3" cy="290.8" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="261.8" cy="185.8" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="217.4" cy="301.6" r="2"/>
+          <circle class="c-dot-rumble" cx="278.1" cy="284.5" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="166.2" cy="264.8" r="2"/>
+          <circle class="c-dot-rumble" cx="302.6" cy="226.4" r="2"/>
+          <circle class="c-dot-rumble" cx="129.6" cy="187.7" r="2"/>
+          <circle class="c-dot-rumble" cx="375.1" cy="222.7" r="2"/>
+          <circle class="c-dot-rumble" cx="326.2" cy="338.9" r="2"/>
+          <circle class="c-dot-rumble" cx="338.9" cy="224.6" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="215.2" cy="177.5" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="261.8" cy="185.8" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="129.6" cy="187.7" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="314.8" cy="112.0" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="261.8" cy="185.8" r="2"/>
+          <circle class="c-dot-rumble" cx="215.2" cy="177.5" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="182.1" cy="256.1" r="2"/>
+          <circle class="c-dot-rumble" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-rumble" cx="185.7" cy="72.6" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="254.0" cy="257.2" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="166.2" cy="264.8" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="302.6" cy="226.4" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="129.6" cy="187.7" r="2"/>
+          <circle class="c-dot-rumble" cx="302.6" cy="226.4" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="220.2" cy="195.0" r="2"/>
+          <circle class="c-dot-rumble" cx="225.1" cy="212.5" r="2"/>
+          <circle class="c-dot-rumble" cx="200.5" cy="125.1" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="325.4" cy="97.3" r="2"/>
+          <circle class="c-dot-rumble" cx="266.3" cy="228.2" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="129.6" cy="187.7" r="2"/>
+          <circle class="c-dot-rumble" cx="118.3" cy="290.8" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="375.1" cy="222.7" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="182.1" cy="256.1" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="284.4" cy="227.3" r="2"/>
+          <circle class="c-dot-rumble" cx="86.4" cy="308.2" r="2"/>
+          <circle class="c-dot-rumble" cx="261.8" cy="185.8" r="2"/>
+          <circle class="c-dot-rumble" cx="278.1" cy="284.5" r="2"/>
+          <circle class="c-dot-rumble" cx="215.2" cy="177.5" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="242.0" cy="243.6" r="2"/>
+          <circle class="c-dot-rumble" cx="214.0" cy="238.7" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="284.4" cy="227.3" r="2"/>
+          <circle class="c-dot-rumble" cx="196.5" cy="215.9" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="284.4" cy="227.3" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="272.4" cy="171.0" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="179.8" cy="208.8" r="2"/>
+          <circle class="c-dot-rumble" cx="129.6" cy="187.7" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="200.5" cy="125.1" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="214.0" cy="238.7" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="129.6" cy="187.7" r="2"/>
+          <circle class="c-dot-rumble" cx="302.1" cy="311.7" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="314.1" cy="325.3" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="240.6" cy="215.3" r="2"/>
+          <circle class="c-dot-rumble" cx="211.1" cy="337.3" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="217.4" cy="301.6" r="2"/>
+          <circle class="c-dot-rumble" cx="242.0" cy="243.6" r="2"/>
+          <circle class="c-dot-rumble" cx="166.2" cy="264.8" r="2"/>
+          <circle class="c-dot-rumble" cx="302.1" cy="311.7" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="118.3" cy="290.8" r="2"/>
+          <circle class="c-dot-rumble" cx="266.3" cy="228.2" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="129.6" cy="187.7" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="179.8" cy="208.8" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="248.1" cy="229.1" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="215.2" cy="177.5" r="2"/>
+          <circle class="c-dot-rumble" cx="240.6" cy="215.3" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="338.9" cy="224.6" r="2"/>
+          <circle class="c-dot-rumble" cx="338.9" cy="224.6" r="2"/>
+          <circle class="c-dot-rumble" cx="118.3" cy="290.8" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="134.3" cy="282.1" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="163.0" cy="201.8" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="217.4" cy="301.6" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="230.0" cy="230.0" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="278.1" cy="284.5" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="214.0" cy="238.7" r="2"/>
+          <circle class="c-dot-rumble" cx="283.0" cy="156.3" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="293.6" cy="141.5" r="2"/>
+          <circle class="c-dot-rumble" cx="338.9" cy="224.6" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="79.3" cy="166.5" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="214.0" cy="238.7" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="129.6" cy="187.7" r="2"/>
+          <circle class="c-dot-rumble" cx="195.5" cy="107.6" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="220.5" cy="283.7" r="2"/>
+          <circle class="c-dot-rumble" cx="163.0" cy="201.8" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="163.0" cy="201.8" r="2"/>
+          <circle class="c-dot-rumble" cx="214.2" cy="319.4" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="302.1" cy="311.7" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="266.1" cy="270.9" r="2"/>
+          <circle class="c-dot-rumble" cx="220.5" cy="283.7" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="200.5" cy="125.1" r="2"/>
+          <circle class="c-dot-rumble" cx="290.1" cy="298.1" r="2"/>
+          <circle class="c-dot-rumble" cx="393.3" cy="221.8" r="2"/>
+          <circle class="c-dot-rumble" cx="314.1" cy="325.3" r="2"/>
+          <circle class="c-dot-rumble" cx="320.7" cy="225.5" r="2"/>
+          <circle class="c-dot-rumble" cx="304.2" cy="126.8" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+          <circle class="c-dot-rumble" cx="357.0" cy="223.6" r="2"/>
+          <circle class="c-dot-rumble" cx="207.9" cy="355.2" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="86.4" cy="308.2" r="2"/>
+          <circle class="c-dot-rumble" cx="278.1" cy="284.5" r="2"/>
+          <circle class="c-dot-rumble" cx="182.1" cy="256.1" r="2"/>
+          <circle class="c-dot-rumble" cx="302.1" cy="311.7" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="146.3" cy="194.7" r="2"/>
+          <circle class="c-dot-rumble" cx="393.3" cy="221.8" r="2"/>
+          <circle class="c-dot-rumble" cx="217.4" cy="301.6" r="2"/>
+          <circle class="c-dot-rumble" cx="261.8" cy="185.8" r="2"/>
+          <circle class="c-dot-rumble" cx="204.8" cy="373.1" r="2"/>
+          <circle class="c-dot-rumble" cx="150.2" cy="273.4" r="2"/>
+          <circle class="c-dot-rumble" cx="205.4" cy="142.6" r="2"/>
+          <circle class="c-dot-rumble" cx="112.8" cy="180.6" r="2"/>
+              <circle class="c-radius-circle" id="c-radius-circle" cx="230.0" cy="230.0" r="127.2"/>
+              <circle class="c-highlight-dot movie-matrix" id="c-highlight-dot" cx="201.7" cy="354.0" r="6"/>
+              <text class="c-highlight-label" id="c-highlight-label" x="201.7" y="374.0" text-anchor="middle">Saturday (16.0%)</text>
+            </svg>
+          </div>
+        </div>
+
+        </div>
+
       </div>
 
       <div class="probe-layout">
@@ -3791,6 +5281,28 @@
             </div>
             <p class="probe-formula-pair">e&#8330; = (a + b) / 2&nbsp;&nbsp;&nbsp;e&#8331; = (a &minus; b) / 2</p>
             <p class="probe-annotation" id="probe-d-annotation">Mainstream gravity dominates e&#8330;. The e&#8331; channel is suppressed.</p>
+          </div>
+
+          <div class="probe-panel panel-c">
+            <p class="probe-panel-head">&#8450; Complex</p>
+            <div class="probe-bar-row">
+              <span class="probe-bar-tag">z_re</span>
+              <div class="probe-bar-track track-d">
+                <div class="probe-bar-zero"></div>
+                <div class="probe-bar-fill fill-c-re" id="probe-bar-c-re"></div>
+              </div>
+              <span class="probe-bar-val" id="probe-val-c-re">+0.5501</span>
+            </div>
+            <div class="probe-bar-row">
+              <span class="probe-bar-tag">z_im</span>
+              <div class="probe-bar-track track-d">
+                <div class="probe-bar-zero"></div>
+                <div class="probe-bar-fill fill-c-im" id="probe-bar-c-im"></div>
+              </div>
+              <span class="probe-bar-val" id="probe-val-c-im">&minus;0.5501</span>
+            </div>
+            <p class="probe-formula-pair">z = a &middot; e<sup>i&theta;</sup>&nbsp;&nbsp;&nbsp;&theta; = 2&pi; &times; weekday / 7</p>
+            <p class="probe-annotation" id="probe-c-annotation">The Matrix at 4.0 is most often rated on a Saturday (16.0% of its 4.0s).</p>
           </div>
 
         </div>
@@ -4324,7 +5836,21 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
   var valMinus = document.getElementById("probe-val-minus");
   var dAnnotation = document.getElementById("probe-d-annotation");
 
+  var barCRe = document.getElementById("probe-bar-c-re");
+  var valCRe = document.getElementById("probe-val-c-re");
+  var barCIm = document.getElementById("probe-bar-c-im");
+  var valCIm = document.getElementById("probe-val-c-im");
+  var cAnnotation = document.getElementById("probe-c-annotation");
+  var cRadiusCircle = document.getElementById("c-radius-circle");
+  var cHighlightDot = document.getElementById("c-highlight-dot");
+  var cHighlightLabel = document.getElementById("c-highlight-label");
+
+  var C_CROSSTAB = {"matrix":{"0.5":[1,1,3,0,0,0,0],"1.0":[1,1,2,1,1,1,0],"1.5":[0,2,1,1,2,0,0],"2.0":[5,5,3,6,1,5,8],"2.5":[2,6,4,1,1,1,3],"3.0":[11,17,15,16,16,10,13],"3.5":[12,12,10,12,9,12,12],"4.0":[35,34,36,24,34,38,37],"4.5":[23,30,24,20,25,18,31],"5.0":[44,69,41,47,39,40,42]},"rumble":{"0.5":[1,1,1,1,0,0,2],"1.0":[2,2,2,2,4,0,4],"1.5":[4,0,2,1,1,0,1],"2.0":[3,9,7,3,6,6,12],"2.5":[4,2,2,6,4,5,6],"3.0":[23,20,23,17,19,17,18],"3.5":[9,14,7,10,7,4,7],"4.0":[23,22,13,13,9,16,6],"4.5":[2,1,3,1,2,1,1],"5.0":[2,1,3,1,4,1,0]}};
+  var WEEKDAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  var C_CX = 230, C_CY = 230, C_SCALE = 163.48;
+
   var currentB = 1;
+  var currentMovieKey = "matrix";
 
   function fmt4(x) {
     var sign = x >= 0 ? (x === 0 ? "" : "+") : "−";
@@ -4339,6 +5865,47 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     } else {
       fillEl.style.left = (50 + value * half) + "%";
       fillEl.style.width = (-value * half) + "%";
+    }
+  }
+
+  function renderComplex(a, rating) {
+    var ratingKey = rating.toFixed(1);
+    var counts = (C_CROSSTAB[currentMovieKey] || {})[ratingKey] || [0, 0, 0, 0, 0, 0, 0];
+    var total = counts.reduce(function (s, c) { return s + c; }, 0);
+
+    var modeIdx = 0;
+    for (var i = 1; i < 7; i++) {
+      if (counts[i] > counts[modeIdx]) modeIdx = i;
+    }
+    var pct = total > 0 ? (counts[modeIdx] / total * 100) : 0;
+    var theta = 2 * Math.PI * modeIdx / 7;
+    var zRe = a * Math.cos(theta);
+    var zIm = a * Math.sin(theta);
+
+    positionDiverging(barCRe, zRe);
+    positionDiverging(barCIm, zIm);
+    valCRe.textContent = fmt4(zRe);
+    valCIm.textContent = fmt4(zIm);
+
+    var movieLabel = currentMovieKey === "matrix" ? "The Matrix" : "Rumble in the Bronx";
+    cAnnotation.textContent = total > 0
+      ? movieLabel + " at " + rating.toFixed(1) + " is most often rated on a " + WEEKDAY_NAMES[modeIdx] +
+        " (" + pct.toFixed(1) + "% of its " + rating.toFixed(1) + "s)."
+      : movieLabel + " has no rating=" + rating.toFixed(1) + " events in this subset.";
+
+    if (cRadiusCircle) cRadiusCircle.setAttribute("r", (a * C_SCALE).toFixed(1));
+    if (cHighlightDot) {
+      cHighlightDot.setAttribute("cx", (C_CX + zRe * C_SCALE).toFixed(1));
+      cHighlightDot.setAttribute("cy", (C_CY - zIm * C_SCALE).toFixed(1));
+      cHighlightDot.classList.toggle("movie-matrix", currentMovieKey === "matrix");
+      cHighlightDot.classList.toggle("movie-rumble", currentMovieKey === "rumble");
+    }
+    if (cHighlightLabel) {
+      cHighlightLabel.setAttribute("x", (C_CX + zRe * C_SCALE).toFixed(1));
+      cHighlightLabel.setAttribute("y", (C_CY - zIm * C_SCALE + 20).toFixed(1));
+      cHighlightLabel.textContent = total > 0
+        ? WEEKDAY_NAMES[modeIdx].slice(0, 3) + " (" + pct.toFixed(1) + "%)"
+        : "no data";
     }
   }
 
@@ -4363,6 +5930,8 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     dAnnotation.textContent = currentB > 0
       ? "Mainstream gravity dominates e₊. The e₋ channel is suppressed."
       : "e₊ collapses. Niche signal dominates e₋.";
+
+    renderComplex(a, rating);
   }
 
   picker.querySelectorAll(".probe-movie-btn").forEach(function (btn) {
@@ -4372,6 +5941,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
         b.setAttribute("aria-pressed", String(b === btn));
       });
       currentB = parseFloat(btn.getAttribute("data-b"));
+      currentMovieKey = btn.getAttribute("data-movie");
       render();
     });
   });
