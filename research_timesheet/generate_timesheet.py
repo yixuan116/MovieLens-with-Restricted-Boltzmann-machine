@@ -344,11 +344,6 @@ tr.subtotal td { font-weight: bold; background: var(--stripe); }
 }
 .sig-line { flex: 1; }
 .sig-rule { border-bottom: 1px solid var(--ink); height: 1.6rem; margin-bottom: 0.2rem; }
-.group-label {
-  font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.04em;
-  color: var(--ink-faint); margin: 0.9rem 0 0.25rem;
-}
-.week-total { text-align: right; font-size: 0.85rem; font-weight: bold; margin: 0.3rem 0 0; }
 .grand-total { margin-top: 2rem; font-size: 0.95rem; font-weight: bold; }
 .manual-section {
   margin-top: 2.4rem; padding-top: 1.2rem; border-top: 2px solid var(--ink);
@@ -439,53 +434,38 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
             f'<div class="week-heading">Week of {wk_start.isoformat()} to {wk_end.isoformat()}</div>'
         )
 
-        commit_rows = [r for r in wk_rows if r["evidence_kind"] == "commit"]
-        chatlog_rows = [r for r in wk_rows if r["evidence_kind"] == "chatlog"]
-        manual_rows_wk = [r for r in wk_rows if r["evidence_kind"] == "manual"]
-
-        for group_label, group_rows in (
-            ("With commit", commit_rows),
-            ("Without commit (chat log only)", chatlog_rows),
-            ("Manually logged", manual_rows_wk),
-        ):
-            if not group_rows:
-                continue
-            group_hours = round(sum(r["hours"] for r in group_rows), 2)
-            body_parts.append(f'<p class="group-label">{escape(group_label)}</p>')
-            body_parts.append("<table>")
+        body_parts.append("<table>")
+        body_parts.append(
+            "<tr><th>Date</th><th>Time Block</th><th class=\"num\">Hours</th>"
+            "<th>Project</th><th>Task Description</th><th>Reference</th></tr>"
+        )
+        for r in wk_rows:
+            date_str = r["start"].strftime("%a %Y-%m-%d")
+            time_block = f'{r["start"].strftime("%H:%M")}&ndash;{r["end"].strftime("%H:%M")}'
+            if r["evidence_kind"] == "commit":
+                evidence = ", ".join(c["hash"][:7] for c in r["commits"])
+                tasks = "; ".join(dict.fromkeys(clean_subject(c["subject"]) for c in r["commits"]))
+            elif r["evidence_kind"] == "manual":
+                evidence = "manual_entries.json"
+                tasks = r.get("topic_preview") or ""
+            else:
+                evidence = f'chat log {r["start"].strftime("%H:%M")}–{r["end"].strftime("%H:%M")}'
+                tasks = r.get("topic_preview") or "(session logged; no message text captured)"
             body_parts.append(
-                "<tr><th>Date</th><th>Time Block</th><th class=\"num\">Hours</th>"
-                "<th>Project</th><th>Task Description</th><th>Reference</th></tr>"
+                "<tr>"
+                f"<td>{escape(date_str)}</td>"
+                f"<td>{time_block}</td>"
+                f'<td class="num">{r["hours"]:.2f}</td>'
+                f'<td>{escape(r["project"])}</td>'
+                f"<td>{escape(tasks)}</td>"
+                f'<td class="evidence">{escape(evidence)}</td>'
+                "</tr>"
             )
-            for r in group_rows:
-                date_str = r["start"].strftime("%a %Y-%m-%d")
-                time_block = f'{r["start"].strftime("%H:%M")}&ndash;{r["end"].strftime("%H:%M")}'
-                if r["evidence_kind"] == "commit":
-                    evidence = ", ".join(c["hash"][:7] for c in r["commits"])
-                    tasks = "; ".join(dict.fromkeys(clean_subject(c["subject"]) for c in r["commits"]))
-                elif r["evidence_kind"] == "manual":
-                    evidence = "manual_entries.json"
-                    tasks = r.get("topic_preview") or ""
-                else:
-                    evidence = f'chat log {r["start"].strftime("%H:%M")}–{r["end"].strftime("%H:%M")}'
-                    tasks = r.get("topic_preview") or "(session logged; no message text captured)"
-                body_parts.append(
-                    "<tr>"
-                    f"<td>{escape(date_str)}</td>"
-                    f"<td>{time_block}</td>"
-                    f'<td class="num">{r["hours"]:.2f}</td>'
-                    f'<td>{escape(r["project"])}</td>'
-                    f"<td>{escape(tasks)}</td>"
-                    f'<td class="evidence">{escape(evidence)}</td>'
-                    "</tr>"
-                )
-            body_parts.append(
-                f'<tr class="subtotal"><td colspan="2">{escape(group_label)} subtotal</td>'
-                f'<td class="num">{group_hours:.2f}</td><td colspan="3"></td></tr>'
-            )
-            body_parts.append("</table>")
-
-        body_parts.append(f'<p class="week-total">Week total: {wk_hours:.2f}h</p>')
+        body_parts.append(
+            f'<tr class="subtotal"><td colspan="2">Weekly subtotal</td>'
+            f'<td class="num">{wk_hours:.2f}</td><td colspan="3"></td></tr>'
+        )
+        body_parts.append("</table>")
 
     if current_month is not None:
         body_parts.append(render_signature_block(month_label(week_starts_sorted_month_anchor(current_month))))
