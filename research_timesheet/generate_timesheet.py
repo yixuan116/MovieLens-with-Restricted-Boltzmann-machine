@@ -372,8 +372,8 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
         "Consecutive activity within the configured session-gap window is merged into one session; a "
         "session's Hours is (last activity &minus; first activity) in that session, floored at the "
         "configured minimum block and rounded to the nearest quarter hour. Sessions that produced a commit "
-        "are evidenced by that commit's hash; sessions that did not are evidenced by the session's own logged "
-        "time range, with the Task Description lifted verbatim from the first real message in that window "
+        "reference that commit's hash; sessions that did not reference the session's own logged time range, "
+        "with the Task Description lifted verbatim from the first real message in that window "
         "(never generated or reworded). " + WEEKLY_TARGET_NOTE + "</p>"
     )
 
@@ -407,7 +407,7 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
             body_parts.append("<table>")
             body_parts.append(
                 "<tr><th>Date</th><th>Time Block</th><th class=\"num\">Hours</th>"
-                "<th>Project</th><th>Task Description</th><th>Evidence</th></tr>"
+                "<th>Project</th><th>Task Description</th><th>Reference</th></tr>"
             )
             for r in group_rows:
                 date_str = r["start"].strftime("%a %Y-%m-%d")
