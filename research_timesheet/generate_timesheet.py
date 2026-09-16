@@ -301,7 +301,37 @@ tr.subtotal td { font-weight: bold; background: var(--stripe); }
 }
 .sig-line { flex: 1; }
 .sig-rule { border-bottom: 1px solid var(--ink); height: 1.6rem; margin-bottom: 0.2rem; }
+.group-label {
+  font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--ink-faint); margin: 0.9rem 0 0.25rem;
+}
+.week-total { text-align: right; font-size: 0.85rem; font-weight: bold; margin: 0.3rem 0 0; }
 .grand-total { margin-top: 2rem; font-size: 0.95rem; font-weight: bold; }
+.manual-section {
+  margin-top: 2.4rem; padding-top: 1.2rem; border-top: 2px solid var(--ink);
+}
+.manual-form {
+  display: grid; grid-template-columns: 8rem 5.5rem 5.5rem 10rem 1fr 6rem;
+  gap: 0.4rem; margin-bottom: 0.6rem; font-size: 0.8rem;
+}
+.manual-form input, .manual-form button {
+  font-family: inherit; font-size: 0.8rem; padding: 0.3rem 0.4rem;
+  border: 1px solid var(--border); background: #fff;
+}
+.manual-form button {
+  background: var(--accent); color: #fff; border-color: var(--accent); cursor: pointer;
+}
+.manual-note { font-size: 0.74rem; color: var(--ink-faint); margin: 0 0 0.8rem; }
+.manual-actions { margin-top: 0.5rem; display: flex; gap: 0.6rem; align-items: center; }
+.manual-actions button {
+  font-family: inherit; font-size: 0.76rem; padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border); background: #fff; cursor: pointer;
+}
+.manual-row-del { color: #a33; cursor: pointer; font-size: 0.76rem; background: none; border: none; text-decoration: underline; }
+#manual-export { width: 100%; font-family: "Courier New", monospace; font-size: 0.7rem; margin-top: 0.5rem; height: 4rem; display: none; }
+@media print {
+  .manual-form, .manual-actions, .manual-row-del { display: none !important; }
+}
 @media print {
   body { padding: 0; }
   .week-heading { break-before: auto; }
@@ -362,49 +392,182 @@ def render_html(cfg: dict, rows: list[dict]) -> str:
         body_parts.append(
             f'<div class="week-heading">Week of {wk_start.isoformat()} to {wk_end.isoformat()}</div>'
         )
-        body_parts.append("<table>")
-        body_parts.append(
-            "<tr><th>Date</th><th>Time Block</th><th class=\"num\">Hours</th>"
-            "<th>Project</th><th>Task Description</th><th>Evidence</th></tr>"
-        )
-        for r in wk_rows:
-            date_str = r["start"].strftime("%a %Y-%m-%d")
-            time_block = f'{r["start"].strftime("%H:%M")}&ndash;{r["end"].strftime("%H:%M")}'
-            if r["evidence_kind"] == "commit":
-                evidence = ", ".join(c["hash"][:7] for c in r["commits"])
-                tasks = "; ".join(dict.fromkeys(clean_subject(c["subject"]) for c in r["commits"]))
-            else:
-                evidence = f'chat log {r["start"].strftime("%H:%M")}–{r["end"].strftime("%H:%M")}'
-                tasks = r.get("topic_preview") or "(session logged; no message text captured)"
+
+        commit_rows = [r for r in wk_rows if r["evidence_kind"] == "commit"]
+        chatlog_rows = [r for r in wk_rows if r["evidence_kind"] != "commit"]
+
+        for group_label, group_rows in (
+            ("With commit", commit_rows),
+            ("Without commit (chat log only)", chatlog_rows),
+        ):
+            if not group_rows:
+                continue
+            group_hours = round(sum(r["hours"] for r in group_rows), 2)
+            body_parts.append(f'<p class="group-label">{escape(group_label)}</p>')
+            body_parts.append("<table>")
             body_parts.append(
-                "<tr>"
-                f"<td>{escape(date_str)}</td>"
-                f"<td>{time_block}</td>"
-                f'<td class="num">{r["hours"]:.2f}</td>'
-                f'<td>{escape(r["project"])}</td>'
-                f"<td>{escape(tasks)}</td>"
-                f'<td class="evidence">{escape(evidence)}</td>'
-                "</tr>"
+                "<tr><th>Date</th><th>Time Block</th><th class=\"num\">Hours</th>"
+                "<th>Project</th><th>Task Description</th><th>Evidence</th></tr>"
             )
-        body_parts.append(
-            f'<tr class="subtotal"><td colspan="2">Weekly subtotal</td>'
-            f'<td class="num">{wk_hours:.2f}</td><td colspan="3"></td></tr>'
-        )
-        body_parts.append("</table>")
+            for r in group_rows:
+                date_str = r["start"].strftime("%a %Y-%m-%d")
+                time_block = f'{r["start"].strftime("%H:%M")}&ndash;{r["end"].strftime("%H:%M")}'
+                if r["evidence_kind"] == "commit":
+                    evidence = ", ".join(c["hash"][:7] for c in r["commits"])
+                    tasks = "; ".join(dict.fromkeys(clean_subject(c["subject"]) for c in r["commits"]))
+                else:
+                    evidence = f'chat log {r["start"].strftime("%H:%M")}–{r["end"].strftime("%H:%M")}'
+                    tasks = r.get("topic_preview") or "(session logged; no message text captured)"
+                body_parts.append(
+                    "<tr>"
+                    f"<td>{escape(date_str)}</td>"
+                    f"<td>{time_block}</td>"
+                    f'<td class="num">{r["hours"]:.2f}</td>'
+                    f'<td>{escape(r["project"])}</td>'
+                    f"<td>{escape(tasks)}</td>"
+                    f'<td class="evidence">{escape(evidence)}</td>'
+                    "</tr>"
+                )
+            body_parts.append(
+                f'<tr class="subtotal"><td colspan="2">{escape(group_label)} subtotal</td>'
+                f'<td class="num">{group_hours:.2f}</td><td colspan="3"></td></tr>'
+            )
+            body_parts.append("</table>")
+
+        body_parts.append(f'<p class="week-total">Week total: {wk_hours:.2f}h</p>')
 
     if current_month is not None:
         body_parts.append(render_signature_block(month_label(week_starts_sorted_month_anchor(current_month))))
 
-    body_parts.append(f'<p class="grand-total">Total hours, {escape(start_label)} to {escape(end_label)}: {total_hours:.2f}</p>')
+    body_parts.append(f'<p class="grand-total">Documented total (commits + chat log), {escape(start_label)} to {escape(end_label)}: {total_hours:.2f}</p>')
+    body_parts.append(MANUAL_SECTION_HTML)
 
     html = (
         "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">"
         "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
         f"<title>Research Timesheet</title><style>{CSS}</style></head><body>"
         + "".join(body_parts) +
+        f'<script>window.__documentedTotal = {total_hours};</script>'
+        + MANUAL_SECTION_JS +
         "</body></html>"
     )
     return html
+
+
+MANUAL_SECTION_HTML = """
+<div class="manual-section">
+  <div class="week-heading">Additional Entries (typed in here, not derived from git/chat logs)</div>
+  <p class="manual-note">These rows are typed in directly and saved in this browser (localStorage) --
+  they are not backed by a commit hash or a logged chat timestamp. Use Export to copy them out as JSON
+  so they can be merged into the generator's data permanently.</p>
+  <table>
+    <tr><th>Date</th><th>Time Block</th><th class="num">Hours</th><th>Project</th><th>Task Description</th><th></th></tr>
+    <tbody id="manual-tbody"></tbody>
+    <tr class="subtotal"><td colspan="2">Additional entries subtotal</td>
+      <td class="num" id="manual-subtotal">0.00</td><td colspan="3"></td></tr>
+  </table>
+  <div class="manual-form">
+    <input type="date" id="m-date">
+    <input type="time" id="m-start" placeholder="start">
+    <input type="time" id="m-end" placeholder="end">
+    <input type="text" id="m-project" placeholder="Project">
+    <input type="text" id="m-task" placeholder="Task description">
+    <button type="button" id="m-add">Add entry</button>
+  </div>
+  <div class="manual-actions">
+    <button type="button" id="m-export">Export as JSON</button>
+    <button type="button" id="m-clear">Clear all</button>
+  </div>
+  <textarea id="manual-export" readonly></textarea>
+  <p class="grand-total" id="combined-total"></p>
+</div>
+"""
+
+MANUAL_SECTION_JS = """
+<script>
+(function () {
+  var KEY = "research_timesheet_manual_entries_v1";
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY) || "[]"); }
+    catch (e) { return []; }
+  }
+  function save(entries) {
+    try { localStorage.setItem(KEY, JSON.stringify(entries)); } catch (e) {}
+  }
+  function hoursBetween(start, end) {
+    var s = start.split(":").map(Number), e = end.split(":").map(Number);
+    var mins = (e[0] * 60 + e[1]) - (s[0] * 60 + s[1]);
+    if (mins < 0) mins += 24 * 60;
+    return Math.round((mins / 60) * 100) / 100;
+  }
+
+  function render() {
+    var entries = load();
+    var tbody = document.getElementById("manual-tbody");
+    tbody.innerHTML = "";
+    var subtotal = 0;
+    entries.forEach(function (e, i) {
+      subtotal += e.hours;
+      var tr = document.createElement("tr");
+      tr.innerHTML =
+        "<td>" + e.date + "</td>" +
+        "<td>" + e.start + "\\u2013" + e.end + "</td>" +
+        "<td class=\\"num\\">" + e.hours.toFixed(2) + "</td>" +
+        "<td></td><td></td><td></td>";
+      tr.children[3].textContent = e.project;
+      tr.children[4].textContent = e.task;
+      var delBtn = document.createElement("button");
+      delBtn.className = "manual-row-del";
+      delBtn.textContent = "remove";
+      delBtn.addEventListener("click", function () {
+        var cur = load();
+        cur.splice(i, 1);
+        save(cur);
+        render();
+      });
+      tr.children[5].appendChild(delBtn);
+      tbody.appendChild(tr);
+    });
+    document.getElementById("manual-subtotal").textContent = subtotal.toFixed(2);
+    var documented = window.__documentedTotal || 0;
+    document.getElementById("combined-total").textContent =
+      "Combined total (documented + additional): " + (documented + subtotal).toFixed(2);
+  }
+
+  document.getElementById("m-add").addEventListener("click", function () {
+    var date = document.getElementById("m-date").value;
+    var start = document.getElementById("m-start").value;
+    var end = document.getElementById("m-end").value;
+    var project = document.getElementById("m-project").value.trim();
+    var task = document.getElementById("m-task").value.trim();
+    if (!date || !start || !end || !task) {
+      alert("Date, start, end, and task description are required.");
+      return;
+    }
+    var entries = load();
+    entries.push({ date: date, start: start, end: end, hours: hoursBetween(start, end), project: project, task: task });
+    save(entries);
+    document.getElementById("m-task").value = "";
+    render();
+  });
+
+  document.getElementById("m-clear").addEventListener("click", function () {
+    if (!confirm("Remove all additional entries in this browser?")) return;
+    save([]);
+    render();
+  });
+
+  document.getElementById("m-export").addEventListener("click", function () {
+    var box = document.getElementById("manual-export");
+    box.value = JSON.stringify(load(), null, 2);
+    box.style.display = box.style.display === "none" ? "block" : "none";
+  });
+
+  render();
+})();
+</script>
+"""
 
 
 def week_starts_sorted_month_anchor(month_tuple):
