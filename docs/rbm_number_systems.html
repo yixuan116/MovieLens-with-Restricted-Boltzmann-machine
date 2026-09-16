@@ -305,6 +305,84 @@
     margin: 0;
   }
 
+  /* sticky rating/movie control bar */
+
+  .probe-sticky-bar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(251, 250, 247, 0.95);
+    backdrop-filter: blur(2px);
+    border-bottom: 1px solid var(--border-strong);
+    padding: 0.5rem 0.7rem;
+  }
+
+  .sticky-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  #probe-sticky-bar .sticky-movie-picker {
+    display: flex;
+    gap: 0.4rem;
+    flex-direction: row;
+  }
+
+  #probe-sticky-bar .sticky-movie-btn {
+    font-family: var(--sans);
+    font-size: 0.76rem;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    color: var(--ink);
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-block;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  #probe-sticky-bar .sticky-movie-btn:hover { border-color: var(--accent); }
+  #probe-sticky-bar .sticky-movie-btn.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  #probe-sticky-bar .sticky-movie-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .sticky-slider-group {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex: 1 1 240px;
+    min-width: 180px;
+  }
+
+  .sticky-slider-label {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .sticky-slider-label span { color: var(--ink); font-weight: 600; }
+
+  .sticky-slider-group input[type="range"] {
+    flex: 1 1 auto;
+    min-width: 90px;
+    accent-color: var(--accent);
+  }
+
+  .sticky-a-readout {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+  .sticky-a-readout span { color: var(--ink-soft); font-weight: 600; }
+
+  .sticky-info { flex-shrink: 0; }
+  #probe-sticky-bar .sticky-info-trigger { padding: 0.3rem 0.45rem; font-size: 0.68rem; }
+
+  @media (max-width: 640px) {
+    .sticky-slider-group { flex-basis: 100%; }
+  }
+
   /* distribution walk */
 
   .distwalk {
@@ -679,10 +757,7 @@
   }
 
   .probe-layout {
-    display: grid;
-    grid-template-columns: minmax(220px, 290px) 1fr;
-    gap: 1.6rem;
-    align-items: start;
+    display: block;
   }
 
   .probe-controls {
@@ -952,10 +1027,6 @@
     margin: 0.6rem 0 0;
   }
   .panel-d .probe-annotation { color: #d5d5d5; }
-
-  @media (max-width: 700px) {
-    .probe-layout { grid-template-columns: 1fr; }
-  }
 
   /* ---------- section 2 : funnel ---------- */
 
@@ -1685,6 +1756,28 @@
     <div class="section-body" id="section-01b-body">
 
       <p class="probe-subtitle">Same 4.0 rating, two different movies. The only variable: how the number system encodes popularity before training begins.</p>
+
+      <div class="probe-sticky-bar" id="probe-sticky-bar">
+        <div class="sticky-row">
+          <div class="probe-movie-picker sticky-movie-picker" id="probe-movie-picker" role="group" aria-label="Choose movie">
+            <button type="button" class="probe-movie-btn sticky-movie-btn active" data-movie="matrix" data-b="1" aria-pressed="true" title="Rank 1 / 977 ratings / b = +1.0">The Matrix</button>
+            <button type="button" class="probe-movie-btn sticky-movie-btn" data-movie="rumble" data-b="-1" aria-pressed="false" title="Rank 1000 / 426 ratings / b = &minus;1.0">Rumble in the Bronx</button>
+          </div>
+          <div class="probe-info sticky-info">
+            <button type="button" class="probe-info-trigger sticky-info-trigger" aria-describedby="probe-b-tooltip">b<span aria-hidden="true">&nbsp;&#9432;</span></button>
+            <div class="probe-info-tooltip" id="probe-b-tooltip" role="tooltip">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated. Ranked by how many people rated it, not by how they rated it. Fixed per movie, independent of the rating itself.</div>
+          </div>
+          <div class="sticky-slider-group">
+            <label class="sticky-slider-label" for="probe-rating-slider">Rating <span id="probe-rating-value">4.0</span></label>
+            <input type="range" id="probe-rating-slider" min="0.5" max="5.0" step="0.5" value="4.0">
+            <span class="sticky-a-readout">a = <span id="probe-a-value">0.7778</span></span>
+          </div>
+          <div class="probe-info sticky-info">
+            <button type="button" class="probe-info-trigger sticky-info-trigger" aria-describedby="probe-a-tooltip">a<span aria-hidden="true">&nbsp;&#9432;</span></button>
+            <div class="probe-info-tooltip" id="probe-a-tooltip" role="tooltip">MovieLens ratings run 0.5 to 5.0; min-max normalizing to (rating&minus;0.5)/4.5 maps that onto [0, 1]. Two reasons: the RBM's visible layer reconstructs through a sigmoid, bounded to (0,1). A raw 4.0 would saturate it. And it puts a on the same scale as b ([&minus;1, +1]) so neither swamps the other in e&#8330;/e&#8331;.</div>
+          </div>
+        </div>
+      </div>
 
       <div class="distwalk">
 
@@ -5331,36 +5424,6 @@
       </div>
 
       <div class="probe-layout">
-
-        <div class="probe-controls">
-
-          <div class="probe-movie-picker" id="probe-movie-picker" role="group" aria-label="Choose movie">
-            <button type="button" class="probe-movie-btn active" data-movie="matrix" data-b="1" aria-pressed="true">
-              <span class="probe-movie-name">The Matrix (1999)</span>
-              <span class="probe-movie-meta">Rank 1 / 977 ratings / b&nbsp;=&nbsp;+1.0</span>
-            </button>
-            <button type="button" class="probe-movie-btn" data-movie="rumble" data-b="-1" aria-pressed="false">
-              <span class="probe-movie-name">Rumble in the Bronx (1995)</span>
-              <span class="probe-movie-meta">Rank 1000 / 426 ratings / b&nbsp;=&nbsp;&minus;1.0</span>
-            </button>
-          </div>
-
-          <div class="probe-info">
-            <button type="button" class="probe-info-trigger" aria-describedby="probe-b-tooltip">What is b?<span aria-hidden="true">&nbsp;&#9432;</span></button>
-            <div class="probe-info-tooltip" id="probe-b-tooltip" role="tooltip">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated. Ranked by how many people rated it, not by how they rated it. Fixed per movie, independent of the rating itself.</div>
-          </div>
-
-          <div class="probe-slider-block">
-            <label class="probe-slider-label" for="probe-rating-slider">Rating: <span id="probe-rating-value">4.0</span></label>
-            <input type="range" id="probe-rating-slider" min="0.5" max="5.0" step="0.5" value="4.0">
-            <p class="probe-formula">a = (rating &minus; 0.5) / 4.5 = <span id="probe-a-value">0.7778</span></p>
-            <div class="probe-info">
-              <button type="button" class="probe-info-trigger" aria-describedby="probe-a-tooltip">How &amp; why?<span aria-hidden="true">&nbsp;&#9432;</span></button>
-              <div class="probe-info-tooltip" id="probe-a-tooltip" role="tooltip">MovieLens ratings run 0.5 to 5.0; min-max normalizing to (rating&minus;0.5)/4.5 maps that onto [0, 1]. Two reasons: the RBM's visible layer reconstructs through a sigmoid, bounded to (0,1). A raw 4.0 would saturate it. And it puts a on the same scale as b ([&minus;1, +1]) so neither swamps the other in e&#8330;/e&#8331;.</div>
-            </div>
-          </div>
-
-        </div>
 
         <div class="probe-viz">
 
