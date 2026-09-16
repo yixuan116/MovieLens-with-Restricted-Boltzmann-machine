@@ -1663,78 +1663,6 @@
         <p class="rankcheck-caption">b's rank is computed only within these 1000 pre-selected movies. Put back in the full 20M-rating dataset, Rumble in the Bronx is rank 371 of 26,744 (top 1.39%). Mainstream, not long-tail.</p>
       </div>
 
-      <div class="probe-layout">
-
-        <div class="probe-controls">
-
-          <div class="probe-movie-picker" id="probe-movie-picker" role="group" aria-label="Choose movie">
-            <button type="button" class="probe-movie-btn active" data-movie="matrix" data-b="1" aria-pressed="true">
-              <span class="probe-movie-name">The Matrix (1999)</span>
-              <span class="probe-movie-meta">Rank 1 / 977 ratings / b&nbsp;=&nbsp;+1.0</span>
-            </button>
-            <button type="button" class="probe-movie-btn" data-movie="rumble" data-b="-1" aria-pressed="false">
-              <span class="probe-movie-name">Rumble in the Bronx (1995)</span>
-              <span class="probe-movie-meta">Rank 1000 / 426 ratings / b&nbsp;=&nbsp;&minus;1.0</span>
-            </button>
-          </div>
-
-          <div class="probe-info">
-            <button type="button" class="probe-info-trigger" aria-describedby="probe-b-tooltip">What is b?<span aria-hidden="true">&nbsp;&#9432;</span></button>
-            <div class="probe-info-tooltip" id="probe-b-tooltip" role="tooltip">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated. Ranked by how many people rated it, not by how they rated it. Fixed per movie, independent of the rating itself.</div>
-          </div>
-
-          <div class="probe-slider-block">
-            <label class="probe-slider-label" for="probe-rating-slider">Rating: <span id="probe-rating-value">4.0</span></label>
-            <input type="range" id="probe-rating-slider" min="0.5" max="5.0" step="0.5" value="4.0">
-            <p class="probe-formula">a = (rating &minus; 0.5) / 4.5 = <span id="probe-a-value">0.7778</span></p>
-            <div class="probe-info">
-              <button type="button" class="probe-info-trigger" aria-describedby="probe-a-tooltip">How &amp; why?<span aria-hidden="true">&nbsp;&#9432;</span></button>
-              <div class="probe-info-tooltip" id="probe-a-tooltip" role="tooltip">MovieLens ratings run 0.5 to 5.0; min-max normalizing to (rating&minus;0.5)/4.5 maps that onto [0, 1]. Two reasons: the RBM's visible layer reconstructs through a sigmoid, bounded to (0,1). A raw 4.0 would saturate it. And it puts a on the same scale as b ([&minus;1, +1]) so neither swamps the other in e&#8330;/e&#8331;.</div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="probe-viz">
-
-          <div class="probe-panel panel-r">
-            <p class="probe-panel-head">&#8477; Real</p>
-            <div class="probe-bar-row">
-              <span class="probe-bar-tag">a</span>
-              <div class="probe-bar-track track-r">
-                <div class="probe-bar-fill fill-r" id="probe-bar-a"></div>
-              </div>
-              <span class="probe-bar-val" id="probe-val-a">0.7778</span>
-            </div>
-            <p class="probe-annotation">Popularity is invisible. Both movies produce identical input.</p>
-          </div>
-
-          <div class="probe-panel panel-d">
-            <p class="probe-panel-head">&#120123; Hyperbolic</p>
-            <div class="probe-bar-row">
-              <span class="probe-bar-tag">e&#8330;</span>
-              <div class="probe-bar-track track-d">
-                <div class="probe-bar-zero"></div>
-                <div class="probe-bar-fill fill-plus" id="probe-bar-plus"></div>
-              </div>
-              <span class="probe-bar-val" id="probe-val-plus">+0.8889</span>
-            </div>
-            <div class="probe-bar-row">
-              <span class="probe-bar-tag">e&#8331;</span>
-              <div class="probe-bar-track track-d">
-                <div class="probe-bar-zero"></div>
-                <div class="probe-bar-fill fill-minus" id="probe-bar-minus"></div>
-              </div>
-              <span class="probe-bar-val" id="probe-val-minus">&minus;0.1111</span>
-            </div>
-            <p class="probe-formula-pair">e&#8330; = (a + b) / 2&nbsp;&nbsp;&nbsp;e&#8331; = (a &minus; b) / 2</p>
-            <p class="probe-annotation" id="probe-d-annotation">Mainstream gravity dominates e&#8330;. The e&#8331; channel is suppressed.</p>
-          </div>
-
-        </div>
-
-      </div>
-
       <div class="e2d-section">
         <p class="e2d-heading">1000 movies, two geometries</p>
         <div class="e2d-grid">
@@ -3795,6 +3723,78 @@
             </svg>
           </div>
         </div>
+      </div>
+
+      <div class="probe-layout">
+
+        <div class="probe-controls">
+
+          <div class="probe-movie-picker" id="probe-movie-picker" role="group" aria-label="Choose movie">
+            <button type="button" class="probe-movie-btn active" data-movie="matrix" data-b="1" aria-pressed="true">
+              <span class="probe-movie-name">The Matrix (1999)</span>
+              <span class="probe-movie-meta">Rank 1 / 977 ratings / b&nbsp;=&nbsp;+1.0</span>
+            </button>
+            <button type="button" class="probe-movie-btn" data-movie="rumble" data-b="-1" aria-pressed="false">
+              <span class="probe-movie-name">Rumble in the Bronx (1995)</span>
+              <span class="probe-movie-meta">Rank 1000 / 426 ratings / b&nbsp;=&nbsp;&minus;1.0</span>
+            </button>
+          </div>
+
+          <div class="probe-info">
+            <button type="button" class="probe-info-trigger" aria-describedby="probe-b-tooltip">What is b?<span aria-hidden="true">&nbsp;&#9432;</span></button>
+            <div class="probe-info-tooltip" id="probe-b-tooltip" role="tooltip">b is the movie's popularity rank in this 1000-movie subset, linearly mapped to [&minus;1, +1]. +1 = most-rated movie, &minus;1 = least-rated. Ranked by how many people rated it, not by how they rated it. Fixed per movie, independent of the rating itself.</div>
+          </div>
+
+          <div class="probe-slider-block">
+            <label class="probe-slider-label" for="probe-rating-slider">Rating: <span id="probe-rating-value">4.0</span></label>
+            <input type="range" id="probe-rating-slider" min="0.5" max="5.0" step="0.5" value="4.0">
+            <p class="probe-formula">a = (rating &minus; 0.5) / 4.5 = <span id="probe-a-value">0.7778</span></p>
+            <div class="probe-info">
+              <button type="button" class="probe-info-trigger" aria-describedby="probe-a-tooltip">How &amp; why?<span aria-hidden="true">&nbsp;&#9432;</span></button>
+              <div class="probe-info-tooltip" id="probe-a-tooltip" role="tooltip">MovieLens ratings run 0.5 to 5.0; min-max normalizing to (rating&minus;0.5)/4.5 maps that onto [0, 1]. Two reasons: the RBM's visible layer reconstructs through a sigmoid, bounded to (0,1). A raw 4.0 would saturate it. And it puts a on the same scale as b ([&minus;1, +1]) so neither swamps the other in e&#8330;/e&#8331;.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="probe-viz">
+
+          <div class="probe-panel panel-r">
+            <p class="probe-panel-head">&#8477; Real</p>
+            <div class="probe-bar-row">
+              <span class="probe-bar-tag">a</span>
+              <div class="probe-bar-track track-r">
+                <div class="probe-bar-fill fill-r" id="probe-bar-a"></div>
+              </div>
+              <span class="probe-bar-val" id="probe-val-a">0.7778</span>
+            </div>
+            <p class="probe-annotation">Popularity is invisible. Both movies produce identical input.</p>
+          </div>
+
+          <div class="probe-panel panel-d">
+            <p class="probe-panel-head">&#120123; Hyperbolic</p>
+            <div class="probe-bar-row">
+              <span class="probe-bar-tag">e&#8330;</span>
+              <div class="probe-bar-track track-d">
+                <div class="probe-bar-zero"></div>
+                <div class="probe-bar-fill fill-plus" id="probe-bar-plus"></div>
+              </div>
+              <span class="probe-bar-val" id="probe-val-plus">+0.8889</span>
+            </div>
+            <div class="probe-bar-row">
+              <span class="probe-bar-tag">e&#8331;</span>
+              <div class="probe-bar-track track-d">
+                <div class="probe-bar-zero"></div>
+                <div class="probe-bar-fill fill-minus" id="probe-bar-minus"></div>
+              </div>
+              <span class="probe-bar-val" id="probe-val-minus">&minus;0.1111</span>
+            </div>
+            <p class="probe-formula-pair">e&#8330; = (a + b) / 2&nbsp;&nbsp;&nbsp;e&#8331; = (a &minus; b) / 2</p>
+            <p class="probe-annotation" id="probe-d-annotation">Mainstream gravity dominates e&#8330;. The e&#8331; channel is suppressed.</p>
+          </div>
+
+        </div>
+
       </div>
 
 
