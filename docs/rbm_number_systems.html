@@ -872,6 +872,35 @@
     margin-bottom: 0;
   }
 
+  .v2-step2-wschema { margin: 0.4rem 0 0.6rem; }
+  .v2-step2-wschema-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin: 0 0 0.2rem;
+  }
+  .v2-step2-wschema-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--ink-faint);
+    min-width: 9rem;
+    flex: 0 0 auto;
+  }
+  .v2-step2-wschema-label.label-matrix { color: var(--accent); }
+  .v2-step2-wschema-label.label-rumble { color: #e67e22; }
+  .v2-step2-wschema-ellipsis {
+    font-family: var(--mono);
+    color: var(--ink-faint);
+    letter-spacing: 0.2em;
+  }
+  .v2-step2-wschema-content {
+    display: inline-block;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  .v2-step2-wschema-content .katex { font-size: 0.8rem; }
+
   .v2-interp-info { display: block; }
   .v2-info-trigger {
     display: inline-block;
@@ -2455,9 +2484,48 @@
           <div class="v2-step1-katex" id="v2-step2-W"></div>
           <p class="v2-step1-line">w&#8330; and w&#8331; are learned by CD-1; they are kept as symbols here.</p>
 
+          <p class="v2-step1-line">Rows are the 1000 movies, columns are the 128 hidden units h&#8321;, h&#8322;, &hellip;, h&#8321;&#8322;&#8328;.</p>
+          <div class="v2-step2-wschema">
+            <div class="v2-step2-wschema-row">
+              <span class="v2-step2-wschema-label"></span>
+              <span class="v2-step2-wschema-ellipsis">&#8942;</span>
+            </div>
+            <div class="v2-step2-wschema-row">
+              <span class="v2-step2-wschema-label label-matrix">The Matrix</span>
+              <span class="v2-step2-wschema-content v2-step1-inline-katex" id="v2-step2-w-row-matrix"></span>
+            </div>
+            <div class="v2-step2-wschema-row">
+              <span class="v2-step2-wschema-label"></span>
+              <span class="v2-step2-wschema-ellipsis">&#8942;</span>
+            </div>
+            <div class="v2-step2-wschema-row">
+              <span class="v2-step2-wschema-label label-rumble">Rumble in the Bronx</span>
+              <span class="v2-step2-wschema-content v2-step1-inline-katex" id="v2-step2-w-row-rumble"></span>
+            </div>
+            <div class="v2-step2-wschema-row">
+              <span class="v2-step2-wschema-label"></span>
+              <span class="v2-step2-wschema-ellipsis">&#8942;</span>
+            </div>
+          </div>
+          <p class="v2-step1-line">W&#8331; has the identical structure.</p>
+          <p class="v2-step1-line">One row = one movie's weights to all 128 hidden units. 1000 movies, 1000 rows.</p>
+
           <p class="quad-card-title">A rating alone (b = 0)</p>
           <div class="v2-step1-katex" id="v2-step2-r-live"></div>
           <p class="v2-step1-line">r&middot;I is already diagonal, so it multiplies the weights directly.</p>
+
+          <div class="quad-card-pair v2-step1-values">
+            <div class="card-half">
+              <p class="card-half-label label-matrix">The Matrix</p>
+              <div class="v2-step1-chain" id="v2-step2-rw-plus-matrix"></div>
+              <div class="v2-step1-chain" id="v2-step2-rw-minus-matrix"></div>
+            </div>
+            <div class="card-half">
+              <p class="card-half-label label-rumble">Rumble in the Bronx</p>
+              <div class="v2-step1-chain" id="v2-step2-rw-plus-rumble"></div>
+              <div class="v2-step1-chain" id="v2-step2-rw-minus-rumble"></div>
+            </div>
+          </div>
 
           <p class="quad-card-title">Rating plus popularity</p>
           <p class="v2-step1-line v2-step1-inline-katex">First diagonalize the input with P&nbsp;=&nbsp;<span id="v2-step2-P-inline"></span> and P<sup>&minus;1</sup>&nbsp;=&nbsp;<span id="v2-step2-Pinv-inline"></span>:</p>
@@ -4863,6 +4931,38 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       document.getElementById("v2-step2-multiply"),
       { throwOnError: false, displayMode: true }
     );
+    katex.render(
+      "(w_{+,\\text{Matrix},1},\\ w_{+,\\text{Matrix},2},\\ \\ldots,\\ w_{+,\\text{Matrix},128})",
+      document.getElementById("v2-step2-w-row-matrix"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "(w_{+,\\text{Rumble},1},\\ w_{+,\\text{Rumble},2},\\ \\ldots,\\ w_{+,\\text{Rumble},128})",
+      document.getElementById("v2-step2-w-row-rumble"),
+      { throwOnError: false, displayMode: false }
+    );
+  }
+
+  var STEP2_LABELS = { matrix: "Matrix", rumble: "Rumble" };
+
+  function renderStep2RWRow(key, rating) {
+    var elPlus = document.getElementById("v2-step2-rw-plus-" + key);
+    var elMinus = document.getElementById("v2-step2-rw-minus-" + key);
+    if (!window.katex) return;
+    var rStr = fmtTrim(rating);
+    var name = STEP2_LABELS[key];
+    if (elPlus) {
+      katex.render(
+        rStr + " \\cdot (w_{+,\\text{" + name + "},1},\\ \\ldots,\\ w_{+,\\text{" + name + "},128})",
+        elPlus, { throwOnError: false, displayMode: false }
+      );
+    }
+    if (elMinus) {
+      katex.render(
+        rStr + " \\cdot (w_{-,\\text{" + name + "},1},\\ \\ldots,\\ w_{-,\\text{" + name + "},128})",
+        elMinus, { throwOnError: false, displayMode: false }
+      );
+    }
   }
 
   function renderStep2RAlone(rating) {
@@ -4960,6 +5060,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
 
     renderStep1AChain(key, a, rating);
     renderStep1Chain(key, a, b);
+    renderStep2RWRow(key, rating);
 
     var r2Vline = document.getElementById("v2-r2-vline-" + key);
     if (r2Vline) {
