@@ -888,7 +888,7 @@
   .v2-step1-worked-toggle:focus-visible { color: var(--accent); border-color: var(--accent); }
   .v2-step1-worked-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  #v2-step1-worked-body[hidden] { display: none; }
+  #v2-step1-worked-body[hidden], #v2-step2-worked-body[hidden] { display: none; }
   #v2-step1-worked-body .v2-step1-note { grid-column: 1 / -1; margin-top: 0.4rem; }
 
   .v2-step2-wschema-item.v2-step1-katex .katex { font-size: 0.72rem; }
@@ -2472,10 +2472,18 @@
         </div>
 
         <div class="v2-step1">
-          <span class="distwalk-layer-tag">Step 2 &middot; Hyperbolic weights</span>
+          <span class="distwalk-layer-tag">Step 2 &middot; Diagonalize the input</span>
+
+          <p class="v2-step1-line v2-step1-inline-katex">First diagonalize the input with P&nbsp;=&nbsp;<span id="v2-step2-P-inline"></span> and P<sup>&minus;1</sup>&nbsp;=&nbsp;<span id="v2-step2-Pinv-inline"></span>:</p>
+          <div class="v2-step1-katex" id="v2-step2-diag"></div>
+          <p class="v2-step1-line v2-step1-note">For a rating alone, r&middot;I is already diagonal. e&#8330; = (a + b)/2 and e&#8331; = (a &minus; b)/2 are half of the diagonal entries.</p>
+        </div>
+
+        <div class="v2-step1">
+          <span class="distwalk-layer-tag">Step 3 &middot; Hyperbolic weights</span>
 
           <div class="v2-step1-katex" id="v2-step2-W"></div>
-          <p class="v2-step1-line">w&#8330; and w&#8331; are learned by CD-1; they are kept as symbols here.</p>
+          <p class="v2-step1-line">i = movie, j = hidden unit. Each W<sub>ij</sub> is one cell of the matrices below; w&#8330; and w&#8331; are learned by CD-1 and kept as symbols here.</p>
 
           <p class="v2-step1-line">Rows are the 1000 movies, columns are the 128 hidden units h&#8321;, h&#8322;, &hellip;, h&#8321;&#8322;&#8328;.</p>
           <div class="quad-pair v2-step2-wschema-pair">
@@ -2483,12 +2491,19 @@
             <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-minus"></div>
           </div>
           <p class="v2-step1-line">One row = one movie's weights to all 128 hidden units. 1000 movies, 1000 rows.</p>
+        </div>
+
+        <div class="v2-step1">
+          <span class="distwalk-layer-tag">Step 4 &middot; Multiply input by weights</span>
 
           <p class="quad-card-title">A rating alone (b = 0)</p>
           <div class="v2-step1-katex" id="v2-step2-r-live"></div>
-          <p class="v2-step1-line">r&middot;I is already diagonal, so it multiplies the weights directly.</p>
 
-          <div class="quad-card-pair v2-step1-values">
+          <p class="quad-card-title">Rating plus popularity</p>
+          <div class="v2-step1-katex" id="v2-step2-multiply"></div>
+
+          <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step2-worked-body">Worked example: each movie uses its own row<span aria-hidden="true">&nbsp;&#9432;</span></button>
+          <div class="quad-card-pair v2-step1-values" id="v2-step2-worked-body" hidden>
             <div class="card-half">
               <p class="card-half-label label-matrix">The Matrix</p>
               <div class="v2-step1-chain" id="v2-step2-rw-plus-matrix"></div>
@@ -2501,13 +2516,7 @@
             </div>
           </div>
 
-          <p class="quad-card-title">Rating plus popularity</p>
-          <p class="v2-step1-line v2-step1-inline-katex">First diagonalize the input with P&nbsp;=&nbsp;<span id="v2-step2-P-inline"></span> and P<sup>&minus;1</sup>&nbsp;=&nbsp;<span id="v2-step2-Pinv-inline"></span>:</p>
-          <div class="v2-step1-katex" id="v2-step2-diag"></div>
-          <p class="v2-step1-line">Then multiply:</p>
-          <div class="v2-step1-katex" id="v2-step2-multiply"></div>
-
-          <p class="v2-step1-line v2-step1-note">Each channel multiplies only its own weight, with no cross terms; e&#8330; = (a+b)/2 and e&#8331; = (a&minus;b)/2 shown below are half of the input's diagonal entries.</p>
+          <p class="v2-step1-line v2-step1-note">Each channel multiplies only its own weight, with no cross terms.</p>
         </div>
 
         <p class="v2-interpretation">b is the movie's popularity rank in this 1000-movie subset, mapped to [&minus;1, +1]. Ranked by rating count, not score.<br>e&#8330; averages rating and popularity (consensus channel).<br>e&#8331; measures how far they diverge (divergence channel).<br>When b flips sign, e&#8330; and e&#8331; swap.</p>
@@ -4881,7 +4890,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: false }
     );
     katex.render(
-      "W = \\begin{bmatrix} w_+ & 0 \\\\ 0 & w_- \\end{bmatrix}",
+      "W_{ij} = \\begin{bmatrix} w_{+,ij} & 0 \\\\ 0 & w_{-,ij} \\end{bmatrix}",
       document.getElementById("v2-step2-W"),
       { throwOnError: false, displayMode: true }
     );
@@ -4901,7 +4910,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "\\begin{bmatrix} a+b & 0 \\\\ 0 & a-b \\end{bmatrix} \\cdot \\begin{bmatrix} w_+ & 0 \\\\ 0 & w_- \\end{bmatrix} = \\begin{bmatrix} (a+b)\\cdot w_+ & 0 \\\\ 0 & (a-b)\\cdot w_- \\end{bmatrix}",
+      "\\begin{bmatrix} a+b & 0 \\\\ 0 & a-b \\end{bmatrix} \\cdot \\begin{bmatrix} w_{+,ij} & 0 \\\\ 0 & w_{-,ij} \\end{bmatrix} = \\begin{bmatrix} (a+b)\\cdot w_{+,ij} & 0 \\\\ 0 & (a-b)\\cdot w_{-,ij} \\end{bmatrix}",
       document.getElementById("v2-step2-multiply"),
       { throwOnError: false, displayMode: true }
     );
@@ -4953,8 +4962,8 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     var el = document.getElementById("v2-step2-r-live");
     if (!el || !window.katex) return;
     var rStr = fmtTrim(rating);
-    var latex = "\\begin{bmatrix} " + rStr + " & 0 \\\\ 0 & " + rStr + " \\end{bmatrix} \\cdot \\begin{bmatrix} w_+ & 0 \\\\ 0 & w_- \\end{bmatrix} = \\begin{bmatrix} " +
-      rStr + "w_+ & 0 \\\\ 0 & " + rStr + "w_- \\end{bmatrix}";
+    var latex = "\\begin{bmatrix} " + rStr + " & 0 \\\\ 0 & " + rStr + " \\end{bmatrix} \\cdot \\begin{bmatrix} w_{+,ij} & 0 \\\\ 0 & w_{-,ij} \\end{bmatrix} = \\begin{bmatrix} " +
+      rStr + "w_{+,ij} & 0 \\\\ 0 & " + rStr + "w_{-,ij} \\end{bmatrix}";
     katex.render(latex, el, { throwOnError: false, displayMode: true });
   }
 
