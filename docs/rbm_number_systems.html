@@ -859,15 +859,12 @@
   }
   .v2-step1-katex .katex { font-size: 0.95rem; }
   .v2-step1-inline-katex .katex { font-size: 0.85rem; }
-  .v2-step1-ab {
-    color: var(--ink);
-    overflow-x: auto;
-  }
   .v2-step1-chain {
     color: var(--ink);
-    margin: 0;
+    margin: 0 0 0.35rem;
     overflow-x: auto;
   }
+  .v2-step1-chain:last-child { margin-bottom: 0; }
   .v2-step1-chain .katex { font-size: 0.8rem; }
   .v2-step1-note {
     font-style: italic;
@@ -2420,30 +2417,35 @@
         <p class="v2-formula">z = a + bk, k<sup>2</sup> = +1 &nbsp;&rarr;&nbsp; e&#8330; = (a+b)/2, e&#8331; = (a&minus;b)/2</p>
         <div class="v2-step1">
           <span class="distwalk-layer-tag">Step 1 &middot; From matrix to hyperbolic number</span>
+
           <div class="v2-step1-katex" id="v2-step1-general"></div>
-          <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step1-a-def-inline"></span>, the normalized rating in [0, 1]. Moves with the slider.</p>
-          <p class="v2-step1-line">b = the movie's popularity rank by rating count within the 1000-movie subset, mapped linearly to [&minus;1, +1] (+1 = most-rated, &minus;1 = least-rated). Fixed per movie, independent of the rating value.</p>
-          <div class="quad-card-pair v2-step1-values">
-            <div class="card-half">
-              <p class="card-half-label label-matrix">The Matrix</p>
-              <div class="v2-step1-ab v2-step1-inline-katex" id="v2-step1-ab-matrix"></div>
-            </div>
-            <div class="card-half">
-              <p class="card-half-label label-rumble">Rumble in the Bronx</p>
-              <div class="v2-step1-ab v2-step1-inline-katex" id="v2-step1-ab-rumble"></div>
-            </div>
-          </div>
+
           <p class="v2-step1-line v2-step1-inline-katex">The identity matrix I plays the role of 1, the matrix K&nbsp;=&nbsp;<span id="v2-step1-K-inline"></span>&nbsp;plays the role of k, and <span id="v2-step1-KK-inline"></span>, which is why k<sup>2</sup> = +1.</p>
+
+          <p class="quad-card-title">A rating alone (b = 0)</p>
+          <div class="v2-step1-katex" id="v2-step1-r-symbolic"></div>
+          <div class="v2-step1-katex" id="v2-step1-r-live"></div>
+          <p class="v2-step1-line">A plain rating is a hyperbolic number with zero hyperbolic part. Its matrix is diagonal; this is all &#8477; can see.</p>
+
+          <p class="quad-card-title">Rating plus popularity</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step1-a-def-inline"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step1-b-def-inline"></span> where rank is the movie's popularity rank by rating count within the 1000-movie subset (rank 1 &rarr; b = +1, rank 1000 &rarr; b = &minus;1).</p>
+
           <div class="quad-card-pair v2-step1-values">
             <div class="card-half">
               <p class="card-half-label label-matrix">The Matrix</p>
+              <div class="v2-step1-chain" id="v2-step1-a-chain-matrix"></div>
+              <div class="v2-step1-chain" id="v2-step1-b-chain-matrix"></div>
               <div class="v2-step1-chain" id="v2-step1-chain-matrix"></div>
             </div>
             <div class="card-half">
               <p class="card-half-label label-rumble">Rumble in the Bronx</p>
+              <div class="v2-step1-chain" id="v2-step1-a-chain-rumble"></div>
+              <div class="v2-step1-chain" id="v2-step1-b-chain-rumble"></div>
               <div class="v2-step1-chain" id="v2-step1-chain-rumble"></div>
             </div>
           </div>
+
           <p class="v2-step1-line v2-step1-note">Same real part, opposite hyperbolic part. &#8477; sees only the real part.</p>
         </div>
         <p class="v2-interpretation">b is the movie's popularity rank in this 1000-movie subset, mapped to [&minus;1, +1]. Ranked by rating count, not score.<br>e&#8330; averages rating and popularity (consensus channel).<br>e&#8331; measures how far they diverge (divergence channel).<br>When b flips sign, e&#8330; and e&#8331; swap.</p>
@@ -4776,20 +4778,20 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
   var aLabel = document.getElementById("v2-a-value");
 
   var MOVIES = {
-    matrix: { id: "2571", b: 1 },
-    rumble: { id: "112", b: -1 }
+    matrix: { id: "2571", b: 1, rank: 1 },
+    rumble: { id: "112", b: -1, rank: 1000 }
   };
+
+  function fmtTrim(x) {
+    var s = x.toFixed(1);
+    return s.slice(-2) === ".0" ? s.slice(0, -2) : s;
+  }
 
   if (window.katex) {
     katex.render(
       "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix} = a \\cdot \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix} + b \\cdot \\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix} = a + b \\cdot k",
       document.getElementById("v2-step1-general"),
       { throwOnError: false, displayMode: true }
-    );
-    katex.render(
-      "a = (\\text{rating} - 0.5) / 4.5",
-      document.getElementById("v2-step1-a-def-inline"),
-      { throwOnError: false, displayMode: false }
     );
     katex.render(
       "\\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix}",
@@ -4801,6 +4803,49 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       document.getElementById("v2-step1-KK-inline"),
       { throwOnError: false, displayMode: false }
     );
+    katex.render(
+      "\\begin{bmatrix} r & 0 \\\\ 0 & r \\end{bmatrix} = r \\cdot I + 0 \\cdot K = r + 0 \\cdot k",
+      document.getElementById("v2-step1-r-symbolic"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "a = (\\text{rating} - 0.5) / 4.5",
+      document.getElementById("v2-step1-a-def-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "b = 1 - 2 \\cdot (\\text{rank} - 1) / 999",
+      document.getElementById("v2-step1-b-def-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+  }
+
+  function renderStep1RAlone(rating) {
+    var el = document.getElementById("v2-step1-r-live");
+    if (!el || !window.katex) return;
+    var rStr = fmtTrim(rating);
+    var latex = "\\begin{bmatrix} " + rStr + " & 0 \\\\ 0 & " + rStr + " \\end{bmatrix} = " +
+      rStr + " \\cdot I + 0 \\cdot K = " + rStr + " + 0 \\cdot k";
+    katex.render(latex, el, { throwOnError: false, displayMode: true });
+  }
+
+  function renderStep1AChain(key, a, rating) {
+    var el = document.getElementById("v2-step1-a-chain-" + key);
+    if (!el || !window.katex) return;
+    var ratingStr = rating.toFixed(1);
+    var diffStr = (rating - 0.5).toFixed(1);
+    var latex = "a = (" + ratingStr + " - 0.5) / 4.5 = " + diffStr + " / 4.5 = " + a.toFixed(4);
+    katex.render(latex, el, { throwOnError: false, displayMode: false });
+  }
+
+  function renderStep1BChain(key, rank, b) {
+    var el = document.getElementById("v2-step1-b-chain-" + key);
+    if (!el || !window.katex) return;
+    var term = 2 * (rank - 1) / 999;
+    var termStr = term.toFixed(term % 1 === 0 ? 0 : 4);
+    var bStr = (b >= 0 ? "+" : "") + b.toFixed(1);
+    var latex = "b = 1 - 2 \\cdot (" + rank + " - 1) / 999 = 1 - " + termStr + " = " + bStr;
+    katex.render(latex, el, { throwOnError: false, displayMode: false });
   }
 
   function renderStep1Chain(key, a, b) {
@@ -4815,13 +4860,8 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     katex.render(latex, el, { throwOnError: false, displayMode: false });
   }
 
-  function renderStep1AB(key, a, b) {
-    var el = document.getElementById("v2-step1-ab-" + key);
-    if (!el || !window.katex) return;
-    var aStr = a.toFixed(4);
-    var bSigned = (b >= 0 ? "+" : "-") + Math.abs(b).toFixed(1);
-    var latex = "a = " + aStr + ", \\quad b = " + bSigned;
-    katex.render(latex, el, { throwOnError: false, displayMode: false });
+  for (var step1Key in MOVIES) {
+    renderStep1BChain(step1Key, MOVIES[step1Key].rank, MOVIES[step1Key].b);
   }
 
   var complexData = {"2571":{"0.5":{"0":1,"1":1,"2":3,"3":0,"4":0,"5":0,"6":0},"1.0":{"0":1,"1":1,"2":2,"3":1,"4":1,"5":1,"6":0},"1.5":{"0":0,"1":2,"2":1,"3":1,"4":2,"5":0,"6":0},"2.0":{"0":5,"1":5,"2":3,"3":6,"4":1,"5":5,"6":8},"2.5":{"0":2,"1":6,"2":4,"3":1,"4":1,"5":1,"6":3},"3.0":{"0":11,"1":17,"2":15,"3":16,"4":16,"5":10,"6":13},"3.5":{"0":12,"1":12,"2":10,"3":12,"4":9,"5":12,"6":12},"4.0":{"0":35,"1":34,"2":36,"3":24,"4":34,"5":38,"6":37},"4.5":{"0":23,"1":30,"2":24,"3":20,"4":25,"5":18,"6":31},"5.0":{"0":44,"1":69,"2":41,"3":47,"4":39,"5":40,"6":42}},"112":{"0.5":{"0":1,"1":1,"2":1,"3":1,"4":0,"5":0,"6":2},"1.0":{"0":2,"1":2,"2":2,"3":2,"4":4,"5":0,"6":4},"1.5":{"0":4,"1":0,"2":2,"3":1,"4":1,"5":0,"6":1},"2.0":{"0":3,"1":9,"2":7,"3":3,"4":6,"5":6,"6":12},"2.5":{"0":4,"1":2,"2":2,"3":6,"4":4,"5":5,"6":6},"3.0":{"0":23,"1":20,"2":23,"3":17,"4":19,"5":17,"6":18},"3.5":{"0":9,"1":14,"2":7,"3":10,"4":7,"5":4,"6":7},"4.0":{"0":23,"1":22,"2":13,"3":13,"4":9,"5":16,"6":6},"4.5":{"0":2,"1":1,"2":3,"3":1,"4":2,"5":1,"6":1},"5.0":{"0":2,"1":1,"2":3,"3":1,"4":4,"5":1,"6":0}}};
@@ -4864,7 +4904,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     var movie = MOVIES[key];
     var b = movie.b;
 
-    renderStep1AB(key, a, b);
+    renderStep1AChain(key, a, rating);
     renderStep1Chain(key, a, b);
 
     var r2Vline = document.getElementById("v2-r2-vline-" + key);
@@ -4948,6 +4988,8 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     var a = (rating - 0.5) / 4.5;
     ratingLabel.textContent = rating.toFixed(1);
     aLabel.textContent = a.toFixed(4);
+
+    renderStep1RAlone(rating);
 
     var mResult = renderMovie("matrix", a, rating);
     var rResult = renderMovie("rumble", a, rating);
