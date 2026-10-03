@@ -859,6 +859,10 @@
   }
   .v2-step1-katex .katex { font-size: 0.95rem; }
   .v2-step1-inline-katex .katex { font-size: 0.85rem; }
+  .v2-step1-ab {
+    color: var(--ink);
+    overflow-x: auto;
+  }
   .v2-step1-chain {
     color: var(--ink);
     margin: 0;
@@ -2417,6 +2421,18 @@
         <div class="v2-step1">
           <span class="distwalk-layer-tag">Step 1 &middot; From matrix to hyperbolic number</span>
           <div class="v2-step1-katex" id="v2-step1-general"></div>
+          <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step1-a-def-inline"></span>, the normalized rating in [0, 1]. Moves with the slider.</p>
+          <p class="v2-step1-line">b = the movie's popularity rank by rating count within the 1000-movie subset, mapped linearly to [&minus;1, +1] (+1 = most-rated, &minus;1 = least-rated). Fixed per movie, independent of the rating value.</p>
+          <div class="quad-card-pair v2-step1-values">
+            <div class="card-half">
+              <p class="card-half-label label-matrix">The Matrix</p>
+              <div class="v2-step1-ab v2-step1-inline-katex" id="v2-step1-ab-matrix"></div>
+            </div>
+            <div class="card-half">
+              <p class="card-half-label label-rumble">Rumble in the Bronx</p>
+              <div class="v2-step1-ab v2-step1-inline-katex" id="v2-step1-ab-rumble"></div>
+            </div>
+          </div>
           <p class="v2-step1-line v2-step1-inline-katex">The identity matrix I plays the role of 1, the matrix K&nbsp;=&nbsp;<span id="v2-step1-K-inline"></span>&nbsp;plays the role of k, and <span id="v2-step1-KK-inline"></span>, which is why k<sup>2</sup> = +1.</p>
           <div class="quad-card-pair v2-step1-values">
             <div class="card-half">
@@ -4771,6 +4787,11 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: true }
     );
     katex.render(
+      "a = (\\text{rating} - 0.5) / 4.5",
+      document.getElementById("v2-step1-a-def-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
       "\\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix}",
       document.getElementById("v2-step1-K-inline"),
       { throwOnError: false, displayMode: false }
@@ -4791,6 +4812,15 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     var sign = b >= 0 ? "+" : "-";
     var latex = "\\begin{bmatrix} " + aStr + " & " + bSigned + " \\\\ " + bSigned + " & " + aStr + " \\end{bmatrix} = " +
       aStr + " \\cdot I " + sign + " " + bAbs + " \\cdot K = " + aStr + " " + sign + " " + bAbs + "k";
+    katex.render(latex, el, { throwOnError: false, displayMode: false });
+  }
+
+  function renderStep1AB(key, a, b) {
+    var el = document.getElementById("v2-step1-ab-" + key);
+    if (!el || !window.katex) return;
+    var aStr = a.toFixed(4);
+    var bSigned = (b >= 0 ? "+" : "-") + Math.abs(b).toFixed(1);
+    var latex = "a = " + aStr + ", \\quad b = " + bSigned;
     katex.render(latex, el, { throwOnError: false, displayMode: false });
   }
 
@@ -4834,6 +4864,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     var movie = MOVIES[key];
     var b = movie.b;
 
+    renderStep1AB(key, a, b);
     renderStep1Chain(key, a, b);
 
     var r2Vline = document.getElementById("v2-r2-vline-" + key);
