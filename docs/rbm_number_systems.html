@@ -891,7 +891,8 @@
   #v2-step1-worked-body[hidden] { display: none; }
   #v2-step1-worked-body .v2-step1-note { grid-column: 1 / -1; margin-top: 0.4rem; }
 
-  #v2-step2-wschema.v2-step1-katex .katex { font-size: 0.78rem; }
+  .v2-step2-wschema-item.v2-step1-katex .katex { font-size: 0.72rem; }
+  .v2-step2-wschema-pair { margin: 0 0 0.6rem; }
 
   .v2-interp-info { display: block; }
   .v2-info-trigger {
@@ -2477,8 +2478,10 @@
           <p class="v2-step1-line">w&#8330; and w&#8331; are learned by CD-1; they are kept as symbols here.</p>
 
           <p class="v2-step1-line">Rows are the 1000 movies, columns are the 128 hidden units h&#8321;, h&#8322;, &hellip;, h&#8321;&#8322;&#8328;.</p>
-          <div class="v2-step1-katex" id="v2-step2-wschema"></div>
-          <p class="v2-step1-line">W&#8331; has the identical structure.</p>
+          <div class="quad-pair v2-step2-wschema-pair">
+            <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-plus"></div>
+            <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-minus"></div>
+          </div>
           <p class="v2-step1-line">One row = one movie's weights to all 128 hidden units. 1000 movies, 1000 rows.</p>
 
           <p class="quad-card-title">A rating alone (b = 0)</p>
@@ -4902,16 +4905,24 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       document.getElementById("v2-step2-multiply"),
       { throwOnError: false, displayMode: true }
     );
+    function wschemaLatex(sign, symbol) {
+      return symbol + " = \\left[\\begin{array}{c|cccc}" +
+        " & h_1 & h_2 & \\cdots & h_{128} \\\\ \\hline" +
+        " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots \\\\" +
+        " \\textcolor{#33506c}{\\text{The Matrix}} & w_{" + sign + ",\\text{Matrix},1} & w_{" + sign + ",\\text{Matrix},2} & \\cdots & w_{" + sign + ",\\text{Matrix},128} \\\\" +
+        " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots \\\\" +
+        " \\textcolor{#e67e22}{\\text{Rumble in the Bronx}} & w_{" + sign + ",\\text{Rumble},1} & w_{" + sign + ",\\text{Rumble},2} & \\cdots & w_{" + sign + ",\\text{Rumble},128} \\\\" +
+        " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots" +
+        "\\end{array}\\right]";
+    }
     katex.render(
-      "W_+ = \\left[\\begin{array}{c|cccc}" +
-      " & h_1 & h_2 & \\cdots & h_{128} \\\\ \\hline" +
-      " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots \\\\" +
-      " \\textcolor{#33506c}{\\text{The Matrix}} & w_{+,\\text{Matrix},1} & w_{+,\\text{Matrix},2} & \\cdots & w_{+,\\text{Matrix},128} \\\\" +
-      " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots \\\\" +
-      " \\textcolor{#e67e22}{\\text{Rumble in the Bronx}} & w_{+,\\text{Rumble},1} & w_{+,\\text{Rumble},2} & \\cdots & w_{+,\\text{Rumble},128} \\\\" +
-      " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots" +
-      "\\end{array}\\right]",
-      document.getElementById("v2-step2-wschema"),
+      wschemaLatex("+", "W_+"),
+      document.getElementById("v2-step2-wschema-plus"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      wschemaLatex("-", "W_-"),
+      document.getElementById("v2-step2-wschema-minus"),
       { throwOnError: false, displayMode: true }
     );
   }
