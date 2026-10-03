@@ -720,6 +720,11 @@
     margin: 0 0 0.25rem;
   }
 
+  #hyperbolic-weights { scroll-margin-top: 56px; }
+  @media (max-width: 768px) {
+    #hyperbolic-weights { scroll-margin-top: 96px; }
+  }
+
   .distwalk-layer {
     font-size: 0.8rem;
     line-height: 1.5;
@@ -2449,7 +2454,7 @@
         <p class="v2-formula">z = a + bk, k<sup>2</sup> = +1 &nbsp;&rarr;&nbsp; e&#8330; = (a+b)/2, e&#8331; = (a&minus;b)/2</p>
         <p class="v2-formula-alone" id="v2-formula-alone"></p>
         <div class="v2-step1">
-          <span class="distwalk-layer-tag">Step 1 &middot; From matrix to hyperbolic number</span>
+          <span class="distwalk-layer-tag" id="hyperbolic-weights">Step 1 &middot; From matrix to hyperbolic number</span>
 
           <div class="v2-step1-katex" id="v2-step1-general"></div>
 
@@ -4697,6 +4702,29 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       var expanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', String(!expanded));
       body.hidden = expanded;
+    });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  function scrollToHyperbolicWeights() {
+    if (window.location.hash !== "#hyperbolic-weights") return;
+    var target = document.getElementById("hyperbolic-weights");
+    if (!target) return;
+    var sectionBody = document.getElementById("section-01c-body");
+    var sectionToggle = document.querySelector('[aria-controls="section-01c-body"]');
+    if (sectionBody && sectionBody.hidden) {
+      sectionBody.hidden = false;
+      if (sectionToggle) sectionToggle.setAttribute("aria-expanded", "true");
+    }
+    target.scrollIntoView();
+  }
+  window.addEventListener("load", function () {
+    scrollToHyperbolicWeights();
+    requestAnimationFrame(function () {
+      requestAnimationFrame(scrollToHyperbolicWeights);
     });
   });
 })();
