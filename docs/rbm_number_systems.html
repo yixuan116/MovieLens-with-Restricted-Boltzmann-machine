@@ -2530,6 +2530,19 @@
           <p class="v2-step1-line v2-step1-note">Each channel multiplies only its own weight, with no cross terms.</p>
         </div>
 
+        <div class="v2-step1">
+          <span class="distwalk-layer-tag">Step 5 &middot; Hidden unit activation</span>
+
+          <p class="v2-step1-line">Hidden unit j sums over every movie the user rated, plus its own bias, also in diagonal form.</p>
+
+          <div class="v2-step1-katex" id="v2-step5-sum"></div>
+          <div class="v2-step1-katex" id="v2-step5-sigmoid"></div>
+
+          <p class="v2-step1-line v2-step1-inline-katex">&sigma; acts on each diagonal entry separately. Applied entrywise to <span id="v2-step5-ab-inline"></span>, it would break the hyperbolic structure.</p>
+
+          <p class="v2-step1-line v2-step1-note">One hidden unit, two activation probabilities: each channel produces its own hidden feature.</p>
+        </div>
+
         <p class="v2-interpretation">b is the movie's popularity rank in this 1000-movie subset, mapped to [&minus;1, +1]. Ranked by rating count, not score.<br>e&#8330; averages rating and popularity (consensus channel).<br>e&#8331; measures how far they diverge (divergence channel).<br>When b flips sign, e&#8330; and e&#8331; swap.</p>
         <div class="v2-info-row">
           <div class="probe-info">
@@ -4959,6 +4972,21 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       wschemaLatex("-", "W_-"),
       document.getElementById("v2-step2-wschema-minus"),
       { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\begin{bmatrix} x_{+,j} & 0 \\\\ 0 & x_{-,j} \\end{bmatrix} = \\sum_{i \\in \\text{rated}} \\begin{bmatrix} (a_i+b_i)\\cdot w_{+,ij} & 0 \\\\ 0 & (a_i-b_i)\\cdot w_{-,ij} \\end{bmatrix} + \\begin{bmatrix} c_{+,j} & 0 \\\\ 0 & c_{-,j} \\end{bmatrix}",
+      document.getElementById("v2-step5-sum"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\sigma\\!\\left(\\begin{bmatrix} x_{+,j} & 0 \\\\ 0 & x_{-,j} \\end{bmatrix}\\right) = \\begin{bmatrix} \\sigma(x_{+,j}) & 0 \\\\ 0 & \\sigma(x_{-,j}) \\end{bmatrix} \\qquad \\sigma(x) = \\dfrac{1}{1+e^{-x}}",
+      document.getElementById("v2-step5-sigmoid"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix}",
+      document.getElementById("v2-step5-ab-inline"),
+      { throwOnError: false, displayMode: false }
     );
   }
 
