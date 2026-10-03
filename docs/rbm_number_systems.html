@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Restricted Boltzmann Machines Across Number Systems</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
 <style>
   :root {
     --bg: #fbfaf7;
@@ -850,13 +852,19 @@
     margin: 0 0 0.35rem;
   }
   .v2-step1-values { margin: 0.5rem 0 0.6rem; }
-  .v2-step1-z {
-    font-family: var(--mono);
-    font-size: 0.82rem;
-    font-weight: 600;
+  .v2-step1-katex {
+    color: var(--ink);
+    margin: 0 0 0.6rem;
+    overflow-x: auto;
+  }
+  .v2-step1-katex .katex { font-size: 0.95rem; }
+  .v2-step1-inline-katex .katex { font-size: 0.85rem; }
+  .v2-step1-chain {
     color: var(--ink);
     margin: 0;
+    overflow-x: auto;
   }
+  .v2-step1-chain .katex { font-size: 0.8rem; }
   .v2-step1-note {
     font-style: italic;
     color: var(--ink-faint);
@@ -2407,17 +2415,17 @@
         <p class="v2-block-title">&#120123; Hyperbolic</p>
         <p class="v2-formula">z = a + bk, k<sup>2</sup> = +1 &nbsp;&rarr;&nbsp; e&#8330; = (a+b)/2, e&#8331; = (a&minus;b)/2</p>
         <div class="v2-step1">
-          <span class="distwalk-layer-tag">Step 1 &middot; Standard form</span>
-          <p class="v2-step1-line">z = a + b&middot;k, where k<sup>2</sup> = +1 and k &ne; &plusmn;1 (k is a new unit, not a real number).</p>
-          <p class="v2-step1-line">a = real part (the normalized rating); b = hyperbolic part (the movie's popularity rank).</p>
+          <span class="distwalk-layer-tag">Step 1 &middot; From matrix to hyperbolic number</span>
+          <div class="v2-step1-katex" id="v2-step1-general"></div>
+          <p class="v2-step1-line v2-step1-inline-katex">The identity matrix I plays the role of 1, the matrix K&nbsp;=&nbsp;<span id="v2-step1-K-inline"></span>&nbsp;plays the role of k, and <span id="v2-step1-KK-inline"></span>, which is why k<sup>2</sup> = +1.</p>
           <div class="quad-card-pair v2-step1-values">
             <div class="card-half">
               <p class="card-half-label label-matrix">The Matrix</p>
-              <p class="v2-step1-z" id="v2-step1-z-matrix">z = 0.7778 + 1.0&middot;k</p>
+              <div class="v2-step1-chain" id="v2-step1-chain-matrix"></div>
             </div>
             <div class="card-half">
               <p class="card-half-label label-rumble">Rumble in the Bronx</p>
-              <p class="v2-step1-z" id="v2-step1-z-rumble">z = 0.7778 &minus; 1.0&middot;k</p>
+              <div class="v2-step1-chain" id="v2-step1-chain-rumble"></div>
             </div>
           </div>
           <p class="v2-step1-line v2-step1-note">Same real part, opposite hyperbolic part. &#8477; sees only the real part.</p>
@@ -4756,6 +4764,36 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     rumble: { id: "112", b: -1 }
   };
 
+  if (window.katex) {
+    katex.render(
+      "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix} = a \\cdot \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix} + b \\cdot \\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix} = a + b \\cdot k",
+      document.getElementById("v2-step1-general"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix}",
+      document.getElementById("v2-step1-K-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "K \\cdot K = I",
+      document.getElementById("v2-step1-KK-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+  }
+
+  function renderStep1Chain(key, a, b) {
+    var el = document.getElementById("v2-step1-chain-" + key);
+    if (!el || !window.katex) return;
+    var aStr = a.toFixed(4);
+    var bSigned = b.toFixed(1);
+    var bAbs = Math.abs(b).toFixed(1);
+    var sign = b >= 0 ? "+" : "-";
+    var latex = "\\begin{bmatrix} " + aStr + " & " + bSigned + " \\\\ " + bSigned + " & " + aStr + " \\end{bmatrix} = " +
+      aStr + " \\cdot I " + sign + " " + bAbs + " \\cdot K = " + aStr + " " + sign + " " + bAbs + "k";
+    katex.render(latex, el, { throwOnError: false, displayMode: false });
+  }
+
   var complexData = {"2571":{"0.5":{"0":1,"1":1,"2":3,"3":0,"4":0,"5":0,"6":0},"1.0":{"0":1,"1":1,"2":2,"3":1,"4":1,"5":1,"6":0},"1.5":{"0":0,"1":2,"2":1,"3":1,"4":2,"5":0,"6":0},"2.0":{"0":5,"1":5,"2":3,"3":6,"4":1,"5":5,"6":8},"2.5":{"0":2,"1":6,"2":4,"3":1,"4":1,"5":1,"6":3},"3.0":{"0":11,"1":17,"2":15,"3":16,"4":16,"5":10,"6":13},"3.5":{"0":12,"1":12,"2":10,"3":12,"4":9,"5":12,"6":12},"4.0":{"0":35,"1":34,"2":36,"3":24,"4":34,"5":38,"6":37},"4.5":{"0":23,"1":30,"2":24,"3":20,"4":25,"5":18,"6":31},"5.0":{"0":44,"1":69,"2":41,"3":47,"4":39,"5":40,"6":42}},"112":{"0.5":{"0":1,"1":1,"2":1,"3":1,"4":0,"5":0,"6":2},"1.0":{"0":2,"1":2,"2":2,"3":2,"4":4,"5":0,"6":4},"1.5":{"0":4,"1":0,"2":2,"3":1,"4":1,"5":0,"6":1},"2.0":{"0":3,"1":9,"2":7,"3":3,"4":6,"5":6,"6":12},"2.5":{"0":4,"1":2,"2":2,"3":6,"4":4,"5":5,"6":6},"3.0":{"0":23,"1":20,"2":23,"3":17,"4":19,"5":17,"6":18},"3.5":{"0":9,"1":14,"2":7,"3":10,"4":7,"5":4,"6":7},"4.0":{"0":23,"1":22,"2":13,"3":13,"4":9,"5":16,"6":6},"4.5":{"0":2,"1":1,"2":3,"3":1,"4":2,"5":1,"6":1},"5.0":{"0":2,"1":1,"2":3,"3":1,"4":4,"5":1,"6":0}}};
   var fuzzyData = {"2571": {mu_center: 0.8059, sigma: 0.2013}, "112": {mu_center: 0.5819, sigma: 0.2040}};
   var FZ_ANCHORS = [0.1111, 0.3333, 0.5556, 0.7778, 1.0];
@@ -4796,11 +4834,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     var movie = MOVIES[key];
     var b = movie.b;
 
-    var step1Z = document.getElementById("v2-step1-z-" + key);
-    if (step1Z) {
-      var bSign = b >= 0 ? "+" : "−";
-      step1Z.textContent = "z = " + a.toFixed(4) + " " + bSign + " " + Math.abs(b).toFixed(1) + "·k";
-    }
+    renderStep1Chain(key, a, b);
 
     var r2Vline = document.getElementById("v2-r2-vline-" + key);
     if (r2Vline) {
