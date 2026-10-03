@@ -2448,6 +2448,26 @@
 
           <p class="v2-step1-line v2-step1-note">Same real part, opposite hyperbolic part. &#8477; sees only the real part.</p>
         </div>
+
+        <div class="v2-step1">
+          <span class="distwalk-layer-tag">Step 2 &middot; Hyperbolic weights</span>
+
+          <div class="v2-step1-katex" id="v2-step2-W"></div>
+          <p class="v2-step1-line">w&#8330; and w&#8331; are learned by CD-1; they are kept as symbols here.</p>
+
+          <p class="quad-card-title">A rating alone (b = 0)</p>
+          <div class="v2-step1-katex" id="v2-step2-r-live"></div>
+          <p class="v2-step1-line">r&middot;I is already diagonal, so it multiplies the weights directly.</p>
+
+          <p class="quad-card-title">Rating plus popularity</p>
+          <p class="v2-step1-line v2-step1-inline-katex">First diagonalize the input with P&nbsp;=&nbsp;<span id="v2-step2-P-inline"></span> and P<sup>&minus;1</sup>&nbsp;=&nbsp;<span id="v2-step2-Pinv-inline"></span>:</p>
+          <div class="v2-step1-katex" id="v2-step2-diag"></div>
+          <p class="v2-step1-line">Then multiply:</p>
+          <div class="v2-step1-katex" id="v2-step2-multiply"></div>
+
+          <p class="v2-step1-line v2-step1-note">Each channel multiplies only its own weight, with no cross terms; e&#8330; = (a+b)/2 and e&#8331; = (a&minus;b)/2 shown below are half of the input's diagonal entries.</p>
+        </div>
+
         <p class="v2-interpretation">b is the movie's popularity rank in this 1000-movie subset, mapped to [&minus;1, +1]. Ranked by rating count, not score.<br>e&#8330; averages rating and popularity (consensus channel).<br>e&#8331; measures how far they diverge (divergence channel).<br>When b flips sign, e&#8330; and e&#8331; swap.</p>
         <div class="v2-info-row">
           <div class="probe-info">
@@ -4818,6 +4838,40 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       document.getElementById("v2-step1-b-def-inline"),
       { throwOnError: false, displayMode: false }
     );
+    katex.render(
+      "W = \\begin{bmatrix} w_+ & 0 \\\\ 0 & w_- \\end{bmatrix}",
+      document.getElementById("v2-step2-W"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\begin{bmatrix} 1 & 1 \\\\ 1 & -1 \\end{bmatrix}",
+      document.getElementById("v2-step2-P-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "\\frac{1}{2} \\begin{bmatrix} 1 & 1 \\\\ 1 & -1 \\end{bmatrix}",
+      document.getElementById("v2-step2-Pinv-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "P^{-1} \\cdot \\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix} \\cdot P = \\begin{bmatrix} a+b & 0 \\\\ 0 & a-b \\end{bmatrix}",
+      document.getElementById("v2-step2-diag"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\begin{bmatrix} a+b & 0 \\\\ 0 & a-b \\end{bmatrix} \\cdot \\begin{bmatrix} w_+ & 0 \\\\ 0 & w_- \\end{bmatrix} = \\begin{bmatrix} (a+b)\\cdot w_+ & 0 \\\\ 0 & (a-b)\\cdot w_- \\end{bmatrix}",
+      document.getElementById("v2-step2-multiply"),
+      { throwOnError: false, displayMode: true }
+    );
+  }
+
+  function renderStep2RAlone(rating) {
+    var el = document.getElementById("v2-step2-r-live");
+    if (!el || !window.katex) return;
+    var rStr = fmtTrim(rating);
+    var latex = "\\begin{bmatrix} " + rStr + " & 0 \\\\ 0 & " + rStr + " \\end{bmatrix} \\cdot \\begin{bmatrix} w_+ & 0 \\\\ 0 & w_- \\end{bmatrix} = \\begin{bmatrix} " +
+      rStr + "w_+ & 0 \\\\ 0 & " + rStr + "w_- \\end{bmatrix}";
+    katex.render(latex, el, { throwOnError: false, displayMode: true });
   }
 
   function renderStep1RAlone(rating) {
@@ -4990,6 +5044,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     aLabel.textContent = a.toFixed(4);
 
     renderStep1RAlone(rating);
+    renderStep2RAlone(rating);
 
     var mResult = renderMovie("matrix", a, rating);
     var rResult = renderMovie("rumble", a, rating);
