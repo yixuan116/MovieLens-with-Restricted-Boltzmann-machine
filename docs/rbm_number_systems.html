@@ -835,6 +835,16 @@
     margin: 0 0 0.6rem;
   }
 
+  .v2-formula-alone {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink);
+    background: var(--sys-r-soft);
+    display: inline-block;
+    padding: 0.35rem 0.65rem;
+    margin: 0 0 0.6rem;
+  }
+
   .v2-interpretation {
     font-size: 0.85rem;
     line-height: 1.5;
@@ -2437,6 +2447,7 @@
       <div class="v2-block">
         <p class="v2-block-title">&#120123; Hyperbolic</p>
         <p class="v2-formula">z = a + bk, k<sup>2</sup> = +1 &nbsp;&rarr;&nbsp; e&#8330; = (a+b)/2, e&#8331; = (a&minus;b)/2</p>
+        <p class="v2-formula-alone" id="v2-formula-alone"></p>
         <div class="v2-step1">
           <span class="distwalk-layer-tag">Step 1 &middot; From matrix to hyperbolic number</span>
 
@@ -4858,6 +4869,21 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     return s.slice(-2) === ".0" ? s.slice(0, -2) : s;
   }
 
+  function fmtTrim2(x) {
+    var s = x.toFixed(2);
+    s = s.replace(/0+$/, "").replace(/\.$/, "");
+    return s;
+  }
+
+  function renderFormulaAlone(rating) {
+    var el = document.getElementById("v2-formula-alone");
+    if (!el) return;
+    var rStr = fmtTrim(rating);
+    var half = fmtTrim2(rating / 2);
+    el.textContent = "A rating alone: a = " + rStr + ", b = 0 → z = " + rStr + " + 0·k → " +
+      "e₊ = (" + rStr + " + 0)/2 = " + half + ", e₋ = (" + rStr + " − 0)/2 = " + half;
+  }
+
   if (window.katex) {
     katex.render(
       "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix} = a \\cdot \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix} + b \\cdot \\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix} = a + b \\cdot k",
@@ -5137,6 +5163,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     ratingLabel.textContent = rating.toFixed(1);
     aLabel.textContent = a.toFixed(4);
 
+    renderFormulaAlone(rating);
     renderStep1RAlone(rating);
     renderStep2RAlone(rating);
 
