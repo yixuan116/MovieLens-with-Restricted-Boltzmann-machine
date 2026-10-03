@@ -872,6 +872,22 @@
     margin-bottom: 0;
   }
 
+  .v2-step1-worked-toggle {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    background: none;
+    border: 1px dashed var(--border-strong);
+    padding: 0.25rem 0.55rem;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    margin: 0 0 0.6rem;
+  }
+  .v2-step1-worked-toggle:hover,
+  .v2-step1-worked-toggle:focus-visible { color: var(--accent); border-color: var(--accent); }
+  .v2-step1-worked-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
   .v2-step2-wschema { margin: 0.4rem 0 0.6rem; }
   .v2-step2-wschema-row {
     display: flex;
@@ -2460,7 +2476,8 @@
           <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step1-a-def-inline"></span></p>
           <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step1-b-def-inline"></span> where rank is the movie's popularity rank by rating count within the 1000-movie subset (rank 1 &rarr; b = +1, rank 1000 &rarr; b = &minus;1).</p>
 
-          <div class="quad-card-pair v2-step1-values">
+          <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step1-worked-body">Worked example: The Matrix vs Rumble in the Bronx<span aria-hidden="true">&nbsp;&#9432;</span></button>
+          <div class="quad-card-pair v2-step1-values" id="v2-step1-worked-body" hidden>
             <div class="card-half">
               <p class="card-half-label label-matrix">The Matrix</p>
               <div class="v2-step1-chain" id="v2-step1-a-chain-matrix"></div>
@@ -4683,7 +4700,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
 
 <script>
 (function () {
-  document.querySelectorAll('.collapse-toggle').forEach(function (btn) {
+  document.querySelectorAll('.collapse-toggle, .v2-step1-worked-toggle').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var body = document.getElementById(btn.getAttribute('aria-controls'));
       if (!body) return;
