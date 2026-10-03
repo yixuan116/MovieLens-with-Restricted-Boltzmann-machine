@@ -888,34 +888,7 @@
   .v2-step1-worked-toggle:focus-visible { color: var(--accent); border-color: var(--accent); }
   .v2-step1-worked-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  .v2-step2-wschema { margin: 0.4rem 0 0.6rem; }
-  .v2-step2-wschema-row {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    margin: 0 0 0.2rem;
-  }
-  .v2-step2-wschema-label {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--ink-faint);
-    min-width: 9rem;
-    flex: 0 0 auto;
-  }
-  .v2-step2-wschema-label.label-matrix { color: var(--accent); }
-  .v2-step2-wschema-label.label-rumble { color: #e67e22; }
-  .v2-step2-wschema-ellipsis {
-    font-family: var(--mono);
-    color: var(--ink-faint);
-    letter-spacing: 0.2em;
-  }
-  .v2-step2-wschema-content {
-    display: inline-block;
-    overflow-x: auto;
-    max-width: 100%;
-  }
-  .v2-step2-wschema-content .katex { font-size: 0.8rem; }
+  #v2-step2-wschema.v2-step1-katex .katex { font-size: 0.78rem; }
 
   .v2-interp-info { display: block; }
   .v2-info-trigger {
@@ -2502,28 +2475,7 @@
           <p class="v2-step1-line">w&#8330; and w&#8331; are learned by CD-1; they are kept as symbols here.</p>
 
           <p class="v2-step1-line">Rows are the 1000 movies, columns are the 128 hidden units h&#8321;, h&#8322;, &hellip;, h&#8321;&#8322;&#8328;.</p>
-          <div class="v2-step2-wschema">
-            <div class="v2-step2-wschema-row">
-              <span class="v2-step2-wschema-label"></span>
-              <span class="v2-step2-wschema-ellipsis">&#8942;</span>
-            </div>
-            <div class="v2-step2-wschema-row">
-              <span class="v2-step2-wschema-label label-matrix">The Matrix</span>
-              <span class="v2-step2-wschema-content v2-step1-inline-katex" id="v2-step2-w-row-matrix"></span>
-            </div>
-            <div class="v2-step2-wschema-row">
-              <span class="v2-step2-wschema-label"></span>
-              <span class="v2-step2-wschema-ellipsis">&#8942;</span>
-            </div>
-            <div class="v2-step2-wschema-row">
-              <span class="v2-step2-wschema-label label-rumble">Rumble in the Bronx</span>
-              <span class="v2-step2-wschema-content v2-step1-inline-katex" id="v2-step2-w-row-rumble"></span>
-            </div>
-            <div class="v2-step2-wschema-row">
-              <span class="v2-step2-wschema-label"></span>
-              <span class="v2-step2-wschema-ellipsis">&#8942;</span>
-            </div>
-          </div>
+          <div class="v2-step1-katex" id="v2-step2-wschema"></div>
           <p class="v2-step1-line">W&#8331; has the identical structure.</p>
           <p class="v2-step1-line">One row = one movie's weights to all 128 hidden units. 1000 movies, 1000 rows.</p>
 
@@ -4949,14 +4901,16 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "(w_{+,\\text{Matrix},1},\\ w_{+,\\text{Matrix},2},\\ \\ldots,\\ w_{+,\\text{Matrix},128})",
-      document.getElementById("v2-step2-w-row-matrix"),
-      { throwOnError: false, displayMode: false }
-    );
-    katex.render(
-      "(w_{+,\\text{Rumble},1},\\ w_{+,\\text{Rumble},2},\\ \\ldots,\\ w_{+,\\text{Rumble},128})",
-      document.getElementById("v2-step2-w-row-rumble"),
-      { throwOnError: false, displayMode: false }
+      "W_+ = \\left[\\begin{array}{c|cccc}" +
+      " & h_1 & h_2 & \\cdots & h_{128} \\\\ \\hline" +
+      " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots \\\\" +
+      " \\textcolor{#33506c}{\\text{The Matrix}} & w_{+,\\text{Matrix},1} & w_{+,\\text{Matrix},2} & \\cdots & w_{+,\\text{Matrix},128} \\\\" +
+      " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots \\\\" +
+      " \\textcolor{#e67e22}{\\text{Rumble in the Bronx}} & w_{+,\\text{Rumble},1} & w_{+,\\text{Rumble},2} & \\cdots & w_{+,\\text{Rumble},128} \\\\" +
+      " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots" +
+      "\\end{array}\\right]",
+      document.getElementById("v2-step2-wschema"),
+      { throwOnError: false, displayMode: true }
     );
   }
 
