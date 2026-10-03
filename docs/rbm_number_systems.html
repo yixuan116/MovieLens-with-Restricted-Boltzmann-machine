@@ -841,6 +841,28 @@
     margin: 0 0 1rem;
   }
 
+  .v2-step1 { margin: 0 0 1rem; }
+  .v2-step1-line {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 72ch;
+    margin: 0 0 0.35rem;
+  }
+  .v2-step1-values { margin: 0.5rem 0 0.6rem; }
+  .v2-step1-z {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0;
+  }
+  .v2-step1-note {
+    font-style: italic;
+    color: var(--ink-faint);
+    margin-bottom: 0;
+  }
+
   .v2-interp-info { display: block; }
   .v2-info-trigger {
     display: inline-block;
@@ -2384,6 +2406,22 @@
       <div class="v2-block">
         <p class="v2-block-title">&#120123; Hyperbolic</p>
         <p class="v2-formula">z = a + bk, k<sup>2</sup> = +1 &nbsp;&rarr;&nbsp; e&#8330; = (a+b)/2, e&#8331; = (a&minus;b)/2</p>
+        <div class="v2-step1">
+          <span class="distwalk-layer-tag">Step 1 &middot; Standard form</span>
+          <p class="v2-step1-line">z = a + b&middot;k, where k<sup>2</sup> = +1 and k &ne; &plusmn;1 (k is a new unit, not a real number).</p>
+          <p class="v2-step1-line">a = real part (the normalized rating); b = hyperbolic part (the movie's popularity rank).</p>
+          <div class="quad-card-pair v2-step1-values">
+            <div class="card-half">
+              <p class="card-half-label label-matrix">The Matrix</p>
+              <p class="v2-step1-z" id="v2-step1-z-matrix">z = 0.7778 + 1.0&middot;k</p>
+            </div>
+            <div class="card-half">
+              <p class="card-half-label label-rumble">Rumble in the Bronx</p>
+              <p class="v2-step1-z" id="v2-step1-z-rumble">z = 0.7778 &minus; 1.0&middot;k</p>
+            </div>
+          </div>
+          <p class="v2-step1-line v2-step1-note">Same real part, opposite hyperbolic part. &#8477; sees only the real part.</p>
+        </div>
         <p class="v2-interpretation">b is the movie's popularity rank in this 1000-movie subset, mapped to [&minus;1, +1]. Ranked by rating count, not score.<br>e&#8330; averages rating and popularity (consensus channel).<br>e&#8331; measures how far they diverge (divergence channel).<br>When b flips sign, e&#8330; and e&#8331; swap.</p>
         <div class="v2-info-row">
           <div class="probe-info">
@@ -4757,6 +4795,12 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
   function renderMovie(key, a, rating) {
     var movie = MOVIES[key];
     var b = movie.b;
+
+    var step1Z = document.getElementById("v2-step1-z-" + key);
+    if (step1Z) {
+      var bSign = b >= 0 ? "+" : "−";
+      step1Z.textContent = "z = " + a.toFixed(4) + " " + bSign + " " + Math.abs(b).toFixed(1) + "·k";
+    }
 
     var r2Vline = document.getElementById("v2-r2-vline-" + key);
     if (r2Vline) {
