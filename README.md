@@ -1,3 +1,5 @@
+🔗 Live page: https://yixuan116.github.io/MovieLens-with-Restricted-Boltzmann-machine/rbm_number_systems.html
+
 # RBM RecSys (MovieLens 20M)
 
 This repository implements a modular, production-style Restricted Boltzmann Machine (RBM) recommender in PyTorch with strong engineering hygiene: reproducibility, baselines, structured evaluation, and artifact outputs.
