@@ -1699,9 +1699,9 @@
   }
 
 
-  /* ---------- section 4 ---------- */
+  /* ---------- section 4 / 5 ---------- */
 
-  .section-4 {
+  .section-4, .section-5 {
     margin-top: 2.6rem;
     padding-top: 2.2rem;
     border-top: 1px solid var(--border-strong);
@@ -2495,73 +2495,7 @@
           <p class="v2-step1-line v2-step1-note">For a rating alone, r&middot;I is already diagonal. e&#8330; = (a + b)/2 and e&#8331; = (a &minus; b)/2 are half of the diagonal entries.</p>
         </div>
 
-        <div class="v2-step1">
-          <span class="distwalk-layer-tag">Step 3 &middot; Hyperbolic weights</span>
-
-          <div class="v2-step1-katex" id="v2-step2-W"></div>
-          <p class="v2-step1-line">i = movie, j = hidden unit. Each W<sub>ij</sub> is one cell of the matrices below; w&#8330; and w&#8331; are learned by CD-1 and kept as symbols here.</p>
-
-          <p class="v2-step1-line">Rows are the 1000 movies, columns are the 128 hidden units h&#8321;, h&#8322;, &hellip;, h&#8321;&#8322;&#8328;.</p>
-          <div class="quad-pair v2-step2-wschema-pair">
-            <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-plus"></div>
-            <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-minus"></div>
-          </div>
-          <p class="v2-step1-line">One row = one movie's weights to all 128 hidden units. 1000 movies, 1000 rows.</p>
-        </div>
-
-        <div class="v2-step1">
-          <span class="distwalk-layer-tag">Step 4 &middot; Multiply input by weights</span>
-
-          <p class="quad-card-title">A rating alone (b = 0)</p>
-          <div class="v2-step1-katex" id="v2-step2-r-live"></div>
-
-          <p class="quad-card-title">Rating plus popularity</p>
-          <div class="v2-step1-katex" id="v2-step2-multiply"></div>
-
-          <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step2-worked-body">Worked example: each movie uses its own row<span aria-hidden="true">&nbsp;&#9432;</span></button>
-          <div class="quad-card-pair v2-step1-values" id="v2-step2-worked-body" hidden>
-            <div class="card-half">
-              <p class="card-half-label label-matrix">The Matrix</p>
-              <div class="v2-step1-chain" id="v2-step2-rw-plus-matrix"></div>
-              <div class="v2-step1-chain" id="v2-step2-rw-minus-matrix"></div>
-            </div>
-            <div class="card-half">
-              <p class="card-half-label label-rumble">Rumble in the Bronx</p>
-              <div class="v2-step1-chain" id="v2-step2-rw-plus-rumble"></div>
-              <div class="v2-step1-chain" id="v2-step2-rw-minus-rumble"></div>
-            </div>
-          </div>
-
-          <p class="v2-step1-line v2-step1-note">Each channel multiplies only its own weight, with no cross terms.</p>
-        </div>
-
-        <div class="v2-step1">
-          <span class="distwalk-layer-tag">Step 5 &middot; Hidden unit activation</span>
-
-          <p class="v2-step1-line">Hidden unit j sums over every movie the user rated, plus its own bias, also in diagonal form.</p>
-
-          <div class="v2-step1-katex" id="v2-step5-sum"></div>
-          <div class="v2-step1-katex" id="v2-step5-sigmoid"></div>
-
-          <p class="v2-step1-line v2-step1-inline-katex">&sigma; acts on each diagonal entry separately. Applied entrywise to <span id="v2-step5-ab-inline"></span>, it would break the hyperbolic structure.</p>
-
-          <p class="v2-step1-line v2-step1-note">One hidden unit, two activation probabilities: each channel produces its own hidden feature.</p>
-        </div>
-
-        <p class="v2-interpretation">b is the movie's popularity rank in this 1000-movie subset, mapped to [&minus;1, +1]. Ranked by rating count, not score.<br>e&#8330; averages rating and popularity (consensus channel).<br>e&#8331; measures how far they diverge (divergence channel).<br>When b flips sign, e&#8330; and e&#8331; swap.</p>
-        <div class="v2-info-row">
-          <div class="probe-info">
-            <button type="button" class="probe-info-trigger v2-info-trigger" aria-describedby="v2-b-tooltip">details<span aria-hidden="true">&nbsp;&#9432;</span></button>
-            <div class="probe-info-tooltip" id="v2-b-tooltip" role="tooltip">b is linearly mapped from each movie's rank by rating count within this 1000-movie subset: +1 = most-rated (rank 1), &minus;1 = least-rated (rank 1000). Fixed per movie, independent of the rating value itself.</div>
-          </div>
-          <div class="probe-info">
-            <button type="button" class="probe-info-trigger v2-info-trigger" aria-describedby="v2-rank-tooltip">Is rank 1000 actually niche?<span aria-hidden="true">&nbsp;&#9432;</span></button>
-            <div class="probe-info-tooltip v2-rank-tooltip" id="v2-rank-tooltip" role="tooltip">
-              <p>b's rank is computed within these 1000 pre-selected movies. In the full 20M dataset, Rumble in the Bronx is rank 371 of 26,744 (top 1.39%). Mainstream, not long-tail.</p>
-              <img class="v2-rank-tooltip-img" src="img/rank_vs_full_dataset.png" alt="Left: rank 1 to 1000 distribution within the dense subset. Right: both movies' popularity rank in the full MovieLens 20M dataset, both in the top 1.4 percent.">
-            </div>
-          </div>
-        </div>
+        <p class="v2-interpretation">b is the movie's popularity rank in this 1000-movie subset, mapped to [&minus;1, +1]: +1 = most-rated (rank 1), &minus;1 = least-rated (rank 1000). Fixed per movie, independent of the rating value itself. Ranked by rating count, not score.<br>e&#8330; averages rating and popularity (consensus channel).<br>When b flips sign, e&#8330; and e&#8331; swap.</p>
         <div class="quad-pair">
           <div class="quad-panel">
             <svg class="quad-svg" viewBox="0 0 280 280" role="img" aria-label="Matrix e-plus e-minus plane with the current rating highlighted">
@@ -4339,21 +4273,87 @@
     <section class="section-4" id="section-4">
 
     <div class="section-head-2">
-      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Hyperbolic Decoupling: One Rating, Two Channels</h2>
+      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Hyperbolic Weights: From Input to Hidden Units</h2>
       <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-4-body" aria-label="Collapse section 4">&#8964;</button>
     </div>
 
     <div class="section-body" id="section-4-body">
 
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 1 &middot; Hyperbolic weights</span>
+
+        <div class="v2-step1-katex" id="v2-step2-W"></div>
+        <p class="v2-step1-line">i = movie, j = hidden unit. Each W<sub>ij</sub> is one cell of the matrices below; w&#8330; and w&#8331; are learned by CD-1 and kept as symbols here.</p>
+
+        <p class="v2-step1-line">Rows are the 1000 movies, columns are the 128 hidden units h&#8321;, h&#8322;, &hellip;, h&#8321;&#8322;&#8328;.</p>
+        <div class="quad-pair v2-step2-wschema-pair">
+          <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-plus"></div>
+          <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-minus"></div>
+        </div>
+        <p class="v2-step1-line">One row = one movie's weights to all 128 hidden units. 1000 movies, 1000 rows.</p>
+      </div>
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 2 &middot; Multiply input by weights</span>
+
+        <p class="quad-card-title">A rating alone (b = 0)</p>
+        <div class="v2-step1-katex" id="v2-step2-r-live"></div>
+
+        <p class="quad-card-title">Rating plus popularity</p>
+        <div class="v2-step1-katex" id="v2-step2-multiply"></div>
+
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step2-worked-body">Worked example: each movie uses its own row<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="quad-card-pair v2-step1-values" id="v2-step2-worked-body" hidden>
+          <div class="card-half">
+            <p class="card-half-label label-matrix">The Matrix</p>
+            <div class="v2-step1-chain" id="v2-step2-rw-plus-matrix"></div>
+            <div class="v2-step1-chain" id="v2-step2-rw-minus-matrix"></div>
+          </div>
+          <div class="card-half">
+            <p class="card-half-label label-rumble">Rumble in the Bronx</p>
+            <div class="v2-step1-chain" id="v2-step2-rw-plus-rumble"></div>
+            <div class="v2-step1-chain" id="v2-step2-rw-minus-rumble"></div>
+          </div>
+        </div>
+
+        <p class="v2-step1-line v2-step1-note">Each channel multiplies only its own weight, with no cross terms.</p>
+      </div>
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 3 &middot; Hidden unit activation</span>
+
+        <p class="v2-step1-line">Hidden unit j sums over every movie the user rated, plus its own bias, also in diagonal form.</p>
+
+        <div class="v2-step1-katex" id="v2-step5-sum"></div>
+        <div class="v2-step1-katex" id="v2-step5-sigmoid"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">&sigma; acts on each diagonal entry separately. Applied entrywise to <span id="v2-step5-ab-inline"></span>, it would break the hyperbolic structure.</p>
+
+        <p class="v2-step1-line v2-step1-note">One hidden unit, two activation probabilities: each channel produces its own hidden feature.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+    <section class="section-5" id="section-5">
+
+    <div class="section-head-2">
+      <h2><span class="section-num">05</span>&nbsp;&middot;&nbsp;Hyperbolic Decoupling: One Rating, Two Channels</h2>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-5-body" aria-label="Collapse section 5">&#8964;</button>
+    </div>
+
+    <div class="section-body" id="section-5-body">
+
       <div class="formula-compact">
-        <p class="formula-line">z = a + bj, j&sup2; = +1&nbsp;&nbsp;&rarr;&nbsp;&nbsp;<span class="e-plus">e&#8330; = (a+b)/2</span>,&nbsp; <span class="e-minus">e&#8331; = (a&minus;b)/2</span></p>
-        <p class="formula-sub">Split-complex algebra routes the same rating into a Consensus channel (e&#8330;) and a Divergence channel (e&#8331;). The Matrix (b=+1.0) &rarr; e&#8330;=+0.8889, e&#8331;=&minus;0.1111. Rumble in the Bronx (b=&minus;1.0) &rarr; e&#8330;=&minus;0.1111, e&#8331;=+0.8889 &mdash; same a, opposite channel.</p>
+        <p class="formula-sub">Split-complex algebra routes the same rating into a Consensus channel (e&#8330;) and e&#8331;. The Matrix (b=+1.0) &rarr; e&#8330;=+0.8889, e&#8331;=&minus;0.1111. Rumble in the Bronx (b=&minus;1.0) &rarr; e&#8330;=&minus;0.1111, e&#8331;=+0.8889 &mdash; same a, opposite channel.</p>
       </div>
 
       <div class="simulator">
         <div class="sim-channels">
           <div class="sim-channel minus" id="zone-minus">
-            <p class="sim-channel-name">e&#8331; Divergence</p>
+            <p class="sim-channel-name">e&#8331;</p>
             <p class="sim-channel-pop">Mean Popularity 449.3</p>
           </div>
           <div class="sim-channel plus" id="zone-plus">
@@ -4390,7 +4390,7 @@
           </div>
           <div class="compare-col sys-d">
             <p class="compare-col-label">&#120123; Hyperbolic</p>
-            <p class="compare-col-body">128/128 units split cleanly: <b>W&#8330;=909.7</b> (consensus, mainstream-heavy) vs <b>W&#8331;=449.3</b> (divergence, long-tail) &mdash; CV &#8776; 0.02, an order of magnitude tighter than &#8477;'s bands.</p>
+            <p class="compare-col-body">128/128 units split cleanly: <b>W&#8330;=909.7</b> (consensus, mainstream-heavy) vs <b>W&#8331;=449.3</b> &mdash; CV &#8776; 0.02, an order of magnitude tighter than &#8477;'s bands.</p>
             <p class="compare-col-tag">&#120123; decouples mainstream gravity from long-tail signal.</p>
           </div>
         </div>
