@@ -4180,7 +4180,6 @@
         <p class="v2-step1-line v2-step1-inline-katex">where A&nbsp;=&nbsp;<span id="v2-step3-A-inline"></span> and B&nbsp;=&nbsp;<span id="v2-step3-B-inline"></span> are 1000 &times; 128 real matrices.</p>
 
         <p class="v2-step1-line">Top-left entries form W&#8330;, bottom-right entries form W&#8331;. Both are learned by CD-1 and kept as symbols here.</p>
-        <div class="v2-step1-katex" id="v2-step3-wpm"></div>
 
         <p class="v2-step1-line">Rows are the 1000 movies, columns are the 128 hidden units h&#8321;, h&#8322;, &hellip;, h&#8321;&#8322;&#8328;.</p>
         <div class="quad-pair v2-step2-wschema-pair">
@@ -5018,11 +5017,6 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: false }
     );
     katex.render(
-      "W_+ = A + B, \\quad W_- = A - B",
-      document.getElementById("v2-step3-wpm"),
-      { throwOnError: false, displayMode: true }
-    );
-    katex.render(
       "\\begin{bmatrix} 1 & 1 \\\\ 1 & -1 \\end{bmatrix}",
       document.getElementById("v2-step2-P-inline"),
       { throwOnError: false, displayMode: false }
@@ -5042,7 +5036,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       document.getElementById("v2-step2-multiply"),
       { throwOnError: false, displayMode: true }
     );
-    function wschemaLatex(sign, symbol) {
+    function wschemaLatex(sign, symbol, suffix) {
       return symbol + " = \\left[\\begin{array}{c|cccc}" +
         " & h_1 & h_2 & \\cdots & h_{128} \\\\ \\hline" +
         " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots \\\\" +
@@ -5050,15 +5044,15 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
         " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots \\\\" +
         " \\textcolor{#e67e22}{\\text{Rumble in the Bronx}} & w_{" + sign + ",\\text{Rumble},1} & w_{" + sign + ",\\text{Rumble},2} & \\cdots & w_{" + sign + ",\\text{Rumble},128} \\\\" +
         " \\vdots & \\vdots & \\vdots & \\vdots & \\vdots" +
-        "\\end{array}\\right]";
+        "\\end{array}\\right] = " + suffix;
     }
     katex.render(
-      wschemaLatex("+", "W_+"),
+      wschemaLatex("+", "W_+", "A + B"),
       document.getElementById("v2-step2-wschema-plus"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      wschemaLatex("-", "W_-"),
+      wschemaLatex("-", "W_-", "A - B"),
       document.getElementById("v2-step2-wschema-minus"),
       { throwOnError: false, displayMode: true }
     );
