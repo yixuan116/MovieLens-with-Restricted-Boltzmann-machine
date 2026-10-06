@@ -4177,7 +4177,7 @@
 
         <p class="v2-step1-line">Collecting all 128,000 weights:</p>
         <div class="v2-step1-katex" id="v2-step3-collect"></div>
-        <p class="v2-step1-line v2-step1-inline-katex">where A&nbsp;=&nbsp;<span id="v2-step3-A-inline"></span> and B&nbsp;=&nbsp;<span id="v2-step3-B-inline"></span> are 1000 &times; 128 real matrices.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">where <span id="v2-step3-A-inline"></span> and <span id="v2-step3-B-inline"></span> are 1000 &times; 128 real matrices.</p>
 
         <p class="v2-step1-line">Top-left entries form W&#8330;, bottom-right entries form W&#8331;. Both are learned by CD-1 and kept as symbols here.</p>
 
@@ -4213,6 +4213,31 @@
         </div>
 
         <p class="v2-step1-line v2-step1-note">Each channel multiplies only its own weight, with no cross terms.</p>
+
+        <p class="quad-card-title">One user, all movies at once</p>
+
+        <p class="v2-step1-line">One user's input, one cell per movie:</p>
+        <div class="v2-step1-katex" id="v2-step4-user-v"></div>
+        <p class="v2-step1-line">Movies not in this user's rated movie list have z<sub>i</sub> = 0.</p>
+
+        <p class="v2-step1-line">Diagonalize each cell, exactly as in Step 2:</p>
+        <div class="v2-step1-katex" id="v2-step4-user-diag"></div>
+
+        <p class="v2-step1-line">Top-left entries form one row, bottom-right entries form another, the same way the weights form W&#8330; and W&#8331;:</p>
+        <div class="v2-step1-katex" id="v2-step4-user-vplus"></div>
+        <div class="v2-step1-katex" id="v2-step4-user-vminus"></div>
+
+        <p class="v2-step1-line">Each channel multiplies its own weight table (1&nbsp;&times;&nbsp;1000 times 1000&nbsp;&times;&nbsp;128 gives 1&nbsp;&times;&nbsp;128):</p>
+        <div class="v2-step1-katex" id="v2-step4-user-mult"></div>
+        <p class="v2-step1-line">Entry j is this row times column j of W&#8330;:</p>
+        <div class="v2-step1-katex" id="v2-step4-user-entry"></div>
+
+        <p class="v2-step1-line">Add each hidden unit's bias:</p>
+        <div class="v2-step1-katex" id="v2-step4-user-xplus"></div>
+
+        <p class="v2-step1-line">The other channel repeats Parts 4 and 5 with its own input, weights and bias:</p>
+        <div class="v2-step1-katex" id="v2-step4-user-xminus"></div>
+        <p class="v2-step1-line">Every hidden unit j now has a pair of totals, x&#8330;,j and x&#8331;,j.</p>
       </div>
 
       <div class="v2-step1">
@@ -4220,7 +4245,6 @@
 
         <p class="v2-step1-line">Hidden unit j sums over every movie the user rated, plus its own bias, also in diagonal form.</p>
 
-        <div class="v2-step1-katex" id="v2-step5-sum"></div>
         <div class="v2-step1-katex" id="v2-step5-sigmoid"></div>
 
         <p class="v2-step1-line v2-step1-inline-katex">&sigma; acts on each diagonal entry separately. Applied entrywise to <span id="v2-step5-ab-inline"></span>, it would break the hyperbolic structure.</p>
@@ -5057,8 +5081,43 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "\\begin{bmatrix} x_{+,j} & 0 \\\\ 0 & x_{-,j} \\end{bmatrix} = \\sum_{i \\in \\text{rated}} \\begin{bmatrix} (a_i+b_i)\\cdot w_{+,ij} & 0 \\\\ 0 & (a_i-b_i)\\cdot w_{-,ij} \\end{bmatrix} + \\begin{bmatrix} c_{+,j} & 0 \\\\ 0 & c_{-,j} \\end{bmatrix}",
-      document.getElementById("v2-step5-sum"),
+      "v = \\begin{bmatrix} z_1 & z_2 & \\cdots & z_{1000} \\end{bmatrix}, \\quad z_i = a_i + b_i \\cdot k",
+      document.getElementById("v2-step4-user-v"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "P^{-1} \\cdot \\begin{bmatrix} a_i & b_i \\\\ b_i & a_i \\end{bmatrix} \\cdot P = \\begin{bmatrix} a_i+b_i & 0 \\\\ 0 & a_i-b_i \\end{bmatrix}",
+      document.getElementById("v2-step4-user-diag"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "v_+ = \\begin{bmatrix} a_1+b_1 & a_2+b_2 & \\cdots & a_{1000}+b_{1000} \\end{bmatrix}",
+      document.getElementById("v2-step4-user-vplus"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "v_- = \\begin{bmatrix} a_1-b_1 & a_2-b_2 & \\cdots & a_{1000}-b_{1000} \\end{bmatrix}",
+      document.getElementById("v2-step4-user-vminus"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "v_+ \\cdot W_+ = \\begin{bmatrix} v_{+,1} & \\cdots & v_{+,1000} \\end{bmatrix} \\cdot \\begin{bmatrix} w_{+,1,1} & \\cdots & w_{+,1,128} \\\\ \\vdots & \\ddots & \\vdots \\\\ w_{+,1000,1} & \\cdots & w_{+,1000,128} \\end{bmatrix}",
+      document.getElementById("v2-step4-user-mult"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "(v_+ \\cdot W_+)_j = v_{+,1}\\cdot w_{+,1,j} + v_{+,2}\\cdot w_{+,2,j} + \\cdots + v_{+,1000}\\cdot w_{+,1000,j}",
+      document.getElementById("v2-step4-user-entry"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "x_+ = v_+ \\cdot W_+ + c_+ = \\begin{bmatrix} x_{+,1} & \\cdots & x_{+,128} \\end{bmatrix}",
+      document.getElementById("v2-step4-user-xplus"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "x_- = v_- \\cdot W_- + c_- = \\begin{bmatrix} x_{-,1} & \\cdots & x_{-,128} \\end{bmatrix}",
+      document.getElementById("v2-step4-user-xminus"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
