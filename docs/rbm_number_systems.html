@@ -1428,6 +1428,17 @@
   }
   .panel-d .probe-annotation { color: #d5d5d5; }
 
+  /* ---------- section 01d ---------- */
+
+  .section-1d {
+    margin-top: 2.6rem;
+    padding-top: 2.2rem;
+    border-top: 1px solid var(--border-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+  }
+
   /* ---------- section 2 : funnel ---------- */
 
   .section-2 {
@@ -1699,9 +1710,9 @@
   }
 
 
-  /* ---------- section 4 / 5 ---------- */
+  /* ---------- section 4 ---------- */
 
-  .section-4, .section-5 {
+  .section-4 {
     margin-top: 2.6rem;
     padding-top: 2.2rem;
     border-top: 1px solid var(--border-strong);
@@ -2452,49 +2463,6 @@
       <div class="v2-block">
         <p class="v2-block-title">&#120123; Hyperbolic</p>
         <p class="v2-formula">z = a + bk, k<sup>2</sup> = +1 &nbsp;&rarr;&nbsp; e&#8330; = (a+b)/2, e&#8331; = (a&minus;b)/2</p>
-        <p class="v2-formula-alone" id="v2-formula-alone"></p>
-        <div class="v2-step1">
-          <span class="distwalk-layer-tag" id="hyperbolic-weights">Step 1 &middot; From matrix to hyperbolic number</span>
-
-          <div class="v2-step1-katex" id="v2-step1-general"></div>
-
-          <p class="v2-step1-line v2-step1-inline-katex">The identity matrix I plays the role of 1, the matrix K&nbsp;=&nbsp;<span id="v2-step1-K-inline"></span>&nbsp;plays the role of k, and <span id="v2-step1-KK-inline"></span>, which is why k<sup>2</sup> = +1.</p>
-
-          <p class="quad-card-title">A rating alone (b = 0)</p>
-          <div class="v2-step1-katex" id="v2-step1-r-symbolic"></div>
-          <div class="v2-step1-katex" id="v2-step1-r-live"></div>
-          <p class="v2-step1-line">A plain rating is a hyperbolic number with zero hyperbolic part. Its matrix is diagonal; this is all &#8477; can see.</p>
-
-          <p class="quad-card-title">Rating plus popularity</p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step1-a-def-inline"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step1-b-def-inline"></span> where rank is the movie's popularity rank by rating count within the 1000-movie subset (rank 1 &rarr; b = +1, rank 1000 &rarr; b = &minus;1).</p>
-
-          <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step1-worked-body">Worked example: The Matrix vs Rumble in the Bronx<span aria-hidden="true">&nbsp;&#9432;</span></button>
-          <div class="quad-card-pair v2-step1-values" id="v2-step1-worked-body" hidden>
-            <div class="card-half">
-              <p class="card-half-label label-matrix">The Matrix</p>
-              <div class="v2-step1-chain" id="v2-step1-a-chain-matrix"></div>
-              <div class="v2-step1-chain" id="v2-step1-b-chain-matrix"></div>
-              <div class="v2-step1-chain" id="v2-step1-chain-matrix"></div>
-            </div>
-            <div class="card-half">
-              <p class="card-half-label label-rumble">Rumble in the Bronx</p>
-              <div class="v2-step1-chain" id="v2-step1-a-chain-rumble"></div>
-              <div class="v2-step1-chain" id="v2-step1-b-chain-rumble"></div>
-              <div class="v2-step1-chain" id="v2-step1-chain-rumble"></div>
-            </div>
-            <p class="v2-step1-line v2-step1-note">Same real part, opposite hyperbolic part. &#8477; sees only the real part.</p>
-          </div>
-        </div>
-
-        <div class="v2-step1">
-          <span class="distwalk-layer-tag">Step 2 &middot; Diagonalize the input</span>
-
-          <p class="v2-step1-line v2-step1-inline-katex">First diagonalize the input with P&nbsp;=&nbsp;<span id="v2-step2-P-inline"></span> and P<sup>&minus;1</sup>&nbsp;=&nbsp;<span id="v2-step2-Pinv-inline"></span>:</p>
-          <div class="v2-step1-katex" id="v2-step2-diag"></div>
-          <p class="v2-step1-line v2-step1-note">For a rating alone, r&middot;I is already diagonal. e&#8330; = (a + b)/2 and e&#8331; = (a &minus; b)/2 are half of the diagonal entries.</p>
-        </div>
-
         <p class="v2-interpretation">b is the movie's popularity rank in this 1000-movie subset, mapped to [&minus;1, +1]: +1 = most-rated (rank 1), &minus;1 = least-rated (rank 1000). Fixed per movie, independent of the rating value itself. Ranked by rating count, not score.<br>e&#8330; averages rating and popularity (consensus channel).<br>When b flips sign, e&#8330; and e&#8331; swap.</p>
         <div class="quad-pair">
           <div class="quad-panel">
@@ -4134,12 +4102,122 @@
 
   </section>
 
+  <section class="section-1d" id="section-01d">
+
+    <div class="section-head-2">
+      <h2><span class="section-num">01d</span>&nbsp;&middot;&nbsp;Hyperbolic Weights: From Input to Hidden Units</h2>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01d-body" aria-label="Collapse section 01d">&#8964;</button>
+    </div>
+
+    <div class="section-body" id="section-01d-body">
+
+      <p class="v2-formula-alone" id="v2-formula-alone"></p>
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag" id="hyperbolic-weights">Step 1 &middot; From matrix to hyperbolic number</span>
+
+        <div class="v2-step1-katex" id="v2-step1-general"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">The identity matrix I plays the role of 1, the matrix K&nbsp;=&nbsp;<span id="v2-step1-K-inline"></span>&nbsp;plays the role of k, and <span id="v2-step1-KK-inline"></span>, which is why k<sup>2</sup> = +1.</p>
+
+        <p class="quad-card-title">A rating alone (b = 0)</p>
+        <div class="v2-step1-katex" id="v2-step1-r-symbolic"></div>
+        <div class="v2-step1-katex" id="v2-step1-r-live"></div>
+        <p class="v2-step1-line">A plain rating is a hyperbolic number with zero hyperbolic part. Its matrix is diagonal; this is all &#8477; can see.</p>
+
+        <p class="quad-card-title">Rating plus popularity</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step1-a-def-inline"></span></p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step1-b-def-inline"></span> where rank is the movie's popularity rank by rating count within the 1000-movie subset (rank 1 &rarr; b = +1, rank 1000 &rarr; b = &minus;1).</p>
+
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step1-worked-body">Worked example: The Matrix vs Rumble in the Bronx<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="quad-card-pair v2-step1-values" id="v2-step1-worked-body" hidden>
+          <div class="card-half">
+            <p class="card-half-label label-matrix">The Matrix</p>
+            <div class="v2-step1-chain" id="v2-step1-a-chain-matrix"></div>
+            <div class="v2-step1-chain" id="v2-step1-b-chain-matrix"></div>
+            <div class="v2-step1-chain" id="v2-step1-chain-matrix"></div>
+          </div>
+          <div class="card-half">
+            <p class="card-half-label label-rumble">Rumble in the Bronx</p>
+            <div class="v2-step1-chain" id="v2-step1-a-chain-rumble"></div>
+            <div class="v2-step1-chain" id="v2-step1-b-chain-rumble"></div>
+            <div class="v2-step1-chain" id="v2-step1-chain-rumble"></div>
+          </div>
+          <p class="v2-step1-line v2-step1-note">Same real part, opposite hyperbolic part. &#8477; sees only the real part.</p>
+        </div>
+      </div>
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 2 &middot; Diagonalize the input</span>
+
+        <p class="v2-step1-line v2-step1-inline-katex">First diagonalize the input with P&nbsp;=&nbsp;<span id="v2-step2-P-inline"></span> and P<sup>&minus;1</sup>&nbsp;=&nbsp;<span id="v2-step2-Pinv-inline"></span>:</p>
+        <div class="v2-step1-katex" id="v2-step2-diag"></div>
+        <p class="v2-step1-line v2-step1-note">For a rating alone, r&middot;I is already diagonal. e&#8330; = (a + b)/2 and e&#8331; = (a &minus; b)/2 are half of the diagonal entries.</p>
+      </div>
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 3 &middot; Hyperbolic weights</span>
+
+        <div class="v2-step1-katex" id="v2-step2-W"></div>
+        <p class="v2-step1-line">i = movie, j = hidden unit. Each W<sub>ij</sub> is one cell of the matrices below; w&#8330; and w&#8331; are learned by CD-1 and kept as symbols here.</p>
+
+        <p class="v2-step1-line">Rows are the 1000 movies, columns are the 128 hidden units h&#8321;, h&#8322;, &hellip;, h&#8321;&#8322;&#8328;.</p>
+        <div class="quad-pair v2-step2-wschema-pair">
+          <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-plus"></div>
+          <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-minus"></div>
+        </div>
+        <p class="v2-step1-line">One row = one movie's weights to all 128 hidden units. 1000 movies, 1000 rows.</p>
+      </div>
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 4 &middot; Multiply input by weights</span>
+
+        <p class="quad-card-title">A rating alone (b = 0)</p>
+        <div class="v2-step1-katex" id="v2-step2-r-live"></div>
+
+        <p class="quad-card-title">Rating plus popularity</p>
+        <div class="v2-step1-katex" id="v2-step2-multiply"></div>
+
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step2-worked-body">Worked example: each movie uses its own row<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="quad-card-pair v2-step1-values" id="v2-step2-worked-body" hidden>
+          <div class="card-half">
+            <p class="card-half-label label-matrix">The Matrix</p>
+            <div class="v2-step1-chain" id="v2-step2-rw-plus-matrix"></div>
+            <div class="v2-step1-chain" id="v2-step2-rw-minus-matrix"></div>
+          </div>
+          <div class="card-half">
+            <p class="card-half-label label-rumble">Rumble in the Bronx</p>
+            <div class="v2-step1-chain" id="v2-step2-rw-plus-rumble"></div>
+            <div class="v2-step1-chain" id="v2-step2-rw-minus-rumble"></div>
+          </div>
+        </div>
+
+        <p class="v2-step1-line v2-step1-note">Each channel multiplies only its own weight, with no cross terms.</p>
+      </div>
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 5 &middot; Hidden unit activation</span>
+
+        <p class="v2-step1-line">Hidden unit j sums over every movie the user rated, plus its own bias, also in diagonal form.</p>
+
+        <div class="v2-step1-katex" id="v2-step5-sum"></div>
+        <div class="v2-step1-katex" id="v2-step5-sigmoid"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">&sigma; acts on each diagonal entry separately. Applied entrywise to <span id="v2-step5-ab-inline"></span>, it would break the hyperbolic structure.</p>
+
+        <p class="v2-step1-line v2-step1-note">One hidden unit, two activation probabilities: each channel produces its own hidden feature.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
 
   <section class="section-2" id="section-2">
 
     <div class="section-head-2">
-      <span class="section-num">02</span>
-      <h2>Data Selection Methodology</h2>
+      <h2><span class="section-num">02</span>&nbsp;&middot;&nbsp;Data Selection Methodology</h2>
       <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-2-body" aria-label="Collapse section 2">&#8964;</button>
     </div>
 
@@ -4273,78 +4351,11 @@
     <section class="section-4" id="section-4">
 
     <div class="section-head-2">
-      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Hyperbolic Weights: From Input to Hidden Units</h2>
+      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Hyperbolic Decoupling: One Rating, Two Channels</h2>
       <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-4-body" aria-label="Collapse section 4">&#8964;</button>
     </div>
 
     <div class="section-body" id="section-4-body">
-
-      <div class="v2-step1">
-        <span class="distwalk-layer-tag">Step 1 &middot; Hyperbolic weights</span>
-
-        <div class="v2-step1-katex" id="v2-step2-W"></div>
-        <p class="v2-step1-line">i = movie, j = hidden unit. Each W<sub>ij</sub> is one cell of the matrices below; w&#8330; and w&#8331; are learned by CD-1 and kept as symbols here.</p>
-
-        <p class="v2-step1-line">Rows are the 1000 movies, columns are the 128 hidden units h&#8321;, h&#8322;, &hellip;, h&#8321;&#8322;&#8328;.</p>
-        <div class="quad-pair v2-step2-wschema-pair">
-          <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-plus"></div>
-          <div class="v2-step1-katex v2-step2-wschema-item" id="v2-step2-wschema-minus"></div>
-        </div>
-        <p class="v2-step1-line">One row = one movie's weights to all 128 hidden units. 1000 movies, 1000 rows.</p>
-      </div>
-
-      <div class="v2-step1">
-        <span class="distwalk-layer-tag">Step 2 &middot; Multiply input by weights</span>
-
-        <p class="quad-card-title">A rating alone (b = 0)</p>
-        <div class="v2-step1-katex" id="v2-step2-r-live"></div>
-
-        <p class="quad-card-title">Rating plus popularity</p>
-        <div class="v2-step1-katex" id="v2-step2-multiply"></div>
-
-        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step2-worked-body">Worked example: each movie uses its own row<span aria-hidden="true">&nbsp;&#9432;</span></button>
-        <div class="quad-card-pair v2-step1-values" id="v2-step2-worked-body" hidden>
-          <div class="card-half">
-            <p class="card-half-label label-matrix">The Matrix</p>
-            <div class="v2-step1-chain" id="v2-step2-rw-plus-matrix"></div>
-            <div class="v2-step1-chain" id="v2-step2-rw-minus-matrix"></div>
-          </div>
-          <div class="card-half">
-            <p class="card-half-label label-rumble">Rumble in the Bronx</p>
-            <div class="v2-step1-chain" id="v2-step2-rw-plus-rumble"></div>
-            <div class="v2-step1-chain" id="v2-step2-rw-minus-rumble"></div>
-          </div>
-        </div>
-
-        <p class="v2-step1-line v2-step1-note">Each channel multiplies only its own weight, with no cross terms.</p>
-      </div>
-
-      <div class="v2-step1">
-        <span class="distwalk-layer-tag">Step 3 &middot; Hidden unit activation</span>
-
-        <p class="v2-step1-line">Hidden unit j sums over every movie the user rated, plus its own bias, also in diagonal form.</p>
-
-        <div class="v2-step1-katex" id="v2-step5-sum"></div>
-        <div class="v2-step1-katex" id="v2-step5-sigmoid"></div>
-
-        <p class="v2-step1-line v2-step1-inline-katex">&sigma; acts on each diagonal entry separately. Applied entrywise to <span id="v2-step5-ab-inline"></span>, it would break the hyperbolic structure.</p>
-
-        <p class="v2-step1-line v2-step1-note">One hidden unit, two activation probabilities: each channel produces its own hidden feature.</p>
-      </div>
-
-    </div>
-
-  </section>
-
-
-    <section class="section-5" id="section-5">
-
-    <div class="section-head-2">
-      <h2><span class="section-num">05</span>&nbsp;&middot;&nbsp;Hyperbolic Decoupling: One Rating, Two Channels</h2>
-      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-5-body" aria-label="Collapse section 5">&#8964;</button>
-    </div>
-
-    <div class="section-body" id="section-5-body">
 
       <div class="formula-compact">
         <p class="formula-sub">Split-complex algebra routes the same rating into a Consensus channel (e&#8330;) and e&#8331;. The Matrix (b=+1.0) &rarr; e&#8330;=+0.8889, e&#8331;=&minus;0.1111. Rumble in the Bronx (b=&minus;1.0) &rarr; e&#8330;=&minus;0.1111, e&#8331;=+0.8889 &mdash; same a, opposite channel.</p>
@@ -4391,7 +4402,6 @@
           <div class="compare-col sys-d">
             <p class="compare-col-label">&#120123; Hyperbolic</p>
             <p class="compare-col-body">128/128 units split cleanly: <b>W&#8330;=909.7</b> (consensus, mainstream-heavy) vs <b>W&#8331;=449.3</b> &mdash; CV &#8776; 0.02, an order of magnitude tighter than &#8477;'s bands.</p>
-            <p class="compare-col-tag">&#120123; decouples mainstream gravity from long-tail signal.</p>
           </div>
         </div>
       </div>
@@ -4713,8 +4723,8 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     if (window.location.hash !== "#hyperbolic-weights") return;
     var target = document.getElementById("hyperbolic-weights");
     if (!target) return;
-    var sectionBody = document.getElementById("section-01c-body");
-    var sectionToggle = document.querySelector('[aria-controls="section-01c-body"]');
+    var sectionBody = document.getElementById("section-01d-body");
+    var sectionToggle = document.querySelector('[aria-controls="section-01d-body"]');
     if (sectionBody && sectionBody.hidden) {
       sectionBody.hidden = false;
       if (sectionToggle) sectionToggle.setAttribute("aria-expanded", "true");
