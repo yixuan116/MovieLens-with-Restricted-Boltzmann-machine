@@ -4233,6 +4233,24 @@
         <p class="v2-step1-line v2-step1-note">One hidden unit, two activation probabilities: each channel produces its own hidden feature.</p>
       </div>
 
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 6 &middot; Back to the visible layer</span>
+
+        <p class="v2-step1-line">Each channel sends its hidden activations back through its own weights, plus a visible bias d (1000 entries, one per movie):</p>
+        <div class="v2-step1-katex" id="v2-step6-reconstruct"></div>
+        <div class="v2-step1-katex" id="v2-step6-dims"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step6-vhat-inline"></span> = reconstructed ratings, one per movie, between 0 and 1.</p>
+      </div>
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 7 &middot; One rating out</span>
+
+        <p class="v2-step1-line v2-step1-inline-katex">Put the two channels back into one hyperbolic number with <span id="v2-step7-p-inline"></span>:</p>
+        <div class="v2-step1-katex" id="v2-step7-diag"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">Prediction = real part <span id="v2-step7-ahat-inline"></span>, back to stars: <span id="v2-step7-rating-inline"></span>.</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step7-bhat-inline"></span> stays as a structural signal: how far the two channels disagree.</p>
+      </div>
+
     </div>
 
   </section>
@@ -5184,6 +5202,46 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     katex.render(
       "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix}",
       document.getElementById("v2-step5-ab-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "\\hat{v}_+ = \\sigma(h_+ \\cdot W_+^T + d_+), \\quad \\hat{v}_- = \\sigma(h_- \\cdot W_-^T + d_-)",
+      document.getElementById("v2-step6-reconstruct"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "(1 \\times 128) \\cdot (128 \\times 1000) + (1 \\times 1000) = (1 \\times 1000)",
+      document.getElementById("v2-step6-dims"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\hat{v}",
+      document.getElementById("v2-step6-vhat-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "P",
+      document.getElementById("v2-step7-p-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "\\begin{bmatrix} \\hat{v}_+ & 0 \\\\ 0 & \\hat{v}_- \\end{bmatrix} \\rightarrow \\hat{a} + \\hat{b}k, \\quad \\hat{a} = (\\hat{v}_+ + \\hat{v}_-)/2, \\quad \\hat{b} = (\\hat{v}_+ - \\hat{v}_-)/2",
+      document.getElementById("v2-step7-diag"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\hat{a}",
+      document.getElementById("v2-step7-ahat-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "\\text{rating} = 0.5 + 4.5 \\cdot \\hat{a}",
+      document.getElementById("v2-step7-rating-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "\\hat{b}",
+      document.getElementById("v2-step7-bhat-inline"),
       { throwOnError: false, displayMode: false }
     );
   }
