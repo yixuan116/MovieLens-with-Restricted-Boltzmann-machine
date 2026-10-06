@@ -4195,6 +4195,7 @@
         <p class="quad-card-title v2-step4-user-heading">One user, all movies at once</p>
 
         <p class="v2-step1-line">One user's input, one cell per movie:</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step4-v-inline"></span> = visible ratings, 1000 entries.</p>
         <div class="v2-step1-katex" id="v2-step4-user-v"></div>
         <p class="v2-step1-line">Each entry is a real normalized rating. Movies not in this user's rated movie list have a<sub>i</sub> = 0.</p>
 
@@ -4206,9 +4207,13 @@
         <div class="v2-step1-katex" id="v2-step4-user-entry"></div>
 
         <p class="v2-step1-line">Add each hidden unit's bias:</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step4-cplus-def-inline"></span> = hidden bias, 128 entries: each hidden unit's starting score, independent of ratings.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">Why add it: without <span id="v2-step4-cplus-why1-inline"></span>, every hidden unit starts from the same point (<span id="v2-step4-x0sigma-inline"></span>). <span id="v2-step4-cplus-why2-inline"></span> lets each unit learn its own baseline, like the intercept in a regression.</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step4-xplus-def-inline"></span> = hidden unit input, 128 entries.</p>
         <div class="v2-step1-katex" id="v2-step4-user-xplus"></div>
 
         <p class="v2-step1-line">The other channel repeats Parts 4 and 5 with its own weights and bias:</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step4-cminus-inline"></span> and <span id="v2-step4-xminus-inline"></span> follow the same definitions in the e&#8331; channel.</p>
         <div class="v2-step1-katex" id="v2-step4-user-xminus"></div>
         <p class="v2-step1-line">Every hidden unit j now has a pair of totals, x&#8330;,j and x&#8331;,j. With the same input, they differ only through W&#8330;, W&#8331; and their biases.</p>
       </div>
@@ -5059,6 +5064,11 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: true }
     );
     katex.render(
+      "v",
+      document.getElementById("v2-step4-v-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
       "v \\cdot W_+ = \\begin{bmatrix} a_1 & \\cdots & a_{1000} \\end{bmatrix} \\cdot \\begin{bmatrix} w_{+,1,1} & \\cdots & w_{+,1,128} \\\\ \\vdots & \\ddots & \\vdots \\\\ w_{+,1000,1} & \\cdots & w_{+,1000,128} \\end{bmatrix}",
       document.getElementById("v2-step4-user-mult"),
       { throwOnError: false, displayMode: true }
@@ -5069,9 +5079,44 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: true }
     );
     katex.render(
+      "c_+",
+      document.getElementById("v2-step4-cplus-def-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "c_+",
+      document.getElementById("v2-step4-cplus-why1-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "x = 0, \\ \\sigma = 0.5",
+      document.getElementById("v2-step4-x0sigma-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "c_+",
+      document.getElementById("v2-step4-cplus-why2-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "x_+",
+      document.getElementById("v2-step4-xplus-def-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
       "x_+ = v \\cdot W_+ + c_+ = \\begin{bmatrix} x_{+,1} & \\cdots & x_{+,128} \\end{bmatrix}",
       document.getElementById("v2-step4-user-xplus"),
       { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "c_-",
+      document.getElementById("v2-step4-cminus-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "x_-",
+      document.getElementById("v2-step4-xminus-inline"),
+      { throwOnError: false, displayMode: false }
     );
     katex.render(
       "x_- = v \\cdot W_- + c_- = \\begin{bmatrix} x_{-,1} & \\cdots & x_{-,128} \\end{bmatrix}",
