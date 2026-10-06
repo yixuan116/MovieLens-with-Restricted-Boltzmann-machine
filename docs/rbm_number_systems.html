@@ -4159,6 +4159,8 @@
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 2 &middot; Diagonalize the input</span>
 
+        <p class="v2-step1-line">Diagonalize first, so that every later step (multiplying by weights, adding biases, applying &sigma;) runs on two independent channels.</p>
+
         <p class="v2-step1-line v2-step1-inline-katex">First diagonalize the input with P&nbsp;=&nbsp;<span id="v2-step2-P-inline"></span> and P<sup>&minus;1</sup>&nbsp;=&nbsp;<span id="v2-step2-Pinv-inline"></span>:</p>
         <div class="v2-step1-katex" id="v2-step2-diag"></div>
         <p class="v2-step1-line v2-step1-note">For a rating alone, r&middot;I is already diagonal. e&#8330; = (a + b)/2 and e&#8331; = (a &minus; b)/2 are half of the diagonal entries.</p>
