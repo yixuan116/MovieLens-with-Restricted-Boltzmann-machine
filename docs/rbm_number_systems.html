@@ -4116,9 +4116,17 @@
       <div class="v2-step1">
         <span class="distwalk-layer-tag" id="hyperbolic-weights">Step 1 &middot; From matrix to hyperbolic number</span>
 
+        <p class="v2-step1-line">z = a + b&middot;k is written as a 2&times;2 matrix: a on the main diagonal, b on the anti-diagonal.</p>
+
         <div class="v2-step1-katex" id="v2-step1-general"></div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">The identity matrix I plays the role of 1, the matrix K&nbsp;=&nbsp;<span id="v2-step1-K-inline"></span>&nbsp;plays the role of k, and <span id="v2-step1-KK-inline"></span>, which is why k<sup>2</sup> = +1.</p>
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step1-k-body">Why K plays the role of k<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2-step1-k-body" hidden>
+          <p class="v2-step1-line">I is the identity matrix and plays the role of 1. K is the exchange matrix and plays the role of k: it swaps the two components of a vector.</p>
+          <div class="v2-step1-katex" id="v2-step1-k-swap"></div>
+          <div class="v2-step1-katex" id="v2-step1-k-kk"></div>
+          <p class="v2-step1-line">Swapping twice returns to the start, which is why k<sup>2</sup> = +1.</p>
+        </div>
 
         <p class="quad-card-title">A rating alone (b = 0)</p>
         <div class="v2-step1-katex" id="v2-step1-r-symbolic"></div>
@@ -4937,19 +4945,19 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
 
   if (window.katex) {
     katex.render(
-      "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix} = a \\cdot \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix} + b \\cdot \\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix} = a + b \\cdot k",
+      "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix} = a \\cdot \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix} + b \\cdot \\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix} = \\begin{bmatrix} a & 0 \\\\ 0 & a \\end{bmatrix} + \\begin{bmatrix} 0 & b \\\\ b & 0 \\end{bmatrix} = a + b \\cdot k",
       document.getElementById("v2-step1-general"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "\\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix}",
-      document.getElementById("v2-step1-K-inline"),
-      { throwOnError: false, displayMode: false }
+      "K \\cdot \\begin{bmatrix} x \\\\ y \\end{bmatrix} = \\begin{bmatrix} y \\\\ x \\end{bmatrix}",
+      document.getElementById("v2-step1-k-swap"),
+      { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "K \\cdot K = I",
-      document.getElementById("v2-step1-KK-inline"),
-      { throwOnError: false, displayMode: false }
+      "K \\cdot K = \\begin{bmatrix} 0\\cdot0+1\\cdot1 & 0\\cdot1+1\\cdot0 \\\\ 1\\cdot0+0\\cdot1 & 1\\cdot1+0\\cdot0 \\end{bmatrix} = \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix} = I",
+      document.getElementById("v2-step1-k-kk"),
+      { throwOnError: false, displayMode: true }
     );
     katex.render(
       "\\begin{bmatrix} r & 0 \\\\ 0 & r \\end{bmatrix} = r \\cdot I + 0 \\cdot K = r + 0 \\cdot k",
