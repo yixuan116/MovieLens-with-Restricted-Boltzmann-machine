@@ -4168,13 +4168,19 @@
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 3 &middot; Hyperbolic weights</span>
 
+        <p class="v2-step1-line">i = movie, j = hidden unit. One hyperbolic weight per (movie, hidden unit) pair: 1000 &times; 128 = 128,000 weights.</p>
+
         <div class="v2-step1-katex" id="v2-step3-wform"></div>
         <p class="v2-step1-line">Each weight is itself a hyperbolic number: w<sub>ij</sub> is the real part, v<sub>ij</sub> the k part.</p>
         <div class="v2-step1-katex" id="v2-step3-wmatrix"></div>
         <div class="v2-step1-katex" id="v2-step3-wdiag"></div>
 
-        <div class="v2-step1-katex" id="v2-step2-W"></div>
-        <p class="v2-step1-line">i = movie, j = hidden unit. Each W<sub>ij</sub> is one cell of the matrices below; w&#8330; and w&#8331; are learned by CD-1 and kept as symbols here.</p>
+        <p class="v2-step1-line">Collecting all 128,000 weights:</p>
+        <div class="v2-step1-katex" id="v2-step3-collect"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">where A&nbsp;=&nbsp;<span id="v2-step3-A-inline"></span> and B&nbsp;=&nbsp;<span id="v2-step3-B-inline"></span> are 1000 &times; 128 real matrices.</p>
+
+        <p class="v2-step1-line">Top-left entries form W&#8330;, bottom-right entries form W&#8331;. Both are learned by CD-1 and kept as symbols here.</p>
+        <div class="v2-step1-katex" id="v2-step3-wpm"></div>
 
         <p class="v2-step1-line">Rows are the 1000 movies, columns are the 128 hidden units h&#8321;, h&#8322;, &hellip;, h&#8321;&#8322;&#8328;.</p>
         <div class="quad-pair v2-step2-wschema-pair">
@@ -4997,8 +5003,23 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "W_{ij} = \\begin{bmatrix} w_{+,ij} & 0 \\\\ 0 & w_{-,ij} \\end{bmatrix}",
-      document.getElementById("v2-step2-W"),
+      "\\mathbf{W} = A + B \\cdot k",
+      document.getElementById("v2-step3-collect"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "A = \\left[w_{ij}\\right]",
+      document.getElementById("v2-step3-A-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "B = \\left[v_{ij}\\right]",
+      document.getElementById("v2-step3-B-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "W_+ = A + B, \\quad W_- = A - B",
+      document.getElementById("v2-step3-wpm"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
