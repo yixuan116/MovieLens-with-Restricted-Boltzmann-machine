@@ -546,6 +546,36 @@
   .quad-card-row.dark .quad-card-title { color: #cfcfcf; }
   .v2-step4-user-heading { margin-top: 0.6rem; }
 
+  .v2-step8-table-wrap {
+    overflow-x: auto;
+    margin: 0.4rem 0 0.8rem;
+  }
+  .v2-step8-table {
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink);
+  }
+  .v2-step8-table th,
+  .v2-step8-table td {
+    padding: 0.35rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .v2-step8-table th:first-child,
+  .v2-step8-table td:first-child {
+    text-align: left;
+    color: var(--ink-soft);
+    padding-left: 0;
+  }
+  .v2-step8-table th {
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .v2-step8-table th.col-plus { color: #6f9bc2; }
+  .v2-step8-table th.col-minus { color: #d98a3d; }
+
   .quad-card-pair {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -4251,6 +4281,38 @@
         <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step7-bhat-inline"></span> stays as a structural signal: how far the two channels disagree.</p>
       </div>
 
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 8 &middot; Training with CD-1</span>
+
+        <p class="v2-step1-line">Each channel updates its own weights, with no cross terms:</p>
+        <div class="v2-step1-katex" id="v2-step8-delta-w"></div>
+        <p class="v2-step1-line">Superscript 0 = the real data; superscript 1 = after one round trip (Step 4 to Step 6). The update pushes the model toward the data and away from its own reconstruction.</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step8-lr-inline"></span> = 0.05, 50 epochs, CD-1, batch size 100 users, 128 hidden units per channel.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">Worked example: Rumble in the Bronx &times; <span id="v2-step8-h1-inline"></span>, one user who rated it 4.0, first update</p>
+
+        <div class="v2-step8-table-wrap">
+          <table class="v2-step8-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="col-plus">W&#8330;</th>
+                <th class="col-minus">W&#8331;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><span id="v2-step8-row-v0"></span></td><td>0.7778</td><td>0.7778</td></tr>
+              <tr><td><span id="v2-step8-row-h0"></span></td><td>0.4474</td><td>0.4488</td></tr>
+              <tr><td><span id="v2-step8-row-v1"></span></td><td>0.4885</td><td>0.4632</td></tr>
+              <tr><td><span id="v2-step8-row-h1"></span></td><td>0.4601</td><td>0.4652</td></tr>
+              <tr><td><span id="v2-step8-row-dw"></span></td><td>0.0062</td><td>0.0067</td></tr>
+              <tr><td><span id="v2-step8-row-w"></span></td><td>0.0064 &rarr; 0.0126</td><td>&minus;0.0094 &rarr; &minus;0.0027</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="v2-step1-line v2-step1-note">Same input, different starting weights, different update: the two channels drift apart from the first step.</p>
+      </div>
+
     </div>
 
   </section>
@@ -5242,6 +5304,51 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     katex.render(
       "\\hat{b}",
       document.getElementById("v2-step7-bhat-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "\\Delta w = lr \\cdot (v^0 h^0 - v^1 h^1)",
+      document.getElementById("v2-step8-delta-w"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "lr",
+      document.getElementById("v2-step8-lr-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "h_1",
+      document.getElementById("v2-step8-h1-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "v^0",
+      document.getElementById("v2-step8-row-v0"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "h^0_1",
+      document.getElementById("v2-step8-row-h0"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "v^1",
+      document.getElementById("v2-step8-row-v1"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "h^1_1",
+      document.getElementById("v2-step8-row-h1"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "\\Delta w",
+      document.getElementById("v2-step8-row-dw"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "w",
+      document.getElementById("v2-step8-row-w"),
       { throwOnError: false, displayMode: false }
     );
   }
