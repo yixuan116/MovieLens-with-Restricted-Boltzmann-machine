@@ -4122,6 +4122,7 @@
 
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step1-k-body">Why K plays the role of k<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2-step1-k-body" hidden>
+          <div class="v2-step1-katex" id="v2-step1-k-def"></div>
           <p class="v2-step1-line">I is the identity matrix and plays the role of 1. K is the exchange matrix and plays the role of k: it swaps the two components of a vector.</p>
           <div class="v2-step1-katex" id="v2-step1-k-swap"></div>
           <div class="v2-step1-katex" id="v2-step1-k-kk"></div>
@@ -4947,6 +4948,11 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     katex.render(
       "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix} = a \\cdot \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix} + b \\cdot \\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix} = \\begin{bmatrix} a & 0 \\\\ 0 & a \\end{bmatrix} + \\begin{bmatrix} 0 & b \\\\ b & 0 \\end{bmatrix} = a + b \\cdot k",
       document.getElementById("v2-step1-general"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "k \\cdot (x + y \\cdot k) = y + x \\cdot k, \\text{ so } K = \\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix}",
+      document.getElementById("v2-step1-k-def"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
