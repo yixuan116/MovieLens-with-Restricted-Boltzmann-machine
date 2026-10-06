@@ -4212,18 +4212,21 @@
         <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step4-xplus-def-inline"></span> = hidden unit input, 128 entries.</p>
         <div class="v2-step1-katex" id="v2-step4-user-xplus"></div>
 
-        <p class="v2-step1-line">The other channel repeats Parts 4 and 5 with its own weights and bias:</p>
-        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step4-cminus-inline"></span> and <span id="v2-step4-xminus-inline"></span> follow the same definitions in the e&#8331; channel.</p>
+        <p class="v2-step1-line">The other channel repeats the two lines above with its own weights and bias:</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step4-cminus-inline"></span> and <span id="v2-step4-xminus-inline"></span> follow the same definitions in the <span id="v2-step4-eminus-chan-inline"></span> channel.</p>
         <div class="v2-step1-katex" id="v2-step4-user-xminus"></div>
-        <p class="v2-step1-line">Every hidden unit j now has a pair of totals, x&#8330;,j and x&#8331;,j. With the same input, they differ only through W&#8330;, W&#8331; and their biases.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">Every hidden unit j now has a pair of totals, <span id="v2-step4-xplusj-inline"></span> and <span id="v2-step4-xminusj-inline"></span>. With the same input, they differ only through <span id="v2-step4-wplus-inline"></span>, <span id="v2-step4-wminus-inline"></span> and their biases.</p>
       </div>
 
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 5 &middot; Hidden unit activation</span>
 
-        <p class="v2-step1-line">Hidden unit j sums over every movie the user rated, plus its own bias, also in diagonal form.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">The chain so far: <span id="v2-step5-chain1-inline"></span> (ratings times weights, plus bias), then the sigmoid <span id="v2-step5-chain2-inline"></span> squeezes x into a probability between 0 and 1.</p>
 
         <div class="v2-step1-katex" id="v2-step5-sigmoid"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step5-hplus-inline"></span>, <span id="v2-step5-hminus-inline"></span>: the activation probability of hidden unit j in each channel, between 0 and 1.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">e.g. <span id="v2-step5-example-inline"></span></p>
 
         <p class="v2-step1-line v2-step1-inline-katex">&sigma; acts on each diagonal entry separately. Applied entrywise to <span id="v2-step5-ab-inline"></span>, it would break the hyperbolic structure.</p>
 
@@ -5119,14 +5122,64 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: false }
     );
     katex.render(
+      "e_-",
+      document.getElementById("v2-step4-eminus-chan-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
       "x_- = v \\cdot W_- + c_- = \\begin{bmatrix} x_{-,1} & \\cdots & x_{-,128} \\end{bmatrix}",
       document.getElementById("v2-step4-user-xminus"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
+      "x_{+,j}",
+      document.getElementById("v2-step4-xplusj-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "x_{-,j}",
+      document.getElementById("v2-step4-xminusj-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "W_+",
+      document.getElementById("v2-step4-wplus-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "W_-",
+      document.getElementById("v2-step4-wminus-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "x = v \\cdot W + c",
+      document.getElementById("v2-step5-chain1-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "h = \\sigma(x)",
+      document.getElementById("v2-step5-chain2-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
       "\\sigma\\!\\left(\\begin{bmatrix} x_{+,j} & 0 \\\\ 0 & x_{-,j} \\end{bmatrix}\\right) = \\begin{bmatrix} \\sigma(x_{+,j}) & 0 \\\\ 0 & \\sigma(x_{-,j}) \\end{bmatrix} \\qquad \\sigma(x) = \\dfrac{1}{1+e^{-x}}",
       document.getElementById("v2-step5-sigmoid"),
       { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "h_{+,j} = \\sigma(x_{+,j})",
+      document.getElementById("v2-step5-hplus-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "h_{-,j} = \\sigma(x_{-,j})",
+      document.getElementById("v2-step5-hminus-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "x_{+,j} = -0.3 \\text{ gives } h_{+,j} \\approx 0.43",
+      document.getElementById("v2-step5-example-inline"),
+      { throwOnError: false, displayMode: false }
     );
     katex.render(
       "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix}",
