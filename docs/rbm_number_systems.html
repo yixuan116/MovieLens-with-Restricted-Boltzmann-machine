@@ -544,6 +544,7 @@
     color: var(--ink-soft);
   }
   .quad-card-row.dark .quad-card-title { color: #cfcfcf; }
+  .v2-step4-user-heading { margin-top: 0.6rem; }
 
   .quad-card-pair {
     display: grid;
@@ -4214,7 +4215,7 @@
 
         <p class="v2-step1-line v2-step1-note">Each channel multiplies only its own weight, with no cross terms.</p>
 
-        <p class="quad-card-title">One user, all movies at once</p>
+        <p class="quad-card-title v2-step4-user-heading">One user, all movies at once</p>
 
         <p class="v2-step1-line">One user's input, one cell per movie:</p>
         <div class="v2-step1-katex" id="v2-step4-user-v"></div>
@@ -5001,6 +5002,11 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: true }
     );
     katex.render(
+      "\\begin{bmatrix} a & 0 \\\\ 0 & a \\end{bmatrix} = a \\cdot I + 0 \\cdot K = a + 0 \\cdot k",
+      document.getElementById("v2-step1-r-live"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
       "a = (\\text{rating} - 0.5) / 4.5",
       document.getElementById("v2-step1-a-def-inline"),
       { throwOnError: false, displayMode: false }
@@ -5058,6 +5064,11 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     katex.render(
       "\\begin{bmatrix} a+b & 0 \\\\ 0 & a-b \\end{bmatrix} \\cdot \\begin{bmatrix} w_{+,ij} & 0 \\\\ 0 & w_{-,ij} \\end{bmatrix} = \\begin{bmatrix} (a+b)\\cdot w_{+,ij} & 0 \\\\ 0 & (a-b)\\cdot w_{-,ij} \\end{bmatrix}",
       document.getElementById("v2-step2-multiply"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\begin{bmatrix} a & 0 \\\\ 0 & a \\end{bmatrix} \\cdot \\begin{bmatrix} w_{+,ij} & 0 \\\\ 0 & w_{-,ij} \\end{bmatrix} = \\begin{bmatrix} a\\cdot w_{+,ij} & 0 \\\\ 0 & a\\cdot w_{-,ij} \\end{bmatrix}",
+      document.getElementById("v2-step2-r-live"),
       { throwOnError: false, displayMode: true }
     );
     function wschemaLatex(sign, symbol, suffix) {
@@ -5134,42 +5145,25 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
 
   var STEP2_LABELS = { matrix: "Matrix", rumble: "Rumble" };
 
-  function renderStep2RWRow(key, a) {
+  function renderStep2RWRow(key, a, b) {
     var elPlus = document.getElementById("v2-step2-rw-plus-" + key);
     var elMinus = document.getElementById("v2-step2-rw-minus-" + key);
     if (!window.katex) return;
-    var aStr = a.toFixed(4);
+    var apbStr = (a + b).toFixed(4);
+    var ambStr = (a - b).toFixed(4);
     var name = STEP2_LABELS[key];
     if (elPlus) {
       katex.render(
-        aStr + " \\cdot (w_{+,\\text{" + name + "},1},\\ \\ldots,\\ w_{+,\\text{" + name + "},128})",
+        apbStr + " \\cdot (w_{+,\\text{" + name + "},1},\\ \\ldots,\\ w_{+,\\text{" + name + "},128})",
         elPlus, { throwOnError: false, displayMode: false }
       );
     }
     if (elMinus) {
       katex.render(
-        aStr + " \\cdot (w_{-,\\text{" + name + "},1},\\ \\ldots,\\ w_{-,\\text{" + name + "},128})",
+        ambStr + " \\cdot (w_{-,\\text{" + name + "},1},\\ \\ldots,\\ w_{-,\\text{" + name + "},128})",
         elMinus, { throwOnError: false, displayMode: false }
       );
     }
-  }
-
-  function renderStep2RAlone(a) {
-    var el = document.getElementById("v2-step2-r-live");
-    if (!el || !window.katex) return;
-    var aStr = a.toFixed(4);
-    var latex = "\\begin{bmatrix} " + aStr + " & 0 \\\\ 0 & " + aStr + " \\end{bmatrix} \\cdot \\begin{bmatrix} w_{+,ij} & 0 \\\\ 0 & w_{-,ij} \\end{bmatrix} = \\begin{bmatrix} " +
-      aStr + "w_{+,ij} & 0 \\\\ 0 & " + aStr + "w_{-,ij} \\end{bmatrix}";
-    katex.render(latex, el, { throwOnError: false, displayMode: true });
-  }
-
-  function renderStep1RAlone(a) {
-    var el = document.getElementById("v2-step1-r-live");
-    if (!el || !window.katex) return;
-    var aStr = a.toFixed(4);
-    var latex = "\\begin{bmatrix} " + aStr + " & 0 \\\\ 0 & " + aStr + " \\end{bmatrix} = " +
-      aStr + " \\cdot I + 0 \\cdot K = " + aStr + " + 0 \\cdot k";
-    katex.render(latex, el, { throwOnError: false, displayMode: true });
   }
 
   function renderStep1AChain(key, a, rating) {
@@ -5249,7 +5243,7 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
 
     renderStep1AChain(key, a, rating);
     renderStep1Chain(key, a, b);
-    renderStep2RWRow(key, a);
+    renderStep2RWRow(key, a, b);
 
     var r2Vline = document.getElementById("v2-r2-vline-" + key);
     if (r2Vline) {
@@ -5334,8 +5328,6 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     aLabel.textContent = a.toFixed(4);
 
     renderFormulaAlone(a);
-    renderStep1RAlone(a);
-    renderStep2RAlone(a);
 
     var mResult = renderMovie("matrix", a, rating);
     var rResult = renderMovie("rumble", a, rating);
