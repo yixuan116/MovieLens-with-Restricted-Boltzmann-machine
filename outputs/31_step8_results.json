@@ -1,0 +1,128 @@
+{
+  "notebook": "31_step8_minus_channel.ipynb",
+  "reused_R_baseline_notebook": "26_drbm_energy_cd1_training.ipynb",
+  "architecture_match": {
+    "128 hidden units": "N_HIDDEN=128",
+    "sigmoid visible+hidden units": "torch.sigmoid present in RBM class",
+    "trained on normalized rating a": "build_matrix(train_hyp, \"a\") present",
+    "W_real shape is (1000, 128)": "shape=(1000, 128)"
+  },
+  "hyperparameter_line": "lr=0.05, 50 epochs, CD-1 (1 Gibbs step), batch size=100 users, N_HIDDEN=128, masked (test positions excluded), plus_seed=44 (reused from R baseline, not retrained), minus_seed=45",
+  "seeds": {
+    "plus_seed_reused": 44,
+    "minus_seed_trained": 45
+  },
+  "source_paths": {
+    "train_hyperbolic_csv": "/Users/yixuan/Boltzmann Machine in Movie Lens/rbm-recsys/data/train_hyperbolic.csv",
+    "test_hyperbolic_csv": "/Users/yixuan/Boltzmann Machine in Movie Lens/rbm-recsys/data/test_hyperbolic.csv",
+    "plus_channel_weights_reused": [
+      "/Users/yixuan/Boltzmann Machine in Movie Lens/rbm-recsys/data/W_real.npy",
+      "/Users/yixuan/Boltzmann Machine in Movie Lens/rbm-recsys/data/hbias_real.npy",
+      "/Users/yixuan/Boltzmann Machine in Movie Lens/rbm-recsys/data/vbias_real.npy"
+    ],
+    "minus_channel_weights_saved": [
+      "/Users/yixuan/Boltzmann Machine in Movie Lens/rbm-recsys/outputs/31_W_minus.npy",
+      "/Users/yixuan/Boltzmann Machine in Movie Lens/rbm-recsys/outputs/31_c_minus.npy",
+      "/Users/yixuan/Boltzmann Machine in Movie Lens/rbm-recsys/outputs/31_d_minus.npy"
+    ]
+  },
+  "minus_channel_training_history": [
+    0.044227036833763125,
+    0.03879901133477688,
+    0.03875171989202499,
+    0.03873688913881779,
+    0.03884211704134941,
+    0.03876003287732601,
+    0.038859257102012636,
+    0.03874459713697433,
+    0.0387367133051157,
+    0.03868387006223202,
+    0.03871353231370449,
+    0.03861324600875378,
+    0.03855341821908951,
+    0.03857574015855789,
+    0.03841660991311073,
+    0.03836668431758881,
+    0.03820724859833717,
+    0.038088534399867056,
+    0.03778714761137962,
+    0.03760650493204594,
+    0.037550154700875284,
+    0.03735608458518982,
+    0.03724175542593002,
+    0.037143340706825255,
+    0.03704685941338539,
+    0.03701298497617245,
+    0.03699166513979435,
+    0.03692266382277012,
+    0.036735979840159416,
+    0.03667557500302791,
+    0.036626536026597024,
+    0.03655917458236217,
+    0.03650283515453338,
+    0.036473068222403524,
+    0.03636624105274677,
+    0.03638830967247486,
+    0.036314234137535095,
+    0.03617560043931008,
+    0.03611543700098992,
+    0.03597002439200878,
+    0.03599125407636165,
+    0.03601131290197372,
+    0.03595866486430168,
+    0.035983368568122384,
+    0.035917284712195394,
+    0.03583287037909031,
+    0.03575996458530426,
+    0.03580200523138046,
+    0.035730110853910445,
+    0.03568373806774616
+  ],
+  "worked_example_plus": {
+    "movie": "Rumble in the Bronx (Hont faan kui) (1995)",
+    "movieId": 112,
+    "user": 24127,
+    "user_total_rating_count": 530,
+    "hidden_unit": "h1 (index 0)",
+    "v0": 0.7777777910232544,
+    "h0_1": 0.44741639494895935,
+    "v1": 0.48846325278282166,
+    "h1_1": 0.46008285880088806,
+    "lr": 0.05,
+    "delta_w": 0.006162848278574407,
+    "w_before": 0.006433217320591211,
+    "w_after": 0.012596065599165618
+  },
+  "worked_example_minus": {
+    "movie": "Rumble in the Bronx (Hont faan kui) (1995)",
+    "movieId": 112,
+    "user": 24127,
+    "user_total_rating_count": 530,
+    "hidden_unit": "h1 (index 0)",
+    "channel": "minus (seed=45)",
+    "v0": 0.7777777910232544,
+    "h0_1": 0.44883793592453003,
+    "v1": 0.4632098078727722,
+    "h1_1": 0.4651552140712738,
+    "lr": 0.05,
+    "delta_w": 0.00668158604949225,
+    "w_before": -0.009361893869936466,
+    "w_after": -0.002680307820444216
+  },
+  "final_metrics_test_set": {
+    "n_test": 123474,
+    "plus": {
+      "rmse": 0.8430789113044739,
+      "mae": 0.6481009721755981
+    },
+    "minus": {
+      "rmse": 0.8416557312011719,
+      "mae": 0.6504910588264465
+    },
+    "average": {
+      "rmse": 0.8413490653038025,
+      "mae": 0.6484799385070801
+    }
+  },
+  "figure_path": "/Users/yixuan/Boltzmann Machine in Movie Lens/rbm-recsys/outputs/31_minus_channel_training_loss.png"
+}
