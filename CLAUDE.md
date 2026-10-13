@@ -23,6 +23,7 @@ Yixuan sets every standard for this work. This session handles both requirements
 * Only final predictions and hidden feature visualizations go on the page; intermediate data stays off.
 * Scannable, no long paragraphs.
 * Every symbol in a formula is declared on the page. Keep the formulas clean and put the declarations in a collapsible “Symbols” toggle right under the formula.
+* When a step reuses something defined earlier, state what it is right there (e.g. “k, the exchange matrix K = [[0, 1], [1, 0]]”). Never write “see Step X” or “from section Y” in place of the definition.
 * Before any page edit, show a rendered preview of formulas and layout; edit only after Yixuan confirms. One change at a time. Deletions come last, after visual confirmation.
 
 ## Execution rules
