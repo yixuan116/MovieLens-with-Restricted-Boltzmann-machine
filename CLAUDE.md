@@ -21,6 +21,7 @@ Yixuan sets every standard for this work. This session handles both requirements
 * Every figure already produced is used on the page, embedded inline in its section’s narrative, explained as it appears. No figure dumps at the end, no separate validation section repeating earlier content.
 * Only final predictions and hidden feature visualizations go on the page; intermediate data stays off.
 * Scannable, no long paragraphs.
+* Every symbol in a formula is declared on the page. Keep the formulas clean and put the declarations in a collapsible “Symbols” toggle right under the formula.
 * Before any page edit, show a rendered preview of formulas and layout; edit only after Yixuan confirms. One change at a time. Deletions come last, after visual confirmation.
 
 ## Execution rules
