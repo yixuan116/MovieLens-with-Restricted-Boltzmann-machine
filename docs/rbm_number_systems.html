@@ -4258,10 +4258,7 @@
         <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step5-hplus-inline"></span>, <span id="v2-step5-hminus-inline"></span>: the activation probability of hidden unit j in each channel, between 0 and 1.</p>
         <p class="v2-step1-line v2-step1-inline-katex">e.g. <span id="v2-step5-example-inline"></span></p>
 
-        <p class="v2-step1-line">To pass a signal on, each hidden unit is switched on or off by a draw:</p>
         <div class="v2-step1-katex" id="v2-step5-sample"></div>
-        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step5-splus-inline"></span>, <span id="v2-step5-sminus-inline"></span>: the on/off state of hidden unit j in each channel.</p>
-        <p class="v2-step1-line v2-step1-inline-katex">e.g. <span id="v2-step5-sample-example-inline"></span></p>
 
         <p class="v2-step1-line v2-step1-inline-katex">&sigma; acts on each diagonal entry separately. Applied entrywise to <span id="v2-step5-ab-inline"></span>, it would break the hyperbolic structure.</p>
 
@@ -4271,17 +4268,9 @@
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 6 &middot; Back to the visible layer</span>
 
-        <p class="v2-step1-line">Each channel sends its on/off states s back through its own weights, plus a visible bias d (1000 entries, one per movie):</p>
-        <div class="v2-step1-katex" id="v2-step6-reconstruct"></div>
-        <div class="v2-step1-katex" id="v2-step6-dims"></div>
-        <p class="v2-step1-line">Both channels at once, in diagonal form:</p>
         <div class="v2-step1-katex" id="v2-step6-diag"></div>
-        <p class="v2-step1-line">The + channel written out as matrices, size under each:</p>
         <div class="v2-step1-katex" id="v2-step6-matrix"></div>
-        <p class="v2-step1-line v2-step1-inline-katex">Row j of <span id="v2-step6-wt-inline"></span> holds hidden unit j's weights to all 1000 movies (i = movie, j = hidden unit, as in Step 4).</p>
-        <p class="v2-step1-line">Entry i, one movie:</p>
         <div class="v2-step1-katex" id="v2-step6-entry"></div>
-        <p class="v2-step1-line v2-step1-inline-katex">The &minus; channel is identical with <span id="v2-step6-minus-inline"></span>.</p>
         <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step6-vhat-inline"></span> = reconstructed ratings, one per movie, between 0 and 1.</p>
       </div>
 
@@ -5275,34 +5264,14 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: false }
     );
     katex.render(
-      "s_{+,j} \\in \\{0, 1\\},\\ P(s_{+,j} = 1) = h_{+,j} \\qquad s_{-,j} \\in \\{0, 1\\},\\ P(s_{-,j} = 1) = h_{-,j}",
+      "s_{\\pm,j} \\in \\{0, 1\\},\\ P(s_{\\pm,j} = 1) = h_{\\pm,j} \\qquad \\text{e.g. } h_{+,1} = 0.4474 \\rightarrow P(s_{+,1} = 1) = 0.4474",
       document.getElementById("v2-step5-sample"),
       { throwOnError: false, displayMode: true }
-    );
-    katex.render(
-      "s_{+,j}",
-      document.getElementById("v2-step5-splus-inline"),
-      { throwOnError: false, displayMode: false }
-    );
-    katex.render(
-      "s_{-,j}",
-      document.getElementById("v2-step5-sminus-inline"),
-      { throwOnError: false, displayMode: false }
-    );
-    katex.render(
-      "h_{+,1} = 0.4474 \\text{ means } s_{+,1} = 1 \\text{ with } 44.74\\% \\text{ chance, otherwise } 0",
-      document.getElementById("v2-step5-sample-example-inline"),
-      { throwOnError: false, displayMode: false }
     );
     katex.render(
       "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix}",
       document.getElementById("v2-step5-ab-inline"),
       { throwOnError: false, displayMode: false }
-    );
-    katex.render(
-      "\\hat{v}_+ = \\sigma(h_+ \\cdot W_+^T + d_+), \\quad \\hat{v}_- = \\sigma(h_- \\cdot W_-^T + d_-)",
-      document.getElementById("v2-step6-reconstruct"),
-      { throwOnError: false, displayMode: true }
     );
     katex.render(
       "\\begin{bmatrix} \\hat{v}_+ & 0 \\\\ 0 & \\hat{v}_- \\end{bmatrix} = \\sigma\\!\\left( \\begin{bmatrix} s_+ & 0 \\\\ 0 & s_- \\end{bmatrix} \\cdot \\begin{bmatrix} W_+^T & 0 \\\\ 0 & W_-^T \\end{bmatrix} + \\begin{bmatrix} d_+ & 0 \\\\ 0 & d_- \\end{bmatrix} \\right)",
@@ -5315,23 +5284,8 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "W_+^T",
-      document.getElementById("v2-step6-wt-inline"),
-      { throwOnError: false, displayMode: false }
-    );
-    katex.render(
       "\\hat{v}_{+,i} = \\sigma\\!\\left( s_{+,1} \\cdot w_{+,i,1} + s_{+,2} \\cdot w_{+,i,2} + \\cdots + s_{+,128} \\cdot w_{+,i,128} + d_{+,i} \\right)",
       document.getElementById("v2-step6-entry"),
-      { throwOnError: false, displayMode: true }
-    );
-    katex.render(
-      "s_-,\\ W_-^T,\\ d_-",
-      document.getElementById("v2-step6-minus-inline"),
-      { throwOnError: false, displayMode: false }
-    );
-    katex.render(
-      "(1 \\times 128) \\cdot (128 \\times 1000) + (1 \\times 1000) = (1 \\times 1000)",
-      document.getElementById("v2-step6-dims"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
