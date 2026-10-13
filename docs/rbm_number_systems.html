@@ -4258,6 +4258,11 @@
         <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step5-hplus-inline"></span>, <span id="v2-step5-hminus-inline"></span>: the activation probability of hidden unit j in each channel, between 0 and 1.</p>
         <p class="v2-step1-line v2-step1-inline-katex">e.g. <span id="v2-step5-example-inline"></span></p>
 
+        <p class="v2-step1-line">To pass a signal on, each hidden unit is switched on or off by a draw:</p>
+        <div class="v2-step1-katex" id="v2-step5-sample"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step5-splus-inline"></span>, <span id="v2-step5-sminus-inline"></span>: the on/off state of hidden unit j in each channel.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">e.g. <span id="v2-step5-sample-example-inline"></span></p>
+
         <p class="v2-step1-line v2-step1-inline-katex">&sigma; acts on each diagonal entry separately. Applied entrywise to <span id="v2-step5-ab-inline"></span>, it would break the hyperbolic structure.</p>
 
         <p class="v2-step1-line v2-step1-note">One hidden unit, two activation probabilities: each channel produces its own hidden feature.</p>
@@ -5259,6 +5264,26 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     katex.render(
       "x_{+,j} = -0.3 \\text{ gives } h_{+,j} \\approx 0.43",
       document.getElementById("v2-step5-example-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "s_{+,j} \\in \\{0, 1\\},\\ P(s_{+,j} = 1) = h_{+,j} \\qquad s_{-,j} \\in \\{0, 1\\},\\ P(s_{-,j} = 1) = h_{-,j}",
+      document.getElementById("v2-step5-sample"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "s_{+,j}",
+      document.getElementById("v2-step5-splus-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "s_{-,j}",
+      document.getElementById("v2-step5-sminus-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "h_{+,1} = 0.4474 \\text{ means } s_{+,1} = 1 \\text{ with } 44.74\\% \\text{ chance, otherwise } 0",
+      document.getElementById("v2-step5-sample-example-inline"),
       { throwOnError: false, displayMode: false }
     );
     katex.render(
