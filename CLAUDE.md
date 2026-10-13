@@ -36,6 +36,7 @@ Yixuan sets every standard for this work. This session handles both requirements
 ## Communication
 
 * Conversation is in Chinese; code, notebooks and page content are in English.
+* In chat, write every vector or matrix on one line with its size as a subscript suffix, e.g. v = [ v₁ v₂ ⋯ v₁₀₀₀ ]₁ₓ₁₀₀₀, W = [ 0.5 −0.2 ; 0.1 0.3 ]₂ₓ₂ (semicolons separate rows). No separate size lines, no stacked matrices.
 * Conclusions first. Concise; never restate what is already settled. One recommendation, one reason; no option menus.
 * No dashes of any kind. No “not X but Y” constructions; state Y directly. Never open with “however”.
 * Align scope before producing anything. One step at a time; never bundle steps that depend on results not yet seen.
