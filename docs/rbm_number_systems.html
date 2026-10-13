@@ -575,6 +575,7 @@
   }
   .v2-step8-table th.col-plus { color: #6f9bc2; }
   .v2-step8-table th.col-minus { color: #d98a3d; }
+  .v2-move { color: #2a9d8f; }
   .v2-step8-table td.v2-step8-formula,
   .v2-step8-table th.v2-step8-formula { text-align: left; font-family: inherit; }
   .v2-step8-table td.v2-step8-formula .katex { font-size: 0.95rem; }
@@ -4370,6 +4371,45 @@
         <div class="v2-step1-katex v2-tex-d" data-tex="P(v,h) = \frac{e^{-E(v,h)}}{Z}, \qquad Z = \sum_{\text{all } (v,h)} e^{-E(v,h)}"></div>
         <div class="v2-step1-katex v2-tex-d" data-tex="\frac{P(v^0,h^0)}{P(v^1,h^1)} = \frac{e^{-E^0}/Z}{e^{-E^1}/Z} = e^{\,E^1 - E^0}"></div>
         <p class="v2-step1-line">Lower energy, higher probability. Comparing the real data with the reconstruction needs only the energy difference.</p>
+      </div>
+
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 2 &middot; Energy change</span>
+
+        <p class="v2-step1-line v2-step1-inline-katex">One weight, Rumble in the Bronx &times; <span class="v2-tex" data-tex="h_1"></span>; the same <span class="v2-tex" data-tex="w"></span> scores both configurations (the weight before the update).</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="E^0 = -\,\textcolor{#2a9d8f}{v^0} \cdot w \cdot \textcolor{#2a9d8f}{h^0_1}, \qquad E^1 = -\,\textcolor{#2a9d8f}{v^1} \cdot w \cdot \textcolor{#2a9d8f}{h^1_1}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta = E^1 - E^0 = w \cdot \big(\textcolor{#2a9d8f}{v^0 h^0_1 - v^1 h^1_1}\big), \qquad \Delta w = lr \cdot \big(\textcolor{#2a9d8f}{v^0 h^0_1 - v^1 h^1_1}\big)"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta = \frac{w \cdot \Delta w}{lr}"></div>
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e-step2-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e-step2-sym-body" hidden>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="E^0,\ E^1"></span> = this weight's share of the energy, at the real data and after one round trip</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\Delta"></span> = energy change</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="w"></span> = the weight before the update, the same in both configurations</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\Delta w,\ lr"></span> = weight update and learning rate, from Step 8 of 01d</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-move">Colored</span> = the values that differ between the two configurations</p>
+        </div>
+
+        <div class="v2-step8-table-wrap">
+          <table class="v2-step8-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="v2-step8-formula">Formula</th>
+                <th class="col-plus">W&#8330;</th>
+                <th class="col-minus">W&#8331;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="v2-tex" data-tex="E^0"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="-\,\textcolor{#2a9d8f}{v^0} \cdot w \cdot \textcolor{#2a9d8f}{h^0_1}"></span></td><td>&minus;<span class="v2-move">0.7778</span> &times; 0.0064 &times; <span class="v2-move">0.4474</span> = &minus;0.00224</td><td>&minus;<span class="v2-move">0.7778</span> &times; (&minus;0.0094) &times; <span class="v2-move">0.4488</span> = +0.00327</td></tr>
+              <tr><td><span class="v2-tex" data-tex="E^1"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="-\,\textcolor{#2a9d8f}{v^1} \cdot w \cdot \textcolor{#2a9d8f}{h^1_1}"></span></td><td>&minus;<span class="v2-move">0.4885</span> &times; 0.0064 &times; <span class="v2-move">0.4601</span> = &minus;0.00145</td><td>&minus;<span class="v2-move">0.4632</span> &times; (&minus;0.0094) &times; <span class="v2-move">0.4652</span> = +0.00202</td></tr>
+              <tr><td><span class="v2-tex" data-tex="\Delta"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="E^1 - E^0"></span></td><td>+0.00079</td><td>&minus;0.00125</td></tr>
+              <tr><td>check</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="w \cdot \Delta w / lr"></span></td><td>0.0064 &times; 0.0062 / 0.05 = +0.00079</td><td>&minus;0.0094 &times; 0.0067 / 0.05 = &minus;0.00125</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\Delta \ge 0"></span>: the real data already has lower energy than the reconstruction. Same gap in both channels, opposite starting weights, opposite signs.</p>
       </div>
 
     </div>
