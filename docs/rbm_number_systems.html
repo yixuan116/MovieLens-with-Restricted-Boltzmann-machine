@@ -828,7 +828,7 @@
     .connector-line { width: 1.5rem; }
   }
 
-  /* ---------- section 01c (v2 candidate) ---------- */
+  /* ---------- section 01b probe block (four lenses) ---------- */
 
   .v2-hook {
     font-family: var(--serif);
@@ -1465,10 +1465,10 @@
   }
   .panel-d .probe-annotation { color: #d5d5d5; }
 
-  /* ---------- section 01d ---------- */
+  /* ---------- sections 01c and 01d ---------- */
 
-  .section-1d,
-  .section-1e {
+  .section-1c,
+  .section-1d {
     margin-top: 2.6rem;
     padding-top: 2.2rem;
     border-top: 1px solid var(--border-strong);
@@ -2347,13 +2347,13 @@
 
   </section>
 
-  <section class="section-1c" id="section-01c">
+  <section class="section-1b-probe" id="section-01b-probe">
 
     <div class="section-head-2">
-      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01c-body" aria-label="Collapse section 01c">&#8964;</button>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01b-probe-body" aria-label="Collapse the four lens probe">&#8964;</button>
     </div>
 
-    <div class="section-body" id="section-01c-body">
+    <div class="section-body" id="section-01b-probe-body">
 
       <div class="probe-sticky-bar v2-sticky-bar" id="v2-sticky-bar">
         <div class="sticky-row">
@@ -4140,14 +4140,14 @@
 
   </section>
 
-  <section class="section-1d" id="section-01d">
+  <section class="section-1c" id="section-01c">
 
     <div class="section-head-2">
-      <h2><span class="section-num">01d</span>&nbsp;&middot;&nbsp;Hyperbolic Weights: From Input to Hidden Units</h2>
-      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01d-body" aria-label="Collapse section 01d">&#8964;</button>
+      <h2><span class="section-num">01c</span>&nbsp;&middot;&nbsp;Hyperbolic Weights: From Input to Hidden Units</h2>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01c-body" aria-label="Collapse section 01c">&#8964;</button>
     </div>
 
-    <div class="section-body" id="section-01d-body">
+    <div class="section-body" id="section-01c-body">
 
       <p class="v2-formula-alone" id="v2-formula-alone"></p>
 
@@ -4365,14 +4365,14 @@
 
   </section>
 
-  <section class="section-1e" id="section-01e">
+  <section class="section-1d" id="section-01d">
 
     <div class="section-head-2">
-      <h2><span class="section-num">01e</span>&nbsp;&middot;&nbsp;Energy Change: Which Channel to Update</h2>
-      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01e-body" aria-label="Collapse section 01e">&#8964;</button>
+      <h2><span class="section-num">01d</span>&nbsp;&middot;&nbsp;Energy Change: Which Channel to Update</h2>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01d-body" aria-label="Collapse section 01d">&#8964;</button>
     </div>
 
-    <div class="section-body" id="section-01e-body">
+    <div class="section-body" id="section-01d-body">
 
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 1 &middot; Energy of a configuration</span>
@@ -5054,8 +5054,8 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     if (window.location.hash !== "#hyperbolic-weights") return;
     var target = document.getElementById("hyperbolic-weights");
     if (!target) return;
-    var sectionBody = document.getElementById("section-01d-body");
-    var sectionToggle = document.querySelector('[aria-controls="section-01d-body"]');
+    var sectionBody = document.getElementById("section-01c-body");
+    var sectionToggle = document.querySelector('[aria-controls="section-01c-body"]');
     if (sectionBody && sectionBody.hidden) {
       sectionBody.hidden = false;
       if (sectionToggle) sectionToggle.setAttribute("aria-expanded", "true");

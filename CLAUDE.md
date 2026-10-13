@@ -59,13 +59,13 @@ Yixuan sets every standard for this work. This session handles both requirements
 
 * 01 Overview: four lenses and the H = 4 cross cutting test defined.
 * 01b Same Rating, Four Lenses: input probe for all four systems on The Matrix vs Rumble in the Bronx, complete.
-* 01d Hyperbolic Weights: Steps 1 to 8 built. Real input, hyperbolic weights W = w + v·k, diagonalized into W₊ = w + v and W₋ = w − v; σ applied per channel. Prediction = (v̂₊ + v̂₋)/2; b̂ = (v̂₊ − v̂₋)/2 kept as a structural signal. CD-1, lr 0.05, 50 epochs, batch 100 users, 128 hidden units per channel.
+* 01c Hyperbolic Weights: Steps 1 to 8 built. Real input, hyperbolic weights W = w + v·k, diagonalized into W₊ = w + v and W₋ = w − v; σ applied per channel. Prediction = (v̂₊ + v̂₋)/2; b̂ = (v̂₊ − v̂₋)/2 kept as a structural signal. CD-1, lr 0.05, 50 epochs, batch 100 users, 128 hidden units per channel.
   * Step 2: diagonalization with P written out in three steps; collapsible "Why the two channels stay separate".
   * Step 5: hidden units drawn as on/off states s ∈ {0, 1} with P(s = 1) = h, matching CD-1 in code.
   * Step 6: general formula, Symbols toggle, diagonal form, + channel matrix form with sizes, entry i; reconstruction uses s.
   * Step 8: worked example table now shows formula and computation per row for W₊ and W₋ (one user, starting weights, c = d = 0); Symbols toggle.
   * Source of the Step 8 numbers: notebooks/31_step8_minus_channel.ipynb and outputs/31_step8_results.json (+ channel reuses notebook 26's ℝ baseline, seed 44; − channel seed 45).
-* 01e Energy Change: Which Channel to Update: new section, Steps 1 to 5 built on the Rumble in the Bronx × h₁ example.
+* 01d Energy Change: Which Channel to Update: new section, Steps 1 to 5 built on the Rumble in the Bronx × h₁ example.
   * Step 1: energy of a configuration, partition function Z, ratio of the two CD-1 configurations where Z cancels.
   * Step 2: energy change Δ = w · Δw / lr; Δ₁ = +0.00079, Δ₂ = −0.00125; moving values colored.
   * Step 3: ΔE = Δ₁e₊ + Δ₂e₋ assembled with P in three steps; ΔE = −0.00023 + 0.00102k.
@@ -77,4 +77,4 @@ Yixuan sets every standard for this work. This session handles both requirements
 
 ## Next
 
-Notebook 32: run the four quadrant rule on full training data and plot the share of each cell over the 50 epochs, as the result figure closing 01e. Decide first with Yixuan: (1) per hidden unit or per single weight; (2) rebuild the data in this environment (MovieLens 20M, then notebook 25) with notebook 31's settings.
+Notebook 32: run the four quadrant rule on full training data and plot the share of each cell over the 50 epochs, as the result figure closing 01d. Decide first with Yixuan: (1) per hidden unit or per single weight; (2) rebuild the data in this environment (MovieLens 20M, then notebook 25) with notebook 31's settings.
