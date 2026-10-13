@@ -4187,6 +4187,17 @@
         <p class="v2-step1-line">&#9314; Multiply by 1/2:</p>
         <div class="v2-step1-katex v2-tex-d" data-tex="\frac{1}{2}\begin{bmatrix} 2(a+b) & 0 \\ 0 & 2(a-b) \end{bmatrix} = \begin{bmatrix} a+b & 0 \\ 0 & a-b \end{bmatrix}"></div>
         <p class="v2-step1-line">The off diagonal entries cancel to 0, so the two channels have no cross terms.</p>
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2-step2-separate-body">Why the two channels stay separate<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2-step2-separate-body" hidden>
+          <p class="v2-step1-line">The two diagonal entries are the number's value in each channel:</p>
+          <div class="v2-step1-katex v2-tex-d" data-tex="a + bk \;\longrightarrow\; \begin{bmatrix} a+b & 0 \\ 0 & a-b \end{bmatrix}, \qquad a + bk = (a+b)\,e_+ + (a-b)\,e_-"></div>
+          <p class="v2-step1-line">Multiply two hyperbolic numbers directly, using k&sup2; = +1:</p>
+          <div class="v2-step1-katex v2-tex-d" data-tex="(a+bk)(c+dk) = ac + ad\,k + bc\,k + bd\,k^2 = (ac+bd) + (ad+bc)\,k"></div>
+          <p class="v2-step1-line">Split the product into its two channels:</p>
+          <div class="v2-step1-katex v2-tex-d" data-tex="+\text{ channel: } (ac+bd) + (ad+bc) = a(c+d) + b(c+d) = (a+b)(c+d)"></div>
+          <div class="v2-step1-katex v2-tex-d" data-tex="-\text{ channel: } (ac+bd) - (ad+bc) = a(c-d) - b(c-d) = (a-b)(c-d)"></div>
+          <p class="v2-step1-line">Each channel of the product is the product of that channel alone. Multiplying by weights, adding biases and applying &sigma; can all run per channel, then be put back together.</p>
+        </div>
         <p class="v2-step1-line v2-step1-note">The visible input is real, so a&middot;I is already diagonal and both channels receive the same a.</p>
       </div>
 
