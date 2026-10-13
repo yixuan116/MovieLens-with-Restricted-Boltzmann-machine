@@ -4352,16 +4352,16 @@
     <div class="section-body" id="section-01e-body">
 
       <div class="v2-step1">
-        <span class="distwalk-layer-tag">Step 1 &middot; Energy of a snapshot</span>
+        <span class="distwalk-layer-tag">Step 1 &middot; Energy of a configuration</span>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="E(v,h) = -\,v\,W\,h^{T} - c\,h^{T} - d\,v^{T}"></div>
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e-step1-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e-step1-sym-body" hidden>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="E"></span> = energy of one snapshot <span class="v2-tex" data-tex="(v, h)"></span>, a single number</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="E"></span> = energy of one configuration <span class="v2-tex" data-tex="(v, h)"></span>, a single number</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="v"></span> = this user's ratings, one entry per movie (Step 4 of 01d)</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="h"></span> = hidden unit activations, one entry per hidden unit (Step 5 of 01d)</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="W"></span> = weights; <span class="v2-tex" data-tex="c"></span> = hidden bias; <span class="v2-tex" data-tex="d"></span> = visible bias</p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="Z"></span> = sum of <span class="v2-tex" data-tex="e^{-E}"></span> over every possible snapshot, so that all probabilities add up to 1; too large to compute, and it cancels when two snapshots are compared</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="Z"></span> = partition function: the sum of <span class="v2-tex" data-tex="e^{-E}"></span> over every possible configuration, which turns weights into probabilities that add up to 1; too large to compute, and it cancels when two configurations are compared</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="(v^0, h^0)"></span> = the real data; <span class="v2-tex" data-tex="(v^1, h^1)"></span> = after one round trip of CD-1 (Step 8 of 01d)</p>
         </div>
         <div class="v2-step1-katex v2-tex-d" data-tex="\begin{bmatrix} E_+ & 0 \\ 0 & E_- \end{bmatrix} = -\begin{bmatrix} v & 0 \\ 0 & v \end{bmatrix}\begin{bmatrix} W_+ & 0 \\ 0 & W_- \end{bmatrix}\begin{bmatrix} h_+^{T} & 0 \\ 0 & h_-^{T} \end{bmatrix} - \begin{bmatrix} c_+ h_+^{T} & 0 \\ 0 & c_- h_-^{T} \end{bmatrix} - \begin{bmatrix} d_+ v^{T} & 0 \\ 0 & d_- v^{T} \end{bmatrix}"></div>
