@@ -4268,6 +4268,7 @@
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 6 &middot; Back to the visible layer</span>
 
+        <div class="v2-step1-katex" id="v2-step6-general"></div>
         <div class="v2-step1-katex" id="v2-step6-diag"></div>
         <div class="v2-step1-katex" id="v2-step6-matrix"></div>
         <div class="v2-step1-katex" id="v2-step6-entry"></div>
@@ -5272,6 +5273,11 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       "\\begin{bmatrix} a & b \\\\ b & a \\end{bmatrix}",
       document.getElementById("v2-step5-ab-inline"),
       { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "\\hat{v} = \\sigma(s \\cdot W^T + d)",
+      document.getElementById("v2-step6-general"),
+      { throwOnError: false, displayMode: true }
     );
     katex.render(
       "\\begin{bmatrix} \\hat{v}_+ & 0 \\\\ 0 & \\hat{v}_- \\end{bmatrix} = \\sigma\\!\\left( \\begin{bmatrix} s_+ & 0 \\\\ 0 & s_- \\end{bmatrix} \\cdot \\begin{bmatrix} W_+^T & 0 \\\\ 0 & W_-^T \\end{bmatrix} + \\begin{bmatrix} d_+ & 0 \\\\ 0 & d_- \\end{bmatrix} \\right)",
