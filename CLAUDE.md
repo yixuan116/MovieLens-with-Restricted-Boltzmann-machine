@@ -18,6 +18,7 @@ Yixuan sets every standard for this work. This session handles both requirements
 ## Page standards
 
 * Portfolio grade, suitable for LinkedIn and YouTube; no personal names anywhere.
+* The live page link is fixed: https://yixuan116.github.io/MovieLens-with-Restricted-Boltzmann-machine/rbm_number_systems.html. Never change it or add anything to it; to see a new deploy, use Cmd + Shift + R.
 * Every figure already produced is used on the page, embedded inline in its section’s narrative, explained as it appears. No figure dumps at the end, no separate validation section repeating earlier content.
 * Only final predictions and hidden feature visualizations go on the page; intermediate data stays off.
 * Scannable, no long paragraphs.
