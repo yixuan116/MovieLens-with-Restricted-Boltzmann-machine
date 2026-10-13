@@ -29,6 +29,7 @@ Yixuan sets every standard for this work. This session handles both requirements
 * Every task ends with commit and push to main.
 * No screenshots or temporary verification files in the repo.
 * At the end of each working day, update the Progress section below, then commit and push.
+* After that end of day push, remind Yixuan to run git pull on the local copy.
 
 ## Communication
 
