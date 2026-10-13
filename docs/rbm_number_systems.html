@@ -4504,6 +4504,40 @@
         <p class="v2-step1-line v2-step1-inline-katex">Both channels of <span class="v2-tex" data-tex="k\,\Delta E"></span> are positive: cell 3, update the <span class="v2-tex" data-tex="e_-"></span> part only. <span class="v2-tex" data-tex="\mathbb{R}"></span> sees <span class="v2-tex" data-tex="\mathrm{Re}(\Delta E) = -0.00023 < 0"></span> and would update both channels, pushing the + channel away from data it already prefers.</p>
       </div>
 
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 5 &middot; Gated update</span>
+
+        <p class="v2-step1-line">One switch per channel; a channel is updated only when its energy change is negative:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="g_+ = \begin{cases} 1 & \textcolor{#6f9bc2}{\Delta_1} < 0 \\ 0 & \textcolor{#6f9bc2}{\Delta_1} \ge 0 \end{cases}, \qquad g_- = \begin{cases} 1 & \textcolor{#d98a3d}{\Delta_2} < 0 \\ 0 & \textcolor{#d98a3d}{\Delta_2} \ge 0 \end{cases}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="W_+ \leftarrow W_+ + g_+\,\Delta W_+, \qquad W_- \leftarrow W_- + g_-\,\Delta W_-"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">Back in the hyperbolic weight <span class="v2-tex" data-tex="W = w + v\,k"></span>, with <span class="v2-tex" data-tex="W_+ = w + v"></span> and <span class="v2-tex" data-tex="W_- = w - v"></span>:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta w = \frac{g_+\,\Delta W_+ + g_-\,\Delta W_-}{2}, \qquad \Delta v = \frac{g_+\,\Delta W_+ - g_-\,\Delta W_-}{2}"></div>
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e-step5-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e-step5-sym-body" hidden>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="g_+,\ g_-"></span> = on/off switch of each channel: 1 means update, 0 means keep</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\Delta W_+,\ \Delta W_-"></span> = the CD-1 update of each channel, <span class="v2-tex" data-tex="lr \cdot (v^0 h^0_1 - v^1 h^1_1)"></span>: 0.0062 and 0.0067 here</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="w,\ v"></span> = real part and k part of the hyperbolic weight; <span class="v2-tex" data-tex="\Delta w,\ \Delta v"></span> = their changes</p>
+        </div>
+        <p class="v2-step1-line">All four cells with the same updates, Rumble in the Bronx &times; h&#8321;:</p>
+
+        <div class="v2-step8-table-wrap">
+          <table class="v2-step8-table">
+            <thead>
+              <tr><th>Cell</th><th>(g&#8330;, g&#8331;)</th><th class="col-plus">W&#8330;</th><th class="col-minus">W&#8331;</th><th>&Delta;w</th><th>&Delta;v</th><th class="v2-step8-formula"></th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1 &middot; no update</td><td>(0, 0)</td><td>0.0064</td><td>&minus;0.0094</td><td>0</td><td>0</td><td>if Rumble in the Bronx &times; h&#8321; fell here</td></tr>
+              <tr><td>2 &middot; update both</td><td>(1, 1)</td><td>0.0126</td><td>&minus;0.0027</td><td>0.00645</td><td>&minus;0.00025</td><td>if it fell here; same as Step 8 of 01d</td></tr>
+              <tr style="font-weight:600"><td>3 &middot; update e&#8331; only</td><td>(0, 1)</td><td>0.0064</td><td>&minus;0.0027</td><td>0.00335</td><td>&minus;0.00335</td><td>Rumble in the Bronx &times; h&#8321;, actual cell</td></tr>
+              <tr><td>4 &middot; update e&#8330; only</td><td>(1, 0)</td><td>0.0126</td><td>&minus;0.0094</td><td>0.0031</td><td>0.0031</td><td>if it fell here</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="v2-step1-line">Starting point: W&#8330; = 0.0064, W&#8331; = &minus;0.0094. Cell 3 changes only W&#8331;: &Delta;w and &Delta;v are equal and opposite, so W&#8330; = w + v stays at 0.0064. Cell 4 mirrors it: &Delta;w = &Delta;v, so W&#8331; = w &minus; v stays. &#8477; can reach only cells 1 and 2.</p>
+      </div>
+
     </div>
 
   </section>
