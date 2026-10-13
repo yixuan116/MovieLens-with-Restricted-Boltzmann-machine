@@ -4178,6 +4178,15 @@
 
         <p class="v2-step1-line v2-step1-inline-katex">First diagonalize the input with P&nbsp;=&nbsp;<span id="v2-step2-P-inline"></span> and P<sup>&minus;1</sup>&nbsp;=&nbsp;<span id="v2-step2-Pinv-inline"></span>:</p>
         <div class="v2-step1-katex" id="v2-step2-diag"></div>
+        <p class="v2-step1-line">Written out in full:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\frac{1}{2}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix} a & b \\ b & a \end{bmatrix}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} = \begin{bmatrix} a+b & 0 \\ 0 & a-b \end{bmatrix}"></div>
+        <p class="v2-step1-line">&#9312; Multiply the left two:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix} a & b \\ b & a \end{bmatrix} = \begin{bmatrix} 1\cdot a + 1\cdot b & 1\cdot b + 1\cdot a \\ 1\cdot a + (-1)\cdot b & 1\cdot b + (-1)\cdot a \end{bmatrix} = \begin{bmatrix} a+b & a+b \\ a-b & b-a \end{bmatrix}"></div>
+        <p class="v2-step1-line">&#9313; Multiply by P on the right:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\begin{bmatrix} a+b & a+b \\ a-b & b-a \end{bmatrix}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} = \begin{bmatrix} (a+b)+(a+b) & (a+b)-(a+b) \\ (a-b)+(b-a) & (a-b)-(b-a) \end{bmatrix} = \begin{bmatrix} 2(a+b) & 0 \\ 0 & 2(a-b) \end{bmatrix}"></div>
+        <p class="v2-step1-line">&#9314; Multiply by 1/2:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\frac{1}{2}\begin{bmatrix} 2(a+b) & 0 \\ 0 & 2(a-b) \end{bmatrix} = \begin{bmatrix} a+b & 0 \\ 0 & a-b \end{bmatrix}"></div>
+        <p class="v2-step1-line">The off diagonal entries cancel to 0, so the two channels have no cross terms.</p>
         <p class="v2-step1-line v2-step1-note">The visible input is real, so a&middot;I is already diagonal and both channels receive the same a.</p>
       </div>
 
