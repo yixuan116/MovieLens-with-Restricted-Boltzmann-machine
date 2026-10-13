@@ -4412,6 +4412,30 @@
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\Delta \ge 0"></span>: the real data already has lower energy than the reconstruction. Same gap in both channels, opposite starting weights, opposite signs.</p>
       </div>
 
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 3 &middot; One hyperbolic number</span>
+
+        <p class="v2-step1-line v2-step1-inline-katex">Put the two channels back into one hyperbolic number with <span class="v2-tex" data-tex="P"></span> from Step 2 of 01d.</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta E = \textcolor{#6f9bc2}{\Delta_1}\, e_+ + \textcolor{#d98a3d}{\Delta_2}\, e_-"></div>
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e-step3-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e-step3-sym-body" hidden>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\Delta E"></span> = energy change as one hyperbolic number</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{\Delta_1}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{\Delta_2}"></span> = energy change of the + and &minus; channel, from Step 2</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="e_+,\ e_-"></span> = the two basis elements of a hyperbolic number</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="P,\ P^{-1}"></span> = the matrices from Step 2 of 01d</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="k"></span> = hyperbolic unit, <span class="v2-tex" data-tex="k^2 = +1"></span></p>
+        </div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta E = P \begin{bmatrix} \textcolor{#6f9bc2}{\Delta_1} & 0 \\ 0 & \textcolor{#d98a3d}{\Delta_2} \end{bmatrix} P^{-1} = \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix} \textcolor{#6f9bc2}{\Delta_1} & 0 \\ 0 & \textcolor{#d98a3d}{\Delta_2} \end{bmatrix}\frac{1}{2}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} = \frac{1}{2}\begin{bmatrix} \textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2} & \textcolor{#6f9bc2}{\Delta_1} - \textcolor{#d98a3d}{\Delta_2} \\ \textcolor{#6f9bc2}{\Delta_1} - \textcolor{#d98a3d}{\Delta_2} & \textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2} \end{bmatrix}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta E = \frac{\textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2}}{2} + \frac{\textcolor{#6f9bc2}{\Delta_1} - \textcolor{#d98a3d}{\Delta_2}}{2}\,k"></div>
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e-step3-basis-body">Why <span class="v2-tex" data-tex="e_+ = (1+k)/2"></span><span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e-step3-basis-body" hidden>
+          <div class="v2-step1-katex v2-tex-d" data-tex="e_+ = P\begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}P^{-1} = \frac{1}{2}\begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix} = \frac{1+k}{2}, \qquad e_- = P\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}P^{-1} = \frac{1}{2}\begin{bmatrix} 1 & -1 \\ -1 & 1 \end{bmatrix} = \frac{1-k}{2}"></div>
+        </div>
+        <p class="v2-step1-line">Worked example, Rumble in the Bronx &times; h&#8321;:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta E = \frac{\textcolor{#6f9bc2}{0.00079} + (\textcolor{#d98a3d}{-0.00125})}{2} + \frac{\textcolor{#6f9bc2}{0.00079} - (\textcolor{#d98a3d}{-0.00125})}{2}\,k = -0.00023 + 0.00102\,k"></div>
+      </div>
+
     </div>
 
   </section>
