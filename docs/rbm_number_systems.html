@@ -4271,9 +4271,17 @@
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 6 &middot; Back to the visible layer</span>
 
-        <p class="v2-step1-line">Each channel sends its hidden activations back through its own weights, plus a visible bias d (1000 entries, one per movie):</p>
+        <p class="v2-step1-line">Each channel sends its on/off states s back through its own weights, plus a visible bias d (1000 entries, one per movie):</p>
         <div class="v2-step1-katex" id="v2-step6-reconstruct"></div>
         <div class="v2-step1-katex" id="v2-step6-dims"></div>
+        <p class="v2-step1-line">Both channels at once, in diagonal form:</p>
+        <div class="v2-step1-katex" id="v2-step6-diag"></div>
+        <p class="v2-step1-line">The + channel written out as matrices, size under each:</p>
+        <div class="v2-step1-katex" id="v2-step6-matrix"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">Row j of <span id="v2-step6-wt-inline"></span> holds hidden unit j's weights to all 1000 movies (i = movie, j = hidden unit, as in Step 4).</p>
+        <p class="v2-step1-line">Entry i, one movie:</p>
+        <div class="v2-step1-katex" id="v2-step6-entry"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">The &minus; channel is identical with <span id="v2-step6-minus-inline"></span>.</p>
         <p class="v2-step1-line v2-step1-inline-katex"><span id="v2-step6-vhat-inline"></span> = reconstructed ratings, one per movie, between 0 and 1.</p>
       </div>
 
@@ -5295,6 +5303,31 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       "\\hat{v}_+ = \\sigma(h_+ \\cdot W_+^T + d_+), \\quad \\hat{v}_- = \\sigma(h_- \\cdot W_-^T + d_-)",
       document.getElementById("v2-step6-reconstruct"),
       { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\begin{bmatrix} \\hat{v}_+ & 0 \\\\ 0 & \\hat{v}_- \\end{bmatrix} = \\sigma\\!\\left( \\begin{bmatrix} s_+ & 0 \\\\ 0 & s_- \\end{bmatrix} \\cdot \\begin{bmatrix} W_+^T & 0 \\\\ 0 & W_-^T \\end{bmatrix} + \\begin{bmatrix} d_+ & 0 \\\\ 0 & d_- \\end{bmatrix} \\right)",
+      document.getElementById("v2-step6-diag"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "\\underset{1 \\times 1000}{\\begin{bmatrix} \\hat{v}_{+,1} & \\hat{v}_{+,2} & \\cdots & \\hat{v}_{+,1000} \\end{bmatrix}} = \\sigma\\!\\left( \\underset{1 \\times 128}{\\begin{bmatrix} s_{+,1} & s_{+,2} & \\cdots & s_{+,128} \\end{bmatrix}} \\cdot \\underset{128 \\times 1000}{\\begin{bmatrix} w_{+,1,1} & w_{+,2,1} & \\cdots & w_{+,1000,1} \\\\ w_{+,1,2} & w_{+,2,2} & \\cdots & w_{+,1000,2} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ w_{+,1,128} & w_{+,2,128} & \\cdots & w_{+,1000,128} \\end{bmatrix}} + \\underset{1 \\times 1000}{\\begin{bmatrix} d_{+,1} & d_{+,2} & \\cdots & d_{+,1000} \\end{bmatrix}} \\right)",
+      document.getElementById("v2-step6-matrix"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "W_+^T",
+      document.getElementById("v2-step6-wt-inline"),
+      { throwOnError: false, displayMode: false }
+    );
+    katex.render(
+      "\\hat{v}_{+,i} = \\sigma\\!\\left( s_{+,1} \\cdot w_{+,i,1} + s_{+,2} \\cdot w_{+,i,2} + \\cdots + s_{+,128} \\cdot w_{+,i,128} + d_{+,i} \\right)",
+      document.getElementById("v2-step6-entry"),
+      { throwOnError: false, displayMode: true }
+    );
+    katex.render(
+      "s_-,\\ W_-^T,\\ d_-",
+      document.getElementById("v2-step6-minus-inline"),
+      { throwOnError: false, displayMode: false }
     );
     katex.render(
       "(1 \\times 128) \\cdot (128 \\times 1000) + (1 \\times 1000) = (1 \\times 1000)",
