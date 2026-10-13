@@ -4461,6 +4461,49 @@
         <div class="v2-step1-katex v2-tex-d" data-tex="\Delta E = \frac{\textcolor{#6f9bc2}{0.00079} + (\textcolor{#d98a3d}{-0.00125})}{2} + \frac{\textcolor{#6f9bc2}{0.00079} - (\textcolor{#d98a3d}{-0.00125})}{2}\,k = -0.00023 + 0.00102\,k"></div>
       </div>
 
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 4 &middot; Four quadrants</span>
+
+        <p class="v2-step1-line v2-step1-inline-katex">Multiply <span class="v2-tex" data-tex="\Delta E"></span> by <span class="v2-tex" data-tex="k"></span>, then read the signs of both channels.</p>
+        <p class="v2-step1-line">&#9312; Multiply by k (K from Step 1 of 01d):</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="k\,\Delta E = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}\frac{1}{2}\begin{bmatrix} \textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2} & \textcolor{#6f9bc2}{\Delta_1} - \textcolor{#d98a3d}{\Delta_2} \\ \textcolor{#6f9bc2}{\Delta_1} - \textcolor{#d98a3d}{\Delta_2} & \textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2} \end{bmatrix} = \frac{1}{2}\begin{bmatrix} \textcolor{#6f9bc2}{\Delta_1} - \textcolor{#d98a3d}{\Delta_2} & \textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2} \\ \textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2} & \textcolor{#6f9bc2}{\Delta_1} - \textcolor{#d98a3d}{\Delta_2} \end{bmatrix}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="k\,\Delta E = \frac{\textcolor{#6f9bc2}{\Delta_1} - \textcolor{#d98a3d}{\Delta_2}}{2} + \frac{\textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2}}{2}\,k"></div>
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e-step4-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e-step4-sym-body" hidden>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="k\,\Delta E"></span> = the energy change multiplied by the hyperbolic unit <span class="v2-tex" data-tex="k"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="K"></span> = the exchange matrix that plays the role of <span class="v2-tex" data-tex="k"></span> (Step 1 of 01d)</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="z \ge 0"></span> in <span class="v2-tex" data-tex="\mathbb{D}"></span> = the value of <span class="v2-tex" data-tex="z"></span> is <span class="v2-tex" data-tex="\ge 0"></span> in both channels</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\mathrm{Re}(\Delta E)"></span> = the real part of <span class="v2-tex" data-tex="\Delta E"></span>, the only number <span class="v2-tex" data-tex="\mathbb{R}"></span> sees</p>
+          <p class="v2-step1-line">cell = one of four mutually exclusive sign patterns of the two channels; action = which part of the weight to update</p>
+        </div>
+        <p class="v2-step1-line">&#9313; Split back into the two channels (+ = real part + k part, &minus; = real part &minus; k part):</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="+:\; \frac{\textcolor{#6f9bc2}{\Delta_1} - \textcolor{#d98a3d}{\Delta_2}}{2} + \frac{\textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2}}{2} = \textcolor{#6f9bc2}{\Delta_1}, \qquad -:\; \frac{\textcolor{#6f9bc2}{\Delta_1} - \textcolor{#d98a3d}{\Delta_2}}{2} - \frac{\textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2}}{2} = -\textcolor{#d98a3d}{\Delta_2}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="k\,\Delta E = \textcolor{#6f9bc2}{\Delta_1}\,e_+ - \textcolor{#d98a3d}{\Delta_2}\,e_-"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="k"></span> keeps <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{\Delta_1}"></span> and flips the sign of <span class="v2-tex" data-tex="\textcolor{#d98a3d}{\Delta_2}"></span>.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">&#9314; A hyperbolic number is <span class="v2-tex" data-tex="\ge 0"></span> when its value is <span class="v2-tex" data-tex="\ge 0"></span> in both channels. Four mutually exclusive cells follow (<span class="v2-tex" data-tex="\Delta = 0"></span> counts as no update):</p>
+
+        <div class="v2-step8-table-wrap">
+          <table class="v2-step8-table">
+            <thead>
+              <tr><th>Cell</th><th class="col-plus">&Delta;&#8321;</th><th class="col-minus">&Delta;&#8322;</th><th class="v2-step8-formula">Test</th><th class="v2-step8-formula">Action</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td><span class="v2-tex" data-tex="\ge 0"></span></td><td><span class="v2-tex" data-tex="\ge 0"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="\Delta E \ge 0"></span></td><td class="v2-step8-formula">no update</td></tr>
+              <tr><td>2</td><td><span class="v2-tex" data-tex="< 0"></span></td><td><span class="v2-tex" data-tex="< 0"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="\Delta E < 0"></span></td><td class="v2-step8-formula">update both</td></tr>
+              <tr><td>3</td><td><span class="v2-tex" data-tex="\ge 0"></span></td><td><span class="v2-tex" data-tex="< 0"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="k\,\Delta E > 0"></span></td><td class="v2-step8-formula">update the <span class="v2-tex" data-tex="e_-"></span> part only</td></tr>
+              <tr><td>4</td><td><span class="v2-tex" data-tex="< 0"></span></td><td><span class="v2-tex" data-tex="\ge 0"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="k\,\Delta E < 0"></span></td><td class="v2-step8-formula">update the <span class="v2-tex" data-tex="e_+"></span> part only</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">&#9315; <span class="v2-tex" data-tex="\mathbb{R}"></span> sees only the real part, one number, so it can tell only cells 1 and 2 apart:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\mathrm{Re}(\Delta E) = \frac{\textcolor{#6f9bc2}{\Delta_1} + \textcolor{#d98a3d}{\Delta_2}}{2}"></div>
+        <p class="v2-step1-line">&#9316; Worked example, Rumble in the Bronx &times; h&#8321;:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta E = -0.00023 + 0.00102\,k \;\rightarrow\; (\textcolor{#6f9bc2}{+0.00079},\; \textcolor{#d98a3d}{-0.00125}), \qquad k\,\Delta E = 0.00102 - 0.00023\,k \;\rightarrow\; (+0.00079,\; +0.00125)"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">Both channels of <span class="v2-tex" data-tex="k\,\Delta E"></span> are positive: cell 3, update the <span class="v2-tex" data-tex="e_-"></span> part only. <span class="v2-tex" data-tex="\mathbb{R}"></span> sees <span class="v2-tex" data-tex="\mathrm{Re}(\Delta E) = -0.00023 < 0"></span> and would update both channels, pushing the + channel away from data it already prefers.</p>
+      </div>
+
     </div>
 
   </section>
