@@ -1464,7 +1464,8 @@
 
   /* ---------- section 01d ---------- */
 
-  .section-1d {
+  .section-1d,
+  .section-1e {
     margin-top: 2.6rem;
     padding-top: 2.2rem;
     border-top: 1px solid var(--border-strong);
@@ -4341,6 +4342,40 @@
 
   </section>
 
+  <section class="section-1e" id="section-01e">
+
+    <div class="section-head-2">
+      <h2><span class="section-num">01e</span>&nbsp;&middot;&nbsp;Energy Change: Which Channel to Update</h2>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01e-body" aria-label="Collapse section 01e">&#8964;</button>
+    </div>
+
+    <div class="section-body" id="section-01e-body">
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 1 &middot; Energy of a snapshot</span>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="E(v,h) = -\,v\,W\,h^{T} - c\,h^{T} - d\,v^{T}"></div>
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e-step1-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e-step1-sym-body" hidden>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="E"></span> = energy of one snapshot <span class="v2-tex" data-tex="(v, h)"></span>, a single number</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="v"></span> = this user's ratings, one entry per movie (Step 4 of 01d)</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="h"></span> = hidden unit activations, one entry per hidden unit (Step 5 of 01d)</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="W"></span> = weights; <span class="v2-tex" data-tex="c"></span> = hidden bias; <span class="v2-tex" data-tex="d"></span> = visible bias</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="Z"></span> = sum of <span class="v2-tex" data-tex="e^{-E}"></span> over every possible snapshot, so that all probabilities add up to 1; too large to compute, and it cancels when two snapshots are compared</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="(v^0, h^0)"></span> = the real data; <span class="v2-tex" data-tex="(v^1, h^1)"></span> = after one round trip of CD-1 (Step 8 of 01d)</p>
+        </div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\begin{bmatrix} E_+ & 0 \\ 0 & E_- \end{bmatrix} = -\begin{bmatrix} v & 0 \\ 0 & v \end{bmatrix}\begin{bmatrix} W_+ & 0 \\ 0 & W_- \end{bmatrix}\begin{bmatrix} h_+^{T} & 0 \\ 0 & h_-^{T} \end{bmatrix} - \begin{bmatrix} c_+ h_+^{T} & 0 \\ 0 & c_- h_-^{T} \end{bmatrix} - \begin{bmatrix} d_+ v^{T} & 0 \\ 0 & d_- v^{T} \end{bmatrix}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="E_+ = -\underset{1 \times 1000}{\begin{bmatrix} v_1 & \cdots & v_{1000} \end{bmatrix}}\underset{1000 \times 128}{\begin{bmatrix} w_{+,1,1} & \cdots & w_{+,1,128} \\ \vdots & \ddots & \vdots \\ w_{+,1000,1} & \cdots & w_{+,1000,128} \end{bmatrix}}\underset{128 \times 1}{\begin{bmatrix} h_{+,1} \\ \vdots \\ h_{+,128} \end{bmatrix}} - \underset{1 \times 128}{\begin{bmatrix} c_{+,1} & \cdots & c_{+,128} \end{bmatrix}}\underset{128 \times 1}{\begin{bmatrix} h_{+,1} \\ \vdots \\ h_{+,128} \end{bmatrix}} - \underset{1 \times 1000}{\begin{bmatrix} d_{+,1} & \cdots & d_{+,1000} \end{bmatrix}}\underset{1000 \times 1}{\begin{bmatrix} v_1 \\ \vdots \\ v_{1000} \end{bmatrix}}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">The <span class="v2-tex" data-tex="-"></span> channel is the same with <span class="v2-tex" data-tex="W_-,\ c_-,\ d_-,\ h_-"></span>; each channel has its own energy and its own <span class="v2-tex" data-tex="Z"></span>.</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="P(v,h) = \frac{e^{-E(v,h)}}{Z}, \qquad Z = \sum_{\text{all } (v,h)} e^{-E(v,h)}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\frac{P(v^0,h^0)}{P(v^1,h^1)} = \frac{e^{-E^0}/Z}{e^{-E^1}/Z} = e^{\,E^1 - E^0}"></div>
+        <p class="v2-step1-line">Lower energy, higher probability. Comparing the real data with the reconstruction needs only the energy difference.</p>
+      </div>
+
+    </div>
+
+  </section>
+
 
 
   <section class="section-2" id="section-2">
@@ -5417,6 +5452,9 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
     );
     document.querySelectorAll(".v2-tex").forEach(function (el) {
       katex.render(el.getAttribute("data-tex"), el, { throwOnError: false, displayMode: false });
+    });
+    document.querySelectorAll(".v2-tex-d").forEach(function (el) {
+      katex.render(el.getAttribute("data-tex"), el, { throwOnError: false, displayMode: true });
     });
   }
 
