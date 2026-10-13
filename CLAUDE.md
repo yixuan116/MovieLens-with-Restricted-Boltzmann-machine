@@ -36,6 +36,7 @@ Yixuan sets every standard for this work. This session handles both requirements
 ## Communication
 
 * Conversation is in Chinese; code, notebooks and page content are in English.
+* In chat, explain in the plainest words possible; everyday analogies (like calling (v, h) a snapshot) are welcome; introduce no new jargon. The page itself uses the field's standard terms.
 * In chat, write every vector or matrix out in full as a rendered LaTeX matrix (bmatrix in $$ … $$), entries shown, row vectors as one row and column vectors as one column. If a size is needed, put it directly under that matrix; never in a separate size line.
 * Conclusions first. Concise; never restate what is already settled. One recommendation, one reason; no option menus.
 * No dashes of any kind. No “not X but Y” constructions; state Y directly. Never open with “however”.
