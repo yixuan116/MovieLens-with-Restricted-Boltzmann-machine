@@ -42,6 +42,7 @@ Yixuan sets every standard for this work. This session handles both requirements
 * Conclusions first. Concise; never restate what is already settled. One recommendation, one reason; no option menus.
 * No dashes of any kind. No “not X but Y” constructions; state Y directly. Never open with “however”.
 * Align scope before producing anything. One step at a time; never bundle steps that depend on results not yet seen.
+* Never list future to-dos or open items unprompted; Yixuan decides what comes next.
 
 ## Data
 
@@ -76,5 +77,3 @@ Yixuan sets every standard for this work. This session handles both requirements
 ## Next
 
 Notebook 32: run the four quadrant rule on full training data and plot the share of each cell over the 50 epochs, as the result figure closing 01e. Decide first with Yixuan: (1) per hidden unit or per single weight; (2) rebuild the data in this environment (MovieLens 20M, then notebook 25) with notebook 31's settings.
-
-Open items, order to be decided: 01d Steps 1 to 4 still lack Symbols toggles; ℂ and Fz full training pipelines; H = 4 squeeze test; fix section 02 display; README and repo About, written last.
