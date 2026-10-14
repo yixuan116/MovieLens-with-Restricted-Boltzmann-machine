@@ -6,7 +6,7 @@ Comparative study of Restricted Boltzmann Machines across four number systems: â
 
 ## Roles
 
-Yixuan sets every standard for this work. This session handles both requirements discussion and execution. The GitHub repo is the single source of truth: this session is the only writer; local copies only pull.
+Yixuan sets every standard for this work. This session handles both requirements discussion and execution. The GitHub repo is the single source of truth. The local VS Code session is the only writer; every task ends with commit and push to main.
 
 ## Research standards
 
