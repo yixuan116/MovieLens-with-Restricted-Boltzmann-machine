@@ -1,0 +1,34 @@
+{
+  "notebook": "38_step2_rumble_term_breakdown.ipynb",
+  "reused_from": "31_step8_minus_channel.ipynb, 37_step1to6_rating_habit_b.ipynb",
+  "movie": "Rumble in the Bronx (Hont faan kui) (1995)",
+  "user": 24127,
+  "hidden_unit": "h1 (index 0)",
+  "a": 0.7777777910232544,
+  "b": 0.6568134171907757,
+  "n_rated": 530,
+  "channel_plus_rumble": {
+    "01c": 0.7777777910232544,
+    "01e": 1.4345912082140302
+  },
+  "channel_minus_rumble": {
+    "01c": 0.7777777910232544,
+    "01e": 0.12096437383247871
+  },
+  "rumble_term_plus": 0.005003613556781972,
+  "rumble_term_minus": -0.007281473133953331,
+  "rest_plus": -0.21611873539821264,
+  "rest_minus": -0.1980855406781118,
+  "x_plus": {
+    "01c": -0.21111512184143066,
+    "01e": -0.4294003180925201
+  },
+  "x_minus": {
+    "01c": -0.20536701381206512,
+    "01e": 0.008344604852814352
+  },
+  "sum_w_plus_R": -0.33233973383903503,
+  "sum_w_minus_R": -0.3253764510154724,
+  "product_plus": -0.21828519625108947,
+  "product_minus": -0.21371161866487948
+}
