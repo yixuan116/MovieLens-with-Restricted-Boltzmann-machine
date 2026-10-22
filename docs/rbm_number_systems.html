@@ -4746,6 +4746,55 @@
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="P(0,0) + P(1,0) + P(0,1) + P(1,1) = 1"></span>, the four outcomes exhaust the probability.</p>
       </div>
 
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 5 &middot; Back to the visible layer</span>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="d = d_A + d_B\,k"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{d_+ = d_A + d_B}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{d_- = d_A - d_B}"></span>.</p>
+
+        <p class="v2-step1-line v2-step1-inline-katex">Reconstruction per channel, using exactly the formula and procedure of <a href="#section-01c">section 01c Step 6</a> (same hidden states <span class="v2-tex" data-tex="s"></span> and the same random draws), with the 01e inputs from Step 1:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{\hat{v}_+ = \sigma(s_+ \cdot W_+^T + d_+)}, \qquad \textcolor{#d98a3d}{\hat{v}_- = \sigma(s_- \cdot W_-^T + d_-)}"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">Put the two channels back into one hyperbolic number:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\hat{v} = \textcolor{#6f9bc2}{\hat{v}_+}\, e_+ + \textcolor{#d98a3d}{\hat{v}_-}\, e_-"></div>
+        <p class="v2-step1-line">&#9312; Substitute <span class="v2-tex" data-tex="e_+,\ e_-"></span>:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\hat{v} = \textcolor{#6f9bc2}{\hat{v}_+} \cdot \frac{1+k}{2} + \textcolor{#d98a3d}{\hat{v}_-} \cdot \frac{1-k}{2}"></div>
+        <p class="v2-step1-line">&#9313; Expand and group the real part and the k part:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\hat{v} = \frac{\textcolor{#6f9bc2}{\hat{v}_+} + \textcolor{#d98a3d}{\hat{v}_-}}{2} + \frac{\textcolor{#6f9bc2}{\hat{v}_+} - \textcolor{#d98a3d}{\hat{v}_-}}{2}\,k"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">The real part <span class="v2-tex" data-tex="\hat{a}"></span> gives the rating, <span class="v2-tex" data-tex="\hat{r} = 4.5\hat{a} + 0.5"></span>; the k part <span class="v2-tex" data-tex="\hat{b}"></span> is compared with the known <span class="v2-tex" data-tex="b"></span>.</p>
+
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step5-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e1-step5-sym-body" hidden>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="d"></span> = visible bias as a hyperbolic number; <span class="v2-tex" data-tex="d_A,\ d_B"></span> = its real part and k part</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{d_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{d_-}"></span> = visible bias of each channel, one per movie</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{\hat{v}_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{\hat{v}_-}"></span> = reconstructed visible value of each channel, between 0 and 1</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\hat{v}"></span> = reconstruction as one hyperbolic number</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\hat{a}"></span> = reconstructed normalized rating; <span class="v2-tex" data-tex="\hat{r}"></span> = reconstructed rating, back on the 0.5 to 5.0 star scale</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\hat{b}"></span> = reconstructed popularity signal, compared with the known <span class="v2-tex" data-tex="b"></span> from Step 1</p>
+        </div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>:</p>
+
+        <div class="v2-step8-table-wrap">
+          <table class="v2-step8-table">
+            <thead>
+              <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=-1"></span>)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="\hat{v}_+"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.4885"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.4885"></span></td></tr>
+              <tr><td class="col-minus"><span class="v2-tex" data-tex="\hat{v}_-"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.4632"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.4632"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="\hat{a},\ \hat{r}"></span></td><td><span class="v2-tex" data-tex="\hat{a}=0.4758,\ \hat{r}=2.6413"></span></td><td><span class="v2-tex" data-tex="\hat{a}=0.4758,\ \hat{r}=2.6413"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="\hat{b}"></span> (target <span class="v2-tex" data-tex="b"></span>)</td><td><span class="v2-tex" data-tex="\hat{b}=0.0126\ (b=0)"></span></td><td><span class="v2-tex" data-tex="\hat{b}=0.0126\ (b=-1)"></span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">In this example, the same random draw samples the identical 128-unit hidden state in both scenarios (<span class="v2-tex" data-tex="0"></span> of <span class="v2-tex" data-tex="128"></span> bits differ), so the reconstruction matches exactly.</p>
+
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\sigma"></span> keeps each channel in <span class="v2-tex" data-tex="(0, 1)"></span>, so <span class="v2-tex" data-tex="\hat{b}"></span> stays within <span class="v2-tex" data-tex="(-0.5, 0.5)"></span> and cannot reach <span class="v2-tex" data-tex="-1"></span>.</p>
+      </div>
+
     </div>
 
   </section>

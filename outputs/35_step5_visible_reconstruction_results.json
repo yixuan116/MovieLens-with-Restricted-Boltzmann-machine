@@ -1,0 +1,33 @@
+{
+  "notebook": "35_step5_visible_reconstruction.ipynb",
+  "reused_from": "31_step8_minus_channel.ipynb, 32_step2_hidden_input.ipynb",
+  "movie": "Rumble in the Bronx (Hont faan kui) (1995)",
+  "user": 24127,
+  "hidden_unit": "h1 (index 0), full 128-unit state used for reconstruction",
+  "d_plus_rumble": 0.0,
+  "d_minus_rumble": 0.0,
+  "vhat_plus": {
+    "01c": 0.48846325278282166,
+    "01e": 0.48846325278282166
+  },
+  "vhat_minus": {
+    "01c": 0.4632098376750946,
+    "01e": 0.4632098376750946
+  },
+  "ahat": {
+    "01c": 0.47583654522895813,
+    "01e": 0.47583654522895813
+  },
+  "rhat": {
+    "01c": 2.6412644535303116,
+    "01e": 2.6412644535303116
+  },
+  "bhat": {
+    "01c": 0.012626707553863525,
+    "01e": 0.012626707553863525
+  },
+  "target_b": {
+    "01c": 0.0,
+    "01e": -1.0
+  }
+}
