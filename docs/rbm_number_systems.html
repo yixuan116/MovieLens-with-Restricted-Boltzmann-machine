@@ -4613,6 +4613,43 @@
 
         <p class="v2-step1-line v2-step1-inline-katex">In 01c, <span class="v2-tex" data-tex="b = 0"></span>, so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{a + b} = \textcolor{#d98a3d}{a - b} = 0.7778"></span>. Now the two channels differ from the first step.</p>
 
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step1-why-body">Why add b<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e1-step1-why-body" hidden>
+          <p class="v2-step1-line">Illustrative raters, same movie.</p>
+
+          <p class="v2-step1-line"><b>Same gap, different position</b></p>
+          <div class="v2-step8-table-wrap">
+            <table class="v2-step8-table">
+              <thead>
+                <tr><th></th><th class="v2-step8-formula">Formula</th><th>Strict (<span class="v2-tex" data-tex="\mu_u=2.0"></span>, rating <span class="v2-tex" data-tex="3.0"></span>)</th><th>Typical (<span class="v2-tex" data-tex="\mu_u=3.5"></span>, rating <span class="v2-tex" data-tex="4.5"></span>)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><span class="v2-tex" data-tex="a"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a = \dfrac{\text{rating} - 0.5}{4.5}"></span></td><td><span class="v2-tex" data-tex="\dfrac{3.0 - 0.5}{4.5} = 0.5556"></span></td><td><span class="v2-tex" data-tex="\dfrac{4.5 - 0.5}{4.5} = 0.8889"></span></td></tr>
+                <tr><td><span class="v2-tex" data-tex="b"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="b = \dfrac{\mu_u - 0.5}{4.5}"></span></td><td><span class="v2-tex" data-tex="\dfrac{2.0 - 0.5}{4.5} = 0.3333"></span></td><td><span class="v2-tex" data-tex="\dfrac{3.5 - 0.5}{4.5} = 0.6667"></span></td></tr>
+                <tr><td class="col-plus">channel +</td><td class="v2-step8-formula col-plus"><span class="v2-tex" data-tex="a + b"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.5556 + 0.3333 = 0.8889"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.8889 + 0.6667 = 1.5556"></span></td></tr>
+                <tr><td class="col-minus">channel &minus;</td><td class="v2-step8-formula col-minus"><span class="v2-tex" data-tex="a - b"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.5556 - 0.3333 = 0.2222"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.8889 - 0.6667 = 0.2222"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\mathbb{R}"></span> sees two different ratings. Channel &minus; is equal: the same lift above each rater's own mean. Channel + differs: where on the scale it happened.</p>
+
+          <p class="v2-step1-line"><b>Same rating, different gap</b></p>
+          <div class="v2-step8-table-wrap">
+            <table class="v2-step8-table">
+              <thead>
+                <tr><th></th><th class="v2-step8-formula">Formula</th><th>Strict (<span class="v2-tex" data-tex="\mu_u=2.0"></span>, rating <span class="v2-tex" data-tex="4.0"></span>)</th><th>Generous (<span class="v2-tex" data-tex="\mu_u=4.5"></span>, rating <span class="v2-tex" data-tex="4.0"></span>)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><span class="v2-tex" data-tex="a"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a = \dfrac{\text{rating} - 0.5}{4.5}"></span></td><td><span class="v2-tex" data-tex="\dfrac{4.0 - 0.5}{4.5} = 0.7778"></span></td><td><span class="v2-tex" data-tex="\dfrac{4.0 - 0.5}{4.5} = 0.7778"></span></td></tr>
+                <tr><td><span class="v2-tex" data-tex="b"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="b = \dfrac{\mu_u - 0.5}{4.5}"></span></td><td><span class="v2-tex" data-tex="\dfrac{2.0 - 0.5}{4.5} = 0.3333"></span></td><td><span class="v2-tex" data-tex="\dfrac{4.5 - 0.5}{4.5} = 0.8889"></span></td></tr>
+                <tr><td class="col-plus">channel +</td><td class="v2-step8-formula col-plus"><span class="v2-tex" data-tex="a + b"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + 0.3333 = 1.1111"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + 0.8889 = 1.6667"></span></td></tr>
+                <tr><td class="col-minus">channel &minus;</td><td class="v2-step8-formula col-minus"><span class="v2-tex" data-tex="a - b"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0.3333 = 0.4444"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0.8889 = -0.1111"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\mathbb{R}"></span> sees the same <span class="v2-tex" data-tex="a = 0.7778"></span> twice. Channel &minus; has opposite signs: one rating above its rater's mean, one below.</p>
+        </div>
+
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step1-b-body">How b is computed<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step1-b-body" hidden>
           <p class="v2-step1-line v2-step1-inline-katex">&#9312; This user's training ratings: <span class="v2-tex" data-tex="n = 530"></span></p>
