@@ -4542,20 +4542,20 @@
         <p class="v2-step1-line">One switch per channel; a channel is updated only when its energy change is negative:</p>
         <div class="v2-step1-katex v2-tex-d" data-tex="g_+ = \begin{cases} 1 & \textcolor{#6f9bc2}{\Delta_1} < 0 \\ 0 & \textcolor{#6f9bc2}{\Delta_1} \ge 0 \end{cases}, \qquad g_- = \begin{cases} 1 & \textcolor{#d98a3d}{\Delta_2} < 0 \\ 0 & \textcolor{#d98a3d}{\Delta_2} \ge 0 \end{cases}"></div>
         <div class="v2-step1-katex v2-tex-d" data-tex="W_+ \leftarrow W_+ + g_+\,\Delta W_+, \qquad W_- \leftarrow W_- + g_-\,\Delta W_-"></div>
-        <p class="v2-step1-line v2-step1-inline-katex">Back in the hyperbolic weight <span class="v2-tex" data-tex="W = w + v\,k"></span>, with <span class="v2-tex" data-tex="W_+ = w + v"></span> and <span class="v2-tex" data-tex="W_- = w - v"></span>:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta w = \frac{g_+\,\Delta W_+ + g_-\,\Delta W_-}{2}, \qquad \Delta v = \frac{g_+\,\Delta W_+ - g_-\,\Delta W_-}{2}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">Back in the hyperbolic weight <span class="v2-tex" data-tex="W = w_r + w_k\,k"></span>, with <span class="v2-tex" data-tex="W_+ = w_r + w_k"></span> and <span class="v2-tex" data-tex="W_- = w_r - w_k"></span>:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta w_r = \frac{g_+\,\Delta W_+ + g_-\,\Delta W_-}{2}, \qquad \Delta w_k = \frac{g_+\,\Delta W_+ - g_-\,\Delta W_-}{2}"></div>
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e-step5-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e-step5-sym-body" hidden>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="g_+,\ g_-"></span> = on/off switch of each channel: 1 means update, 0 means keep</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\Delta W_+,\ \Delta W_-"></span> = the CD-1 update of each channel, <span class="v2-tex" data-tex="lr \cdot (v^0 h^0_1 - v^1 h^1_1)"></span>: 0.0062 and 0.0067 here</p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="w,\ v"></span> = real part and k part of the hyperbolic weight: w is the shared link, the average of the two channels; v is half the gap between them; <span class="v2-tex" data-tex="\Delta w,\ \Delta v"></span> = their changes</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="w_r,\ w_k"></span> = real part and k part of the hyperbolic weight: <span class="v2-tex" data-tex="w_r"></span> is the shared link, the average of the two channels; <span class="v2-tex" data-tex="w_k"></span> is half the gap between them; <span class="v2-tex" data-tex="\Delta w_r,\ \Delta w_k"></span> = their changes</p>
         </div>
         <p class="v2-step1-line">All four cells, Rumble in the Bronx &times; h&#8321;:</p>
         
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
             <thead>
-              <tr><th>Cell</th><th>(g&#8330;, g&#8331;)</th><th class="col-plus">W&#8330;</th><th class="col-minus">W&#8331;</th><th>&Delta;w</th><th>&Delta;v</th><th class="v2-step8-meaning">Meaning</th></tr>
+              <tr><th>Cell</th><th>(g&#8330;, g&#8331;)</th><th class="col-plus">W&#8330;</th><th class="col-minus">W&#8331;</th><th>&Delta;w<sub>r</sub></th><th>&Delta;w<sub>k</sub></th><th class="v2-step8-meaning">Meaning</th></tr>
             </thead>
             <tbody>
               <tr><td>1 &middot; no update</td><td>(0, 0)</td><td>0.0064</td><td>&minus;0.0094</td><td>0</td><td>0</td><td class="v2-step8-meaning">Nothing changes.</td></tr>
@@ -4633,17 +4633,17 @@
         <span class="distwalk-layer-tag">Step 2 &middot; Weights and hidden input</span>
 
         <p class="v2-step1-line">&#9312; Up: the weights decide whether each hidden unit is active</p>
-        <p class="v2-step1-line v2-step1-indent v2-step1-inline-katex">each rated movie's <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{a + b}"></span> (channel +) or <span class="v2-tex" data-tex="\textcolor{#d98a3d}{a - b}"></span> (channel &minus;) &times; its weight &rarr; sum + bias = <span class="v2-tex" data-tex="x"></span> (this step) &rarr; <span class="v2-tex" data-tex="\sigma(x)"></span> = probability of being active (Step 3) &rarr; coin flip: active or inactive (Step 4)</p>
+        <p class="v2-step1-line v2-step1-indent v2-step1-inline-katex">each rated movie's <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{a + b}"></span> (channel +) or <span class="v2-tex" data-tex="\textcolor{#d98a3d}{a - b}"></span> (channel &minus;) &times; its weight &rarr; sum + bias = <span class="v2-tex" data-tex="x"></span> (this step) &rarr; <span class="v2-tex" data-tex="\sigma(x)"></span> = probability of being active (Step 3) &rarr; sampled: active with probability <span class="v2-tex" data-tex="\sigma(x)"></span>, otherwise inactive (Step 4)</p>
         <p class="v2-step1-line">&#9313; Down: the same weights rebuild the rating from the hidden units (Step 5)</p>
 
-        <p class="v2-step1-line v2-step1-inline-katex">The hyperbolic weight from <a href="#section-01c">section 01c</a>: <span class="v2-tex" data-tex="W = A + B\,k"></span>, so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{W_+ = A + B}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{W_- = A - B}"></span>. Not re-derived here. Each channel's input meets only its own weight, with no cross terms (<a href="#section-01c">section 01c Step 2</a>, &ldquo;Why the two channels stay separate&rdquo;).</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="c = c_A + c_B\,k"></div>
-        <p class="v2-step1-line v2-step1-inline-katex">so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{c_+ = c_A + c_B}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{c_- = c_A - c_B}"></span>.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">The hyperbolic weight from <a href="#section-01c">section 01c</a>: <span class="v2-tex" data-tex="W = w_r + w_k\,k"></span>, so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{W_+ = w_r + w_k}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{W_- = w_r - w_k}"></span>. Not re-derived here. Each channel's input meets only its own weight, with no cross terms (<a href="#section-01c">section 01c Step 2</a>, &ldquo;Why the two channels stay separate&rdquo;).</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="c = c_r + c_k\,k"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{c_+ = c_r + c_k}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{c_- = c_r - c_k}"></span>.</p>
         <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{x_+ = (a + b)\, W_+ + c_+}, \qquad \textcolor{#d98a3d}{x_- = (a - b)\, W_- + c_-}"></div>
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step2-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step2-sym-body" hidden>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="A,\ B"></span> = real part and k part of the hyperbolic weight <span class="v2-tex" data-tex="W"></span>, defined in <a href="#section-01c">section 01c</a></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="c"></span> = hidden bias as a hyperbolic number, each hidden unit's starting score, like the intercept in a regression; <span class="v2-tex" data-tex="c_A,\ c_B"></span> = its real part and k part</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="w_r,\ w_k"></span> = real part and k part of the hyperbolic weight <span class="v2-tex" data-tex="W"></span>, defined in <a href="#section-01c">section 01c</a></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="c"></span> = hidden bias as a hyperbolic number, each hidden unit's starting score, like the intercept in a regression; <span class="v2-tex" data-tex="c_r,\ c_k"></span> = its real part and k part</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{x_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{x_-}"></span> = hidden input of each channel, before <span class="v2-tex" data-tex="\sigma"></span></p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{v_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{v_-}"></span> = each channel's visible input from Step 1</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="R"></span> = this user's rated movie list; <span class="v2-tex" data-tex="|R|"></span> = its size</p>
@@ -4740,7 +4740,7 @@
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step4-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step4-sym-body" hidden>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{s_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{s_-}"></span> = sampled state of each channel, <span class="v2-tex" data-tex="0"></span> or <span class="v2-tex" data-tex="1"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\text{Bernoulli}(q)"></span> = a coin flip that lands 1 with probability <span class="v2-tex" data-tex="q"></span> and 0 otherwise</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\text{Bernoulli}(q)"></span> = a random draw: 1 with probability <span class="v2-tex" data-tex="q"></span>, otherwise 0</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="s"></span> = hidden state as one hyperbolic number</p>
         </div>
 
@@ -4756,8 +4756,8 @@
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 5 &middot; Back to the visible layer</span>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="d = d_A + d_B\,k"></div>
-        <p class="v2-step1-line v2-step1-inline-katex">so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{d_+ = d_A + d_B}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{d_- = d_A - d_B}"></span>.</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="d = d_r + d_k\,k"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{d_+ = d_r + d_k}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{d_- = d_r - d_k}"></span>.</p>
 
         <p class="v2-step1-line v2-step1-inline-katex">Reconstruction per channel, using exactly the formula and procedure of <a href="#section-01c">section 01c Step 6</a> (same hidden states <span class="v2-tex" data-tex="s"></span> and the same random draws), with the 01e inputs from Step 1:</p>
         <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{\hat{v}_+ = \sigma(s_+ \cdot W_+^T + d_+)}, \qquad \textcolor{#d98a3d}{\hat{v}_- = \sigma(s_- \cdot W_-^T + d_-)}"></div>
@@ -4772,7 +4772,7 @@
 
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step5-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step5-sym-body" hidden>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="d"></span> = visible bias as a hyperbolic number; <span class="v2-tex" data-tex="d_A,\ d_B"></span> = its real part and k part</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="d"></span> = visible bias as a hyperbolic number; <span class="v2-tex" data-tex="d_r,\ d_k"></span> = its real part and k part</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{d_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{d_-}"></span> = visible bias of each channel, one per movie</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{\hat{v}_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{\hat{v}_-}"></span> = reconstructed visible value of each channel, between 0 and 1</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\hat{v}"></span> = reconstruction as one hyperbolic number</p>
@@ -4809,11 +4809,11 @@
         <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{\Delta W_+ = \eta(v_+^0 q_+^0 - \hat{v}_+ q_+^1)}, \qquad \textcolor{#d98a3d}{\Delta W_- = \eta(v_-^0 q_-^0 - \hat{v}_- q_-^1)}"></div>
 
         <p class="v2-step1-line v2-step1-inline-katex">Put the update back into one hyperbolic number:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta W = \textcolor{#6f9bc2}{\Delta W_+}\, e_+ + \textcolor{#d98a3d}{\Delta W_-}\, e_- = \Delta A + \Delta B\,k"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta W = \textcolor{#6f9bc2}{\Delta W_+}\, e_+ + \textcolor{#d98a3d}{\Delta W_-}\, e_- = \Delta w_r + \Delta w_k\,k"></div>
         <p class="v2-step1-line">&#9312; Substitute <span class="v2-tex" data-tex="e_+,\ e_-"></span>:</p>
         <div class="v2-step1-katex v2-tex-d" data-tex="\Delta W = \textcolor{#6f9bc2}{\Delta W_+} \cdot \frac{1+k}{2} + \textcolor{#d98a3d}{\Delta W_-} \cdot \frac{1-k}{2}"></div>
         <p class="v2-step1-line">&#9313; Expand and group the real part and the k part:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta A = \frac{\textcolor{#6f9bc2}{\Delta W_+} + \textcolor{#d98a3d}{\Delta W_-}}{2}, \qquad \Delta B = \frac{\textcolor{#6f9bc2}{\Delta W_+} - \textcolor{#d98a3d}{\Delta W_-}}{2}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta w_r = \frac{\textcolor{#6f9bc2}{\Delta W_+} + \textcolor{#d98a3d}{\Delta W_-}}{2}, \qquad \Delta w_k = \frac{\textcolor{#6f9bc2}{\Delta W_+} - \textcolor{#d98a3d}{\Delta W_-}}{2}"></div>
 
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step6-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step6-sym-body" hidden>
@@ -4821,7 +4821,7 @@
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{v_+^0,\ q_+^0}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{v_-^0,\ q_-^0}"></span> = each channel's visible input at the real data, <span class="v2-tex" data-tex="a + b"></span> and <span class="v2-tex" data-tex="a - b"></span> from Step 1, and hidden probability (superscript 0)</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{q_+^1}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{q_-^1}"></span> = each channel's hidden probability after one round trip (superscript 1), computed from <span class="v2-tex" data-tex="\hat{v}"></span> in Step 5</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{\Delta W_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{\Delta W_-}"></span> = CD-1 update of each channel's weight</p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\Delta W"></span> = the update as one hyperbolic number; <span class="v2-tex" data-tex="\Delta A,\ \Delta B"></span> = its real part and k part</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\Delta W"></span> = the update as one hyperbolic number; <span class="v2-tex" data-tex="\Delta w_r,\ \Delta w_k"></span> = its real part and k part</p>
         </div>
 
         <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, first update:</p>
@@ -4834,7 +4834,7 @@
             <tbody>
               <tr><td class="col-plus"><span class="v2-tex" data-tex="\Delta W_+"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.0062"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.0170"></span></td></tr>
               <tr><td class="col-minus"><span class="v2-tex" data-tex="\Delta W_-"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.0067"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.0076"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="\Delta B"></span></td><td><span class="v2-tex" data-tex="-0.0003"></span></td><td><span class="v2-tex" data-tex="0.0123"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="\Delta w_k"></span></td><td><span class="v2-tex" data-tex="-0.0003"></span></td><td><span class="v2-tex" data-tex="0.0123"></span></td></tr>
             </tbody>
           </table>
         </div>
