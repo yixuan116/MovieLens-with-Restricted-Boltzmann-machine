@@ -1465,10 +1465,11 @@
   }
   .panel-d .probe-annotation { color: #d5d5d5; }
 
-  /* ---------- sections 01c and 01d ---------- */
+  /* ---------- sections 01c, 01d and 01e ---------- */
 
   .section-1c,
-  .section-1d {
+  .section-1d,
+  .section-1e {
     margin-top: 2.6rem;
     padding-top: 2.2rem;
     border-top: 1px solid var(--border-strong);
@@ -4555,6 +4556,60 @@
           </table>
         </div>
 
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <section class="section-1e" id="section-01e">
+
+    <div class="section-head-2">
+      <h2><span class="section-num">01e</span>&nbsp;&middot;&nbsp;All Numbers Hyperbolic</h2>
+      <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-01e-body" aria-label="Collapse section 01e">&#8964;</button>
+    </div>
+
+    <div class="section-body" id="section-01e-body">
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 1 &middot; The visible input becomes a hyperbolic number</span>
+        <!-- video embed placeholder: 01e Step 1 -->
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="v = a + b\,k"></div>
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step1-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e1-step1-sym-body" hidden>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="v"></span> = this rating as a hyperbolic number</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="a"></span> = normalized rating, <span class="v2-tex" data-tex="a = (\text{rating} - 0.5)/4.5"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="b"></span> = this movie's popularity, from section 04's rank mapped to <span class="v2-tex" data-tex="[-1, +1]"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="k"></span> = hyperbolic unit, <span class="v2-tex" data-tex="k^2 = +1"></span></p>
+        </div>
+
+        <p class="v2-step1-line">Rumble in the Bronx, rating 4.0:</p>
+        <div class="v2-step8-table-wrap">
+          <table class="v2-step8-table">
+            <thead>
+              <tr><th></th><th class="v2-step8-formula">Formula</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="v2-tex" data-tex="a"></span></td><td class="v2-step8-formula">(4 &minus; 0.5) / 4.5</td><td>0.7778</td></tr>
+              <tr><td><span class="v2-tex" data-tex="b"></span></td><td class="v2-step8-formula">rank mapped to [&minus;1, +1]</td><td>&minus;1</td></tr>
+              <tr><td>channel +</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a + b"></span></td><td>0.7778 + (&minus;1) = &minus;0.2222</td></tr>
+              <tr><td>channel &minus;</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a - b"></span></td><td>0.7778 &minus; (&minus;1) = 1.7778</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="v2-step1-line">In 01c, b = 0 and both channels received 0.7778. Now the two channels differ from the first step.</p>
+
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step1-b-body">How b is computed<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e1-step1-b-body" hidden>
+          <p class="v2-step1-line">&#9312; Rating count per movie in the 1000-movie subset: The Matrix (movieId 2571) = 977; Rumble in the Bronx (movieId 112) = 426.</p>
+          <p class="v2-step1-line">&#9313; Rank by count, descending, 1 = most rated: The Matrix rank 1 of 1000; Rumble in the Bronx rank 1000 of 1000.</p>
+          <p class="v2-step1-line v2-step1-inline-katex">&#9314; Rank mapped to <span class="v2-tex" data-tex="[-1, +1]"></span>: <span class="v2-tex" data-tex="b = 1 - \dfrac{2(\text{rank}-1)}{n-1}"></span>, <span class="v2-tex" data-tex="n = 1000"></span>. The Matrix: b = +1.0. Rumble in the Bronx: b = &minus;1.0.</p>
+          <p class="v2-step1-line">b depends only on the movie, never on the rating value. Rumble in the Bronx is last within this subset and in the top 1.39% of the full dataset.</p>
+        </div>
       </div>
 
     </div>
