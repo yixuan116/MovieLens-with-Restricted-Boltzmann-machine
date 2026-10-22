@@ -1,0 +1,15 @@
+{
+  "notebook": "34_step4_hidden_state.ipynb",
+  "reused_from": "33_step3_hidden_probability.ipynb / outputs/33_step3_hidden_probability_results.json",
+  "movie": "Rumble in the Bronx (Hont faan kui) (1995)",
+  "user": 24127,
+  "hidden_unit": "h1 (index 0)",
+  "scenario": "01e",
+  "q_plus": 0.44582640393415923,
+  "q_minus": 0.44652308655726475,
+  "P_00": 0.30672229146198265,
+  "P_10": 0.2467546219807526,
+  "P_01": 0.24745130460385806,
+  "P_11": 0.19907178195340666,
+  "sum": 1.0
+}

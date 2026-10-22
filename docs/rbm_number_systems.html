@@ -4706,6 +4706,44 @@
         <p class="v2-step1-line v2-step1-inline-katex">Both <span class="v2-tex" data-tex="q_+"></span> and <span class="v2-tex" data-tex="q_-"></span> lie in <span class="v2-tex" data-tex="(0, 1)"></span>, so <span class="v2-tex" data-tex="q"></span> has two positive components and lies in <span class="v2-tex" data-tex="\mathbb{D}^+"></span>, the condition a hyperbolic valued probability must satisfy.</p>
       </div>
 
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 4 &middot; Hidden state</span>
+
+        <p class="v2-step1-line v2-step1-inline-katex">Each channel draws its own state: <span class="v2-tex" data-tex="s_+ \sim \text{Bernoulli}(q_+), \quad s_- \sim \text{Bernoulli}(q_-)"></span>.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">Put them back into one hyperbolic number:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="s = s_+ e_+ + s_- e_-"></div>
+
+        <div class="v2-step8-table-wrap">
+          <table class="v2-step8-table">
+            <thead>
+              <tr><th><span class="v2-tex" data-tex="s_+"></span></th><th><span class="v2-tex" data-tex="s_-"></span></th><th><span class="v2-tex" data-tex="s"></span></th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="v2-tex" data-tex="0"></span></td><td><span class="v2-tex" data-tex="0"></span></td><td><span class="v2-tex" data-tex="0"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="1"></span></td><td><span class="v2-tex" data-tex="0"></span></td><td><span class="v2-tex" data-tex="e_+"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="0"></span></td><td><span class="v2-tex" data-tex="1"></span></td><td><span class="v2-tex" data-tex="e_-"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="1"></span></td><td><span class="v2-tex" data-tex="1"></span></td><td><span class="v2-tex" data-tex="e_+ + e_- = 1"></span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="v2-step1-line">The four states are exactly <span class="v2-tex" data-tex="0"></span>, <span class="v2-tex" data-tex="1"></span>, and the two idempotents <span class="v2-tex" data-tex="e_+"></span> and <span class="v2-tex" data-tex="e_-"></span>.</p>
+
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step4-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e1-step4-sym-body" hidden>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="s_+,\ s_-"></span> = sampled state of each channel, <span class="v2-tex" data-tex="0"></span> or <span class="v2-tex" data-tex="1"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\text{Bernoulli}(q)"></span> = a coin flip that lands 1 with probability <span class="v2-tex" data-tex="q"></span> and 0 otherwise</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="s"></span> = hidden state as one hyperbolic number</p>
+        </div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, 01e only, using <span class="v2-tex" data-tex="q_+,\ q_-"></span> from Step 3:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="P(0,0) = (1-q_+)(1-q_-) = (1 - 0.4458)(1 - 0.4465) = 0.5542 \times 0.5535 = 0.3067"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="P(1,0) = q_+(1-q_-) = 0.4458 \times 0.5535 = 0.2468"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="P(0,1) = (1-q_+)q_- = 0.5542 \times 0.4465 = 0.2475"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="P(1,1) = q_+ q_- = 0.4458 \times 0.4465 = 0.1991"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="P(0,0) + P(1,0) + P(0,1) + P(1,1) = 1"></span>, the four outcomes exhaust the probability.</p>
+      </div>
+
     </div>
 
   </section>
