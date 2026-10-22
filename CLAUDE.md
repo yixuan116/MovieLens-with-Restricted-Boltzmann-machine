@@ -25,7 +25,7 @@ Yixuan sets every standard for this work. This session handles both requirements
 * Interpretation goes in a short Meaning column or one short line, in plain terms; never restate numbers already shown, never add a summary paragraph under a table.
 * Every symbol in a formula is declared on the page. Keep the formulas clean and put the declarations in a collapsible “Symbols” toggle right under the formula.
 * When a step reuses something defined earlier, state what it is right there (e.g. “k, the exchange matrix K = [[0, 1], [1, 0]]”). Never write “see Step X” or “from section Y” in place of the definition.
-* Before any page edit, show a rendered preview of formulas and layout; edit only after Yixuan confirms. One change at a time. Deletions come last, after visual confirmation.
+* Page previews are reviewed in a separate chat before the prompt is sent; apply page edits directly, then commit and push. One change at a time. Deletions come last.
 
 ## Execution rules
 
