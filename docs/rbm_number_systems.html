@@ -598,6 +598,7 @@
   .card-half-label.label-matrix { color: var(--accent); }
   .quad-card-row.dark .card-half-label.label-matrix { color: #6f9bc2; }
   .card-half-label.label-rumble { color: #e67e22; }
+  .v2-movie-tag { font-family: var(--mono); font-weight: 600; }
 
   @media (max-width: 640px) {
     .quad-card-pair { grid-template-columns: 1fr; gap: 0.8rem; }
@@ -4584,31 +4585,40 @@
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="a"></span> = normalized rating, <span class="v2-tex" data-tex="a = (\text{rating} - 0.5)/4.5"></span></p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="b"></span> = this movie's popularity, from section 04's rank mapped to <span class="v2-tex" data-tex="[-1, +1]"></span></p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="k"></span> = hyperbolic unit, <span class="v2-tex" data-tex="k^2 = +1"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="c"></span> = a movie's rating count in the subset</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="N"></span> = number of movies in the subset, <span class="v2-tex" data-tex="N = 1000"></span></p>
         </div>
 
-        <p class="v2-step1-line">Rumble in the Bronx, rating 4.0:</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span>, rating <span class="v2-tex" data-tex="4.0"></span>:</p>
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
             <thead>
               <tr><th></th><th class="v2-step8-formula">Formula</th><th>Value</th></tr>
             </thead>
             <tbody>
-              <tr><td><span class="v2-tex" data-tex="a"></span></td><td class="v2-step8-formula">(4 &minus; 0.5) / 4.5</td><td>0.7778</td></tr>
-              <tr><td><span class="v2-tex" data-tex="b"></span></td><td class="v2-step8-formula">rank mapped to [&minus;1, +1]</td><td>&minus;1</td></tr>
-              <tr><td>channel +</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a + b"></span></td><td>0.7778 + (&minus;1) = &minus;0.2222</td></tr>
-              <tr><td>channel &minus;</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a - b"></span></td><td>0.7778 &minus; (&minus;1) = 1.7778</td></tr>
+              <tr><td><span class="v2-tex" data-tex="a"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a = \dfrac{4 - 0.5}{4.5}"></span></td><td><span class="v2-tex" data-tex="0.7778"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="b"></span></td><td class="v2-step8-formula">popularity rank mapped to <span class="v2-tex" data-tex="[-1, +1]"></span></td><td><span class="v2-tex" data-tex="-1"></span></td></tr>
+              <tr><td>channel +</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a + b"></span></td><td><span class="v2-tex" data-tex="0.7778 + (-1) = -0.2222"></span></td></tr>
+              <tr><td>channel &minus;</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a - b"></span></td><td><span class="v2-tex" data-tex="0.7778 - (-1) = 1.7778"></span></td></tr>
             </tbody>
           </table>
         </div>
 
-        <p class="v2-step1-line">In 01c, b = 0 and both channels received 0.7778. Now the two channels differ from the first step.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">In 01c, <span class="v2-tex" data-tex="b = 0"></span>, so <span class="v2-tex" data-tex="a + b = a - b = 0.7778"></span>. Now the two channels differ from the first step.</p>
 
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step1-b-body">How b is computed<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step1-b-body" hidden>
-          <p class="v2-step1-line">&#9312; Rating count per movie in the 1000-movie subset: The Matrix (movieId 2571) = 977; Rumble in the Bronx (movieId 112) = 426.</p>
-          <p class="v2-step1-line">&#9313; Rank by count, descending, 1 = most rated: The Matrix rank 1 of 1000; Rumble in the Bronx rank 1000 of 1000.</p>
-          <p class="v2-step1-line v2-step1-inline-katex">&#9314; Rank mapped to <span class="v2-tex" data-tex="[-1, +1]"></span>: <span class="v2-tex" data-tex="b = 1 - \dfrac{2(\text{rank}-1)}{n-1}"></span>, <span class="v2-tex" data-tex="n = 1000"></span>. The Matrix: b = +1.0. Rumble in the Bronx: b = &minus;1.0.</p>
-          <p class="v2-step1-line">b depends only on the movie, never on the rating value. Rumble in the Bronx is last within this subset and in the top 1.39% of the full dataset.</p>
+          <p class="v2-step1-line v2-step1-inline-katex">&#9312; Rating count in the <span class="v2-tex" data-tex="N = 1000"></span> movie subset:</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-matrix">The Matrix</span> <span class="v2-tex" data-tex="c = 977"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> <span class="v2-tex" data-tex="c = 426"></span></p>
+          <p class="v2-step1-line">&#9313; Rank by count, rank 1 = most rated:</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-matrix">The Matrix</span> <span class="v2-tex" data-tex="\text{rank} = 1"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> <span class="v2-tex" data-tex="\text{rank} = 1000"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex">&#9314; Map to <span class="v2-tex" data-tex="[-1, +1]"></span> with <span class="v2-tex" data-tex="N = 1000"></span>:</p>
+          <div class="v2-step1-katex v2-tex-d" data-tex="b = 1 - \dfrac{2(\text{rank}-1)}{N-1}"></div>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-matrix">The Matrix</span> <span class="v2-tex" data-tex="b = 1 - \dfrac{2(1-1)}{999} = +1"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> <span class="v2-tex" data-tex="b = 1 - \dfrac{2(1000-1)}{999} = -1"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex">b depends only on the movie, never on the rating value. <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> is last within this subset and in the top <span class="v2-tex" data-tex="1.39\%"></span> of the full dataset.</p>
         </div>
       </div>
 
