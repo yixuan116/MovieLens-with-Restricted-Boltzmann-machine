@@ -598,7 +598,8 @@
   .card-half-label.label-matrix { color: var(--accent); }
   .quad-card-row.dark .card-half-label.label-matrix { color: #6f9bc2; }
   .card-half-label.label-rumble { color: #e67e22; }
-  .v2-movie-tag { font-family: var(--mono); font-weight: 600; }
+  .v2e1-row { display: flex; align-items: baseline; gap: 1.4rem; }
+  .v2e1-row .v2-movie-tag { flex: 0 0 11rem; }
 
   @media (max-width: 640px) {
     .quad-card-pair { grid-template-columns: 1fr; gap: 0.8rem; }
@@ -4609,16 +4610,16 @@
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step1-b-body">How b is computed<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step1-b-body" hidden>
           <p class="v2-step1-line v2-step1-inline-katex">&#9312; Rating count in the <span class="v2-tex" data-tex="N = 1000"></span> movie subset:</p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-matrix">The Matrix</span> <span class="v2-tex" data-tex="c = 977"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> <span class="v2-tex" data-tex="c = 426"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-matrix">The Matrix</span><span class="v2-tex" data-tex="c = 977"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span><span class="v2-tex" data-tex="c = 426"></span></p>
           <p class="v2-step1-line">&#9313; Rank by count, rank 1 = most rated:</p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-matrix">The Matrix</span> <span class="v2-tex" data-tex="\text{rank} = 1"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> <span class="v2-tex" data-tex="\text{rank} = 1000"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-matrix">The Matrix</span><span class="v2-tex" data-tex="\text{rank} = 1"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span><span class="v2-tex" data-tex="\text{rank} = 1000"></span></p>
           <p class="v2-step1-line v2-step1-inline-katex">&#9314; Map to <span class="v2-tex" data-tex="[-1, +1]"></span> with <span class="v2-tex" data-tex="N = 1000"></span>:</p>
           <div class="v2-step1-katex v2-tex-d" data-tex="b = 1 - \dfrac{2(\text{rank}-1)}{N-1}"></div>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-matrix">The Matrix</span> <span class="v2-tex" data-tex="b = 1 - \dfrac{2(1-1)}{999} = +1"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> <span class="v2-tex" data-tex="b = 1 - \dfrac{2(1000-1)}{999} = -1"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex">b depends only on the movie, never on the rating value. <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> is last within this subset and in the top <span class="v2-tex" data-tex="1.39\%"></span> of the full dataset.</p>
+          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-matrix">The Matrix</span><span class="v2-tex" data-tex="b = 1 - \dfrac{2(1-1)}{999} = +1"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span><span class="v2-tex" data-tex="b = 1 - \dfrac{2(1000-1)}{999} = -1"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="b"></span> depends only on the movie, never on the rating value. <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> is last within this subset and in the top <span class="v2-tex" data-tex="1.39\%"></span> of the full dataset.</p>
         </div>
       </div>
 
