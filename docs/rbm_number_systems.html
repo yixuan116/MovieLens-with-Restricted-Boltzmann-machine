@@ -575,6 +575,8 @@
   }
   .v2-step8-table th.col-plus { color: #6f9bc2; }
   .v2-step8-table th.col-minus { color: #d98a3d; }
+  .col-plus { color: #6f9bc2; }
+  .col-minus { color: #d98a3d; }
   .v2-move { color: #2a9d8f; }
   .v2-step8-table td.v2-step8-meaning,
   .v2-step8-table th.v2-step8-meaning { white-space: normal; text-align: left; font-family: var(--sans); min-width: 16rem; }
@@ -4604,13 +4606,13 @@
             <tbody>
               <tr><td><span class="v2-tex" data-tex="a"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a = \dfrac{4 - 0.5}{4.5}"></span></td><td><span class="v2-tex" data-tex="0.7778"></span></td></tr>
               <tr><td><span class="v2-tex" data-tex="b"></span></td><td class="v2-step8-formula">popularity rank mapped to <span class="v2-tex" data-tex="[-1, +1]"></span></td><td><span class="v2-tex" data-tex="-1"></span></td></tr>
-              <tr><td>channel +</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a + b"></span></td><td><span class="v2-tex" data-tex="0.7778 + (-1) = -0.2222"></span></td></tr>
-              <tr><td>channel &minus;</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a - b"></span></td><td><span class="v2-tex" data-tex="0.7778 - (-1) = 1.7778"></span></td></tr>
+              <tr><td class="col-plus">channel +</td><td class="v2-step8-formula col-plus"><span class="v2-tex" data-tex="a + b"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + (-1) = -0.2222"></span></td></tr>
+              <tr><td class="col-minus">channel &minus;</td><td class="v2-step8-formula col-minus"><span class="v2-tex" data-tex="a - b"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - (-1) = 1.7778"></span></td></tr>
             </tbody>
           </table>
         </div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">In 01c, <span class="v2-tex" data-tex="b = 0"></span>, so <span class="v2-tex" data-tex="a + b = a - b = 0.7778"></span>. Now the two channels differ from the first step.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">In 01c, <span class="v2-tex" data-tex="b = 0"></span>, so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{a + b} = \textcolor{#d98a3d}{a - b} = 0.7778"></span>. Now the two channels differ from the first step.</p>
 
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step1-b-body">How b is computed<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step1-b-body" hidden>
@@ -4632,19 +4634,19 @@
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 2 &middot; Weights and hidden input</span>
 
-        <p class="v2-step1-line v2-step1-inline-katex">The hyperbolic weight from <a href="#section-01c">section 01c</a>: <span class="v2-tex" data-tex="W = A + B\,k"></span>, so <span class="v2-tex" data-tex="W_+ = A + B"></span> and <span class="v2-tex" data-tex="W_- = A - B"></span>. Not re-derived here.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">The hyperbolic weight from <a href="#section-01c">section 01c</a>: <span class="v2-tex" data-tex="W = A + B\,k"></span>, so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{W_+ = A + B}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{W_- = A - B}"></span>. Not re-derived here.</p>
         <div class="v2-step1-katex v2-tex-d" data-tex="c = c_A + c_B\,k"></div>
-        <p class="v2-step1-line v2-step1-inline-katex">so <span class="v2-tex" data-tex="c_+ = c_A + c_B"></span> and <span class="v2-tex" data-tex="c_- = c_A - c_B"></span>.</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="x_+ = v_+ W_+ + c_+, \qquad x_- = v_- W_- + c_-"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{c_+ = c_A + c_B}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{c_- = c_A - c_B}"></span>.</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{x_+ = v_+ W_+ + c_+}, \qquad \textcolor{#d98a3d}{x_- = v_- W_- + c_-}"></div>
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step2-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step2-sym-body" hidden>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="A,\ B"></span> = real part and k part of the hyperbolic weight <span class="v2-tex" data-tex="W"></span>, defined in <a href="#section-01c">section 01c</a></p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="c"></span> = hidden bias as a hyperbolic number; <span class="v2-tex" data-tex="c_A,\ c_B"></span> = its real part and k part</p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="x_+,\ x_-"></span> = hidden input of each channel, before <span class="v2-tex" data-tex="\sigma"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="v_+,\ v_-"></span> = each channel's visible input from Step 1</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{x_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{x_-}"></span> = hidden input of each channel, before <span class="v2-tex" data-tex="\sigma"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{v_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{v_-}"></span> = each channel's visible input from Step 1</p>
         </div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, at the same starting weights and biases as <a href="#section-01c">section 01c</a> (<span class="v2-tex" data-tex="c_+ = c_- = 0"></span>):</p>
+        <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, at the same starting weights and biases as <a href="#section-01c">section 01c</a> (<span class="v2-tex" data-tex="\textcolor{#6f9bc2}{c_+} = \textcolor{#d98a3d}{c_-} = 0"></span>):</p>
 
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
@@ -4652,42 +4654,42 @@
               <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=-1"></span>)</th></tr>
             </thead>
             <tbody>
-              <tr><td>channel + input</td><td><span class="v2-tex" data-tex="0.7778"></span></td><td><span class="v2-tex" data-tex="-0.2222"></span></td></tr>
-              <tr><td>channel &minus; input</td><td><span class="v2-tex" data-tex="0.7778"></span></td><td><span class="v2-tex" data-tex="1.7778"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="x_+"></span></td><td><span class="v2-tex" data-tex="-0.2111"></span></td><td><span class="v2-tex" data-tex="-0.2175"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="x_-"></span></td><td><span class="v2-tex" data-tex="-0.2054"></span></td><td><span class="v2-tex" data-tex="-0.2147"></span></td></tr>
+              <tr><td class="col-plus">channel + input</td><td class="col-plus"><span class="v2-tex" data-tex="0.7778"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.2222"></span></td></tr>
+              <tr><td class="col-minus">channel &minus; input</td><td class="col-minus"><span class="v2-tex" data-tex="0.7778"></span></td><td class="col-minus"><span class="v2-tex" data-tex="1.7778"></span></td></tr>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="x_+"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.2111"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.2175"></span></td></tr>
+              <tr><td class="col-minus"><span class="v2-tex" data-tex="x_-"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.2054"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.2147"></span></td></tr>
             </tbody>
           </table>
         </div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">Only the <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> entry of <span class="v2-tex" data-tex="v"></span> changes between 01c and 01e; every other rated movie keeps its 01c value. So the change in <span class="v2-tex" data-tex="x"></span> is exactly that one entry's change times its own starting weight, <span class="v2-tex" data-tex="w_{+,\text{Rumble},1} = 0.0064"></span> and <span class="v2-tex" data-tex="w_{-,\text{Rumble},1} = -0.0094"></span>:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="x_+^{01e} = x_+^{01c} + (-0.2222 - 0.7778) \times 0.0064 = -0.2111 + (-1.0000 \times 0.0064) = -0.2111 - 0.0064 = -0.2175"></div>
-        <div class="v2-step1-katex v2-tex-d" data-tex="x_-^{01e} = x_-^{01c} + (1.7778 - 0.7778) \times (-0.0094) = -0.2054 + (1.0000 \times -0.0094) = -0.2054 - 0.0094 = -0.2147"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">Only the <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> entry of <span class="v2-tex" data-tex="v"></span> changes between 01c and 01e; every other rated movie keeps its 01c value. So the change in <span class="v2-tex" data-tex="x"></span> is exactly that one entry's change times its own starting weight, <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{w_{+,\text{Rumble},1} = 0.0064}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{w_{-,\text{Rumble},1} = -0.0094}"></span>:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{x_+^{01e} = x_+^{01c} + (-0.2222 - 0.7778) \times 0.0064 = -0.2111 + (-1.0000 \times 0.0064) = -0.2111 - 0.0064 = -0.2175}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#d98a3d}{x_-^{01e} = x_-^{01c} + (1.7778 - 0.7778) \times (-0.0094) = -0.2054 + (1.0000 \times -0.0094) = -0.2054 - 0.0094 = -0.2147}"></div>
       </div>
 
 
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 3 &middot; Hidden activation as a hyperbolic probability</span>
 
-        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\sigma"></span> acts on each channel separately: <span class="v2-tex" data-tex="q_+ = \sigma(x_+), \quad q_- = \sigma(x_-)"></span>. Applying <span class="v2-tex" data-tex="\sigma"></span> to <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="b"></span> directly would break the hyperbolic structure, as shown in <a href="#section-01c">section 01c</a>.</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\sigma"></span> acts on each channel separately: <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{q_+ = \sigma(x_+)}, \quad \textcolor{#d98a3d}{q_- = \sigma(x_-)}"></span>. Applying <span class="v2-tex" data-tex="\sigma"></span> to <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="b"></span> directly would break the hyperbolic structure, as shown in <a href="#section-01c">section 01c</a>.</p>
 
         <p class="v2-step1-line v2-step1-inline-katex">Put the two channels back into one hyperbolic number with <span class="v2-tex" data-tex="e_+ = (1+k)/2"></span> and <span class="v2-tex" data-tex="e_- = (1-k)/2"></span> from <a href="#section-01d">section 01d</a>:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="q = q_+ e_+ + q_- e_-"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="q = \textcolor{#6f9bc2}{q_+}\, e_+ + \textcolor{#d98a3d}{q_-}\, e_-"></div>
         <p class="v2-step1-line">&#9312; Substitute <span class="v2-tex" data-tex="e_+,\ e_-"></span>:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="q = q_+ \cdot \frac{1+k}{2} + q_- \cdot \frac{1-k}{2}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="q = \textcolor{#6f9bc2}{q_+} \cdot \frac{1+k}{2} + \textcolor{#d98a3d}{q_-} \cdot \frac{1-k}{2}"></div>
         <p class="v2-step1-line">&#9313; Expand and group the real part and the k part:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="q = \frac{q_+ + q_-}{2} + \frac{q_+ - q_-}{2}\,k"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="q = \frac{\textcolor{#6f9bc2}{q_+} + \textcolor{#d98a3d}{q_-}}{2} + \frac{\textcolor{#6f9bc2}{q_+} - \textcolor{#d98a3d}{q_-}}{2}\,k"></div>
         <p class="v2-step1-line">The real part is the average of the two channels; the k part is half the gap between them.</p>
 
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step3-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step3-sym-body" hidden>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\sigma"></span> = sigmoid function, same as <a href="#section-01c">section 01c</a>: <span class="v2-tex" data-tex="\sigma(x) = 1/(1+e^{-x})"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="q_+,\ q_-"></span> = hidden unit probability of each channel, after <span class="v2-tex" data-tex="\sigma"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{q_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{q_-}"></span> = hidden unit probability of each channel, after <span class="v2-tex" data-tex="\sigma"></span></p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="q"></span> = hidden activation as one hyperbolic number</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="e_+,\ e_-"></span> = basis elements of a hyperbolic number, defined in <a href="#section-01d">section 01d</a></p>
         </div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, using the <span class="v2-tex" data-tex="x_+,\ x_-"></span> values from Step 2:</p>
+        <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, using the <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{x_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{x_-}"></span> values from Step 2:</p>
 
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
@@ -4695,35 +4697,35 @@
               <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=-1"></span>)</th></tr>
             </thead>
             <tbody>
-              <tr><td><span class="v2-tex" data-tex="q_+ = \sigma(x_+)"></span></td><td><span class="v2-tex" data-tex="\sigma(-0.2111) = 0.4474"></span></td><td><span class="v2-tex" data-tex="\sigma(-0.2175) = 0.4458"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="q_- = \sigma(x_-)"></span></td><td><span class="v2-tex" data-tex="\sigma(-0.2054) = 0.4488"></span></td><td><span class="v2-tex" data-tex="\sigma(-0.2147) = 0.4465"></span></td></tr>
-              <tr><td>real part of <span class="v2-tex" data-tex="q"></span></td><td><span class="v2-tex" data-tex="(q_+ + q_-)/2 = 0.4481"></span></td><td><span class="v2-tex" data-tex="(q_+ + q_-)/2 = 0.4462"></span></td></tr>
-              <tr><td>k part of <span class="v2-tex" data-tex="q"></span></td><td><span class="v2-tex" data-tex="(q_+ - q_-)/2 = -0.0007"></span></td><td><span class="v2-tex" data-tex="(q_+ - q_-)/2 = -0.0003"></span></td></tr>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="q_+ = \sigma(x_+)"></span></td><td class="col-plus"><span class="v2-tex" data-tex="\sigma(-0.2111) = 0.4474"></span></td><td class="col-plus"><span class="v2-tex" data-tex="\sigma(-0.2175) = 0.4458"></span></td></tr>
+              <tr><td class="col-minus"><span class="v2-tex" data-tex="q_- = \sigma(x_-)"></span></td><td class="col-minus"><span class="v2-tex" data-tex="\sigma(-0.2054) = 0.4488"></span></td><td class="col-minus"><span class="v2-tex" data-tex="\sigma(-0.2147) = 0.4465"></span></td></tr>
+              <tr><td>real part of <span class="v2-tex" data-tex="q"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} + \textcolor{#d98a3d}{q_-})/2 = 0.4481"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} + \textcolor{#d98a3d}{q_-})/2 = 0.4462"></span></td></tr>
+              <tr><td>k part of <span class="v2-tex" data-tex="q"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} - \textcolor{#d98a3d}{q_-})/2 = -0.0007"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} - \textcolor{#d98a3d}{q_-})/2 = -0.0003"></span></td></tr>
             </tbody>
           </table>
         </div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">Both <span class="v2-tex" data-tex="q_+"></span> and <span class="v2-tex" data-tex="q_-"></span> lie in <span class="v2-tex" data-tex="(0, 1)"></span>, so <span class="v2-tex" data-tex="q"></span> has two positive components and lies in <span class="v2-tex" data-tex="\mathbb{D}^+"></span>, the condition a hyperbolic valued probability must satisfy.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">Both <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{q_+}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{q_-}"></span> lie in <span class="v2-tex" data-tex="(0, 1)"></span>, so <span class="v2-tex" data-tex="q"></span> has two positive components and lies in <span class="v2-tex" data-tex="\mathbb{D}^+"></span>, the condition a hyperbolic valued probability must satisfy.</p>
       </div>
 
 
       <div class="v2-step1">
         <span class="distwalk-layer-tag">Step 4 &middot; Hidden state</span>
 
-        <p class="v2-step1-line v2-step1-inline-katex">Each channel draws its own state: <span class="v2-tex" data-tex="s_+ \sim \text{Bernoulli}(q_+), \quad s_- \sim \text{Bernoulli}(q_-)"></span>.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">Each channel draws its own state: <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{s_+ \sim \text{Bernoulli}(q_+)}, \quad \textcolor{#d98a3d}{s_- \sim \text{Bernoulli}(q_-)}"></span>.</p>
         <p class="v2-step1-line v2-step1-inline-katex">Put them back into one hyperbolic number:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="s = s_+ e_+ + s_- e_-"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="s = \textcolor{#6f9bc2}{s_+}\, e_+ + \textcolor{#d98a3d}{s_-}\, e_-"></div>
 
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
             <thead>
-              <tr><th><span class="v2-tex" data-tex="s_+"></span></th><th><span class="v2-tex" data-tex="s_-"></span></th><th><span class="v2-tex" data-tex="s"></span></th></tr>
+              <tr><th class="col-plus"><span class="v2-tex" data-tex="s_+"></span></th><th class="col-minus"><span class="v2-tex" data-tex="s_-"></span></th><th><span class="v2-tex" data-tex="s"></span></th></tr>
             </thead>
             <tbody>
-              <tr><td><span class="v2-tex" data-tex="0"></span></td><td><span class="v2-tex" data-tex="0"></span></td><td><span class="v2-tex" data-tex="0"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="1"></span></td><td><span class="v2-tex" data-tex="0"></span></td><td><span class="v2-tex" data-tex="e_+"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="0"></span></td><td><span class="v2-tex" data-tex="1"></span></td><td><span class="v2-tex" data-tex="e_-"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="1"></span></td><td><span class="v2-tex" data-tex="1"></span></td><td><span class="v2-tex" data-tex="e_+ + e_- = 1"></span></td></tr>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="0"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0"></span></td><td><span class="v2-tex" data-tex="0"></span></td></tr>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="1"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0"></span></td><td><span class="v2-tex" data-tex="e_+"></span></td></tr>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="0"></span></td><td class="col-minus"><span class="v2-tex" data-tex="1"></span></td><td><span class="v2-tex" data-tex="e_-"></span></td></tr>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="1"></span></td><td class="col-minus"><span class="v2-tex" data-tex="1"></span></td><td><span class="v2-tex" data-tex="e_+ + e_- = 1"></span></td></tr>
             </tbody>
           </table>
         </div>
@@ -4731,12 +4733,12 @@
 
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step4-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step4-sym-body" hidden>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="s_+,\ s_-"></span> = sampled state of each channel, <span class="v2-tex" data-tex="0"></span> or <span class="v2-tex" data-tex="1"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{s_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{s_-}"></span> = sampled state of each channel, <span class="v2-tex" data-tex="0"></span> or <span class="v2-tex" data-tex="1"></span></p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\text{Bernoulli}(q)"></span> = a coin flip that lands 1 with probability <span class="v2-tex" data-tex="q"></span> and 0 otherwise</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="s"></span> = hidden state as one hyperbolic number</p>
         </div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, 01e only, using <span class="v2-tex" data-tex="q_+,\ q_-"></span> from Step 3:</p>
+        <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, 01e only, using <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{q_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{q_-}"></span> from Step 3:</p>
         <div class="v2-step1-katex v2-tex-d" data-tex="P(0,0) = (1-q_+)(1-q_-) = (1 - 0.4458)(1 - 0.4465) = 0.5542 \times 0.5535 = 0.3067"></div>
         <div class="v2-step1-katex v2-tex-d" data-tex="P(1,0) = q_+(1-q_-) = 0.4458 \times 0.5535 = 0.2468"></div>
         <div class="v2-step1-katex v2-tex-d" data-tex="P(0,1) = (1-q_+)q_- = 0.5542 \times 0.4465 = 0.2475"></div>
