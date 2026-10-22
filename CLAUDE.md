@@ -56,7 +56,7 @@ Yixuan sets every standard for this work. This session handles both requirements
   * ℂ: z = a · e^(iθ), θ = 2π × weekday / 7.
   * Fz: Gaussian membership centered at the movie mean, five anchors at 1 to 5 stars.
 
-## Progress (as of 2026-10-13)
+## Progress (as of 2026-10-22)
 
 * 01 Overview: four lenses and the H = 4 cross cutting test defined.
 * 01b Same Rating, Four Lenses: input probe for all four systems on The Matrix vs Rumble in the Bronx, complete.
@@ -72,6 +72,10 @@ Yixuan sets every standard for this work. This session handles both requirements
   * Step 3: ΔE = Δ₁e₊ + Δ₂e₋ assembled with P in three steps; ΔE = −0.00023 + 0.00102k.
   * Step 4: kΔE = Δ₁e₊ − Δ₂e₋, four cell table, ℝ sees only Re(ΔE); the example falls in cell 3 (update e₋ only).
   * Step 5: gated update with switches g₊, g₋; all four cells for the example, cell 3 actual.
+* 01e Fully Hyperbolic RBM: Steps 1 to 6 built on the same Rumble in the Bronx × h₁ example (user 24127, seeds 44/45).
+  * b switched from movie popularity to user rating habit: b = (μ_u − 0.5)/4.5, μ_u = this user's mean rating over their training ratings only. b depends only on the user; added to every movie in the user's rated movie list in both channels (+b in channel +, −b in channel −), unrated movies stay 0. Current worked-example value: μ_u = 3.4557, b = 0.6568.
+  * Step 1: v = a + bk; Step 2: W₊/W₋ and c₊/c₋ reused from 01c, link back not re-derived, x recomputed via b × Σ over the rated movie list R (|R| = 530); Step 3: q = q₊e₊ + q₋e₋; Step 4: four joint hidden-state probabilities; Step 5: v̂ reconstruction, now 4/128 (+) and 3/128 (−) hidden bits differ from 01c since b touches all 530 rated entries, not one; Step 6: CD-1 update ΔW = ΔW₊e₊ + ΔW₋e₋ = ΔA + ΔBk.
+  * Source: notebooks/37_step1to6_rating_habit_b.ipynb and outputs/37_step1to6_rating_habit_b_results.json, reusing notebooks 31/32/33/34/35/36's exact seeds, weights and procedure; 01c column cross-checked against those notebooks' stored values.
 * 02 Data Selection: live. Known issue: funnel top shows "0 users × 0 movies" and density shows 0.00%. Also verify the "138,493 qualified users" figure against the funnel logic.
 * 03 Chronological split: live.
 * 04 Hyperbolic Decoupling (input encoding version): live. ℝ RMSE 0.8431, MAE 0.6481; 𝔻 RMSE 0.9523, MAE 0.7187.

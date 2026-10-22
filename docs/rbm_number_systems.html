@@ -4591,10 +4591,9 @@
         <div class="v2-step1-values" id="v2e1-step1-sym-body" hidden>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="v"></span> = this rating as a hyperbolic number</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="a"></span> = normalized rating, <span class="v2-tex" data-tex="a = (\text{rating} - 0.5)/4.5"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="b"></span> = this movie's popularity, from section 04's rank mapped to <span class="v2-tex" data-tex="[-1, +1]"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="b"></span> = this user's mean rating in the training set, normalized like <span class="v2-tex" data-tex="a"></span></p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="k"></span> = hyperbolic unit, <span class="v2-tex" data-tex="k^2 = +1"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="c"></span> = a movie's rating count in the subset</p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="N"></span> = number of movies in the subset, <span class="v2-tex" data-tex="N = 1000"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\mu_u"></span> = this user's mean rating over their training ratings</p>
         </div>
 
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span>, rating <span class="v2-tex" data-tex="4.0"></span>:</p>
@@ -4605,9 +4604,9 @@
             </thead>
             <tbody>
               <tr><td><span class="v2-tex" data-tex="a"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a = \dfrac{4 - 0.5}{4.5}"></span></td><td><span class="v2-tex" data-tex="0.7778"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="b"></span></td><td class="v2-step8-formula">popularity rank mapped to <span class="v2-tex" data-tex="[-1, +1]"></span></td><td><span class="v2-tex" data-tex="-1"></span></td></tr>
-              <tr><td class="col-plus">channel +</td><td class="v2-step8-formula col-plus"><span class="v2-tex" data-tex="a + b"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + (-1) = -0.2222"></span></td></tr>
-              <tr><td class="col-minus">channel &minus;</td><td class="v2-step8-formula col-minus"><span class="v2-tex" data-tex="a - b"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - (-1) = 1.7778"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="b"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="b = \dfrac{\mu_u - 0.5}{4.5}"></span></td><td><span class="v2-tex" data-tex="0.6568"></span></td></tr>
+              <tr><td class="col-plus">channel +</td><td class="v2-step8-formula col-plus"><span class="v2-tex" data-tex="a + b"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + 0.6568 = 1.4346"></span></td></tr>
+              <tr><td class="col-minus">channel &minus;</td><td class="v2-step8-formula col-minus"><span class="v2-tex" data-tex="a - b"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0.6568 = 0.1210"></span></td></tr>
             </tbody>
           </table>
         </div>
@@ -4616,17 +4615,10 @@
 
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step1-b-body">How b is computed<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step1-b-body" hidden>
-          <p class="v2-step1-line v2-step1-inline-katex">&#9312; Rating count in the <span class="v2-tex" data-tex="N = 1000"></span> movie subset:</p>
-          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-matrix">The Matrix</span><span class="v2-tex" data-tex="c = 977"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span><span class="v2-tex" data-tex="c = 426"></span></p>
-          <p class="v2-step1-line">&#9313; Rank by count, rank 1 = most rated:</p>
-          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-matrix">The Matrix</span><span class="v2-tex" data-tex="\text{rank} = 1"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span><span class="v2-tex" data-tex="\text{rank} = 1000"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex">&#9314; Map to <span class="v2-tex" data-tex="[-1, +1]"></span> with <span class="v2-tex" data-tex="N = 1000"></span>:</p>
-          <div class="v2-step1-katex v2-tex-d" data-tex="b = 1 - \dfrac{2(\text{rank}-1)}{N-1}"></div>
-          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-matrix">The Matrix</span><span class="v2-tex" data-tex="b = 1 - \dfrac{2(1-1)}{999} = +1"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex v2e1-row"><span class="v2-movie-tag label-rumble">Rumble in the Bronx</span><span class="v2-tex" data-tex="b = 1 - \dfrac{2(1000-1)}{999} = -1"></span></p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="b"></span> depends only on the movie, never on the rating value. <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> is last within this subset and in the top <span class="v2-tex" data-tex="1.39\%"></span> of the full dataset.</p>
+          <p class="v2-step1-line v2-step1-inline-katex">&#9312; This user's training ratings: <span class="v2-tex" data-tex="n = 530"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex">&#9313; <span class="v2-tex" data-tex="\mu_u = \dfrac{\text{sum}}{n} = \dfrac{1831.5}{530} = 3.4557"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex">&#9314; <span class="v2-tex" data-tex="b = \dfrac{\mu_u - 0.5}{4.5} = \dfrac{3.4557 - 0.5}{4.5} = 0.6568"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="b"></span> depends only on the user, never on the movie or the rating value. Strict users (<span class="v2-tex" data-tex="\mu_u < 2.5"></span>) have <span class="v2-tex" data-tex="b < 0.4444"></span>; generous users (<span class="v2-tex" data-tex="\mu_u > 4.0"></span>) have <span class="v2-tex" data-tex="b > 0.7778"></span>.</p>
         </div>
       </div>
 
@@ -4644,6 +4636,7 @@
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="c"></span> = hidden bias as a hyperbolic number; <span class="v2-tex" data-tex="c_A,\ c_B"></span> = its real part and k part</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{x_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{x_-}"></span> = hidden input of each channel, before <span class="v2-tex" data-tex="\sigma"></span></p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{v_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{v_-}"></span> = each channel's visible input from Step 1</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="R"></span> = this user's rated movie list; <span class="v2-tex" data-tex="|R|"></span> = its size</p>
         </div>
 
         <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, at the same starting weights and biases as <a href="#section-01c">section 01c</a> (<span class="v2-tex" data-tex="\textcolor{#6f9bc2}{c_+} = \textcolor{#d98a3d}{c_-} = 0"></span>):</p>
@@ -4651,20 +4644,21 @@
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
             <thead>
-              <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=-1"></span>)</th></tr>
+              <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=0.6568"></span>)</th></tr>
             </thead>
             <tbody>
-              <tr><td class="col-plus">channel + input</td><td class="col-plus"><span class="v2-tex" data-tex="0.7778"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.2222"></span></td></tr>
-              <tr><td class="col-minus">channel &minus; input</td><td class="col-minus"><span class="v2-tex" data-tex="0.7778"></span></td><td class="col-minus"><span class="v2-tex" data-tex="1.7778"></span></td></tr>
-              <tr><td class="col-plus"><span class="v2-tex" data-tex="x_+"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.2111"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.2175"></span></td></tr>
-              <tr><td class="col-minus"><span class="v2-tex" data-tex="x_-"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.2054"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.2147"></span></td></tr>
+              <tr><td class="col-plus">channel + input</td><td class="col-plus"><span class="v2-tex" data-tex="0.7778"></span></td><td class="col-plus"><span class="v2-tex" data-tex="1.4346"></span></td></tr>
+              <tr><td class="col-minus">channel &minus; input</td><td class="col-minus"><span class="v2-tex" data-tex="0.7778"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.1210"></span></td></tr>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="x_+"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.2111"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.4294"></span></td></tr>
+              <tr><td class="col-minus"><span class="v2-tex" data-tex="x_-"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.2054"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.0083"></span></td></tr>
             </tbody>
           </table>
         </div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">Only the <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> entry of <span class="v2-tex" data-tex="v"></span> changes between 01c and 01e; every other rated movie keeps its 01c value. So the change in <span class="v2-tex" data-tex="x"></span> is exactly that one entry's change times its own starting weight, <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{w_{+,\text{Rumble},1} = 0.0064}"></span> and <span class="v2-tex" data-tex="\textcolor{#d98a3d}{w_{-,\text{Rumble},1} = -0.0094}"></span>:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{x_+^{01e} = x_+^{01c} + (-0.2222 - 0.7778) \times 0.0064 = -0.2111 + (-1.0000 \times 0.0064) = -0.2111 - 0.0064 = -0.2175}"></div>
-        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#d98a3d}{x_-^{01e} = x_-^{01c} + (1.7778 - 0.7778) \times (-0.0094) = -0.2054 + (1.0000 \times -0.0094) = -0.2054 - 0.0094 = -0.2147}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="b"></span> is added to every movie in this user's rated movie list, so every rated entry of <span class="v2-tex" data-tex="v"></span> shifts: <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{+b}"></span> in channel +, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{-b}"></span> in channel &minus;. Unrated movies stay 0 in both channels.</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{x_+^{01e} = x_+^{01c} + b \times \sum_{i \in R} w_{+,i,1} = -0.2111 + 0.6568 \times (-0.3323) = -0.2111 - 0.2183 = -0.4294}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#d98a3d}{x_-^{01e} = x_-^{01c} - b \times \sum_{i \in R} w_{-,i,1} = -0.2054 - 0.6568 \times (-0.3254) = -0.2054 + 0.2137 = 0.0083}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="R"></span> = this user's rated movie list, <span class="v2-tex" data-tex="|R| = 530"></span></p>
       </div>
 
 
@@ -4694,13 +4688,13 @@
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
             <thead>
-              <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=-1"></span>)</th></tr>
+              <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=0.6568"></span>)</th></tr>
             </thead>
             <tbody>
-              <tr><td class="col-plus"><span class="v2-tex" data-tex="q_+ = \sigma(x_+)"></span></td><td class="col-plus"><span class="v2-tex" data-tex="\sigma(-0.2111) = 0.4474"></span></td><td class="col-plus"><span class="v2-tex" data-tex="\sigma(-0.2175) = 0.4458"></span></td></tr>
-              <tr><td class="col-minus"><span class="v2-tex" data-tex="q_- = \sigma(x_-)"></span></td><td class="col-minus"><span class="v2-tex" data-tex="\sigma(-0.2054) = 0.4488"></span></td><td class="col-minus"><span class="v2-tex" data-tex="\sigma(-0.2147) = 0.4465"></span></td></tr>
-              <tr><td>real part of <span class="v2-tex" data-tex="q"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} + \textcolor{#d98a3d}{q_-})/2 = 0.4481"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} + \textcolor{#d98a3d}{q_-})/2 = 0.4462"></span></td></tr>
-              <tr><td>k part of <span class="v2-tex" data-tex="q"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} - \textcolor{#d98a3d}{q_-})/2 = -0.0007"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} - \textcolor{#d98a3d}{q_-})/2 = -0.0003"></span></td></tr>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="q_+ = \sigma(x_+)"></span></td><td class="col-plus"><span class="v2-tex" data-tex="\sigma(-0.2111) = 0.4474"></span></td><td class="col-plus"><span class="v2-tex" data-tex="\sigma(-0.4294) = 0.3943"></span></td></tr>
+              <tr><td class="col-minus"><span class="v2-tex" data-tex="q_- = \sigma(x_-)"></span></td><td class="col-minus"><span class="v2-tex" data-tex="\sigma(-0.2054) = 0.4488"></span></td><td class="col-minus"><span class="v2-tex" data-tex="\sigma(0.0083) = 0.5021"></span></td></tr>
+              <tr><td>real part of <span class="v2-tex" data-tex="q"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} + \textcolor{#d98a3d}{q_-})/2 = 0.4481"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} + \textcolor{#d98a3d}{q_-})/2 = 0.4482"></span></td></tr>
+              <tr><td>k part of <span class="v2-tex" data-tex="q"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} - \textcolor{#d98a3d}{q_-})/2 = -0.0007"></span></td><td><span class="v2-tex" data-tex="(\textcolor{#6f9bc2}{q_+} - \textcolor{#d98a3d}{q_-})/2 = -0.0539"></span></td></tr>
             </tbody>
           </table>
         </div>
@@ -4739,10 +4733,10 @@
         </div>
 
         <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, 01e only, using <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{q_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{q_-}"></span> from Step 3:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="P(0,0) = \textcolor{#6f9bc2}{(1-q_+)}\textcolor{#d98a3d}{(1-q_-)} = \textcolor{#6f9bc2}{(1 - 0.4458)}\textcolor{#d98a3d}{(1 - 0.4465)} = \textcolor{#6f9bc2}{0.5542} \times \textcolor{#d98a3d}{0.5535} = 0.3067"></div>
-        <div class="v2-step1-katex v2-tex-d" data-tex="P(1,0) = \textcolor{#6f9bc2}{q_+}\textcolor{#d98a3d}{(1-q_-)} = \textcolor{#6f9bc2}{0.4458} \times \textcolor{#d98a3d}{0.5535} = 0.2468"></div>
-        <div class="v2-step1-katex v2-tex-d" data-tex="P(0,1) = \textcolor{#6f9bc2}{(1-q_+)}\textcolor{#d98a3d}{q_-} = \textcolor{#6f9bc2}{0.5542} \times \textcolor{#d98a3d}{0.4465} = 0.2475"></div>
-        <div class="v2-step1-katex v2-tex-d" data-tex="P(1,1) = \textcolor{#6f9bc2}{q_+}\,\textcolor{#d98a3d}{q_-} = \textcolor{#6f9bc2}{0.4458} \times \textcolor{#d98a3d}{0.4465} = 0.1991"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="P(0,0) = \textcolor{#6f9bc2}{(1-q_+)}\textcolor{#d98a3d}{(1-q_-)} = \textcolor{#6f9bc2}{(1 - 0.3943)}\textcolor{#d98a3d}{(1 - 0.5021)} = \textcolor{#6f9bc2}{0.6057} \times \textcolor{#d98a3d}{0.4979} = 0.3016"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="P(1,0) = \textcolor{#6f9bc2}{q_+}\textcolor{#d98a3d}{(1-q_-)} = \textcolor{#6f9bc2}{0.3943} \times \textcolor{#d98a3d}{0.4979} = 0.1963"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="P(0,1) = \textcolor{#6f9bc2}{(1-q_+)}\textcolor{#d98a3d}{q_-} = \textcolor{#6f9bc2}{0.6057} \times \textcolor{#d98a3d}{0.5021} = 0.3041"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="P(1,1) = \textcolor{#6f9bc2}{q_+}\,\textcolor{#d98a3d}{q_-} = \textcolor{#6f9bc2}{0.3943} \times \textcolor{#d98a3d}{0.5021} = 0.1980"></div>
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="P(0,0) + P(1,0) + P(0,1) + P(1,1) = 1"></span>, the four outcomes exhaust the probability.</p>
       </div>
 
@@ -4771,7 +4765,7 @@
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{\hat{v}_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{\hat{v}_-}"></span> = reconstructed visible value of each channel, between 0 and 1</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\hat{v}"></span> = reconstruction as one hyperbolic number</p>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\hat{a}"></span> = reconstructed normalized rating; <span class="v2-tex" data-tex="\hat{r}"></span> = reconstructed rating, back on the 0.5 to 5.0 star scale</p>
-          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\hat{b}"></span> = reconstructed popularity signal, compared with the known <span class="v2-tex" data-tex="b"></span> from Step 1</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\hat{b}"></span> = reconstructed rating-habit signal, compared with the known <span class="v2-tex" data-tex="b"></span> from Step 1</p>
         </div>
 
         <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>:</p>
@@ -4779,20 +4773,20 @@
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
             <thead>
-              <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=-1"></span>)</th></tr>
+              <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=0.6568"></span>)</th></tr>
             </thead>
             <tbody>
-              <tr><td class="col-plus"><span class="v2-tex" data-tex="\hat{v}_+"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.4885"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.4885"></span></td></tr>
-              <tr><td class="col-minus"><span class="v2-tex" data-tex="\hat{v}_-"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.4632"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.4632"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="\hat{a},\ \hat{r}"></span></td><td><span class="v2-tex" data-tex="\hat{a}=0.4758,\ \hat{r}=2.6413"></span></td><td><span class="v2-tex" data-tex="\hat{a}=0.4758,\ \hat{r}=2.6413"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="\hat{b}"></span> (target <span class="v2-tex" data-tex="b"></span>)</td><td><span class="v2-tex" data-tex="\hat{b}=0.0126\ (b=0)"></span></td><td><span class="v2-tex" data-tex="\hat{b}=0.0126\ (b=-1)"></span></td></tr>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="\hat{v}_+"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.4885"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.4918"></span></td></tr>
+              <tr><td class="col-minus"><span class="v2-tex" data-tex="\hat{v}_-"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.4632"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.4564"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="\hat{a},\ \hat{r}"></span></td><td><span class="v2-tex" data-tex="\hat{a}=0.4758,\ \hat{r}=2.6413"></span></td><td><span class="v2-tex" data-tex="\hat{a}=0.4741,\ \hat{r}=2.6335"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="\hat{b}"></span> (target <span class="v2-tex" data-tex="b"></span>)</td><td><span class="v2-tex" data-tex="\hat{b}=0.0126\ (b=0)"></span></td><td><span class="v2-tex" data-tex="\hat{b}=0.0177\ (b=0.6568)"></span></td></tr>
             </tbody>
           </table>
         </div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">In this example, the same random draw samples the identical 128-unit hidden state in both scenarios (<span class="v2-tex" data-tex="0"></span> of <span class="v2-tex" data-tex="128"></span> bits differ), so the reconstruction matches exactly.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">The plus channel's hidden state differs in <span class="v2-tex" data-tex="4"></span> of <span class="v2-tex" data-tex="128"></span> bits and the minus channel's in <span class="v2-tex" data-tex="3"></span> of <span class="v2-tex" data-tex="128"></span> bits from the 01c scenario, so the reconstruction differs from 01c because the sampled hidden state changed.</p>
 
-        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\sigma"></span> keeps each channel in <span class="v2-tex" data-tex="(0, 1)"></span>, so <span class="v2-tex" data-tex="\hat{b}"></span> stays within <span class="v2-tex" data-tex="(-0.5, 0.5)"></span> and cannot reach <span class="v2-tex" data-tex="-1"></span>.</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\sigma"></span> keeps each channel in <span class="v2-tex" data-tex="(0, 1)"></span>, so <span class="v2-tex" data-tex="\hat{b}"></span> stays within <span class="v2-tex" data-tex="(-0.5, 0.5)"></span>; <span class="v2-tex" data-tex="b"></span> is reachable only for users with <span class="v2-tex" data-tex="\mu_u < 2.75"></span>.</p>
       </div>
 
 
@@ -4823,19 +4817,19 @@
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
             <thead>
-              <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=-1"></span>)</th></tr>
+              <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=0.6568"></span>)</th></tr>
             </thead>
             <tbody>
-              <tr><td class="col-plus"><span class="v2-tex" data-tex="\Delta W_+"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.0062"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.0162"></span></td></tr>
-              <tr><td class="col-minus"><span class="v2-tex" data-tex="\Delta W_-"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.0067"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.0289"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="\Delta B"></span></td><td><span class="v2-tex" data-tex="-0.0003"></span></td><td><span class="v2-tex" data-tex="-0.0226"></span></td></tr>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="\Delta W_+"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.0062"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.0170"></span></td></tr>
+              <tr><td class="col-minus"><span class="v2-tex" data-tex="\Delta W_-"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.0067"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.0076"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="\Delta B"></span></td><td><span class="v2-tex" data-tex="-0.0003"></span></td><td><span class="v2-tex" data-tex="0.0123"></span></td></tr>
             </tbody>
           </table>
         </div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">01e calculation, with every value substituted (<span class="v2-tex" data-tex="\eta=0.05"></span>, <span class="v2-tex" data-tex="\hat{v}_+=0.4885,\ q_+^1=0.4601,\ \hat{v}_-=0.4632,\ q_-^1=0.4652"></span> from Step 5, unchanged from 01c since the sampled hidden state did not change):</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{\Delta W_+ = 0.05 \times ((-0.2222)(0.4458) - (0.4885)(0.4601)) = 0.05 \times (-0.0991 - 0.2247) = 0.05 \times (-0.3238) = -0.0162}"></div>
-        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#d98a3d}{\Delta W_- = 0.05 \times ((1.7778)(0.4465) - (0.4632)(0.4652)) = 0.05 \times (0.7940 - 0.2155) = 0.05 \times 0.5785 = 0.0289}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">01e calculation, with every value substituted (<span class="v2-tex" data-tex="\eta=0.05"></span>, <span class="v2-tex" data-tex="\hat{v}_+=0.4918,\ q_+^1=0.4599,\ \hat{v}_-=0.4564,\ q_-^1=0.4654"></span> from Step 5; these differ from 01c because the sampled hidden state changed):</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{\Delta W_+ = 0.05 \times ((1.4346)(0.3943) - (0.4918)(0.4599)) = 0.05 \times (0.5657 - 0.2261) = 0.05 \times 0.3396 = 0.0170}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#d98a3d}{\Delta W_- = 0.05 \times ((0.1210)(0.5021) - (0.4564)(0.4654)) = 0.05 \times (0.0608 - 0.2124) = 0.05 \times (-0.1516) = -0.0076}"></div>
       </div>
 
     </div>
