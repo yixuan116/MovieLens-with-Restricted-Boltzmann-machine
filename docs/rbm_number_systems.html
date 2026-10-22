@@ -4795,6 +4795,49 @@
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\sigma"></span> keeps each channel in <span class="v2-tex" data-tex="(0, 1)"></span>, so <span class="v2-tex" data-tex="\hat{b}"></span> stays within <span class="v2-tex" data-tex="(-0.5, 0.5)"></span> and cannot reach <span class="v2-tex" data-tex="-1"></span>.</p>
       </div>
 
+
+      <div class="v2-step1">
+        <span class="distwalk-layer-tag">Step 6 &middot; Training</span>
+
+        <p class="v2-step1-line v2-step1-inline-katex">CD-1 updates each channel separately, using exactly the formula and learning rate of <a href="#section-01c">section 01c Step 8</a>. Not re-derived here.</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{\Delta W_+ = \eta(v_+^0 q_+^0 - \hat{v}_+ q_+^1)}, \qquad \textcolor{#d98a3d}{\Delta W_- = \eta(v_-^0 q_-^0 - \hat{v}_- q_-^1)}"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">Put the update back into one hyperbolic number:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta W = \textcolor{#6f9bc2}{\Delta W_+}\, e_+ + \textcolor{#d98a3d}{\Delta W_-}\, e_- = \Delta A + \Delta B\,k"></div>
+        <p class="v2-step1-line">&#9312; Substitute <span class="v2-tex" data-tex="e_+,\ e_-"></span>:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta W = \textcolor{#6f9bc2}{\Delta W_+} \cdot \frac{1+k}{2} + \textcolor{#d98a3d}{\Delta W_-} \cdot \frac{1-k}{2}"></div>
+        <p class="v2-step1-line">&#9313; Expand and group the real part and the k part:</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta A = \frac{\textcolor{#6f9bc2}{\Delta W_+} + \textcolor{#d98a3d}{\Delta W_-}}{2}, \qquad \Delta B = \frac{\textcolor{#6f9bc2}{\Delta W_+} - \textcolor{#d98a3d}{\Delta W_-}}{2}"></div>
+
+        <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step6-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
+        <div class="v2-step1-values" id="v2e1-step6-sym-body" hidden>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\eta"></span> = learning rate, same as <span class="v2-tex" data-tex="lr"></span> in <a href="#section-01c">section 01c</a>: <span class="v2-tex" data-tex="\eta = 0.05"></span></p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{v_+^0,\ q_+^0}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{v_-^0,\ q_-^0}"></span> = each channel's visible input and hidden probability at the real data (superscript 0)</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{q_+^1}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{q_-^1}"></span> = each channel's hidden probability after one round trip (superscript 1), computed from <span class="v2-tex" data-tex="\hat{v}"></span> in Step 5</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\textcolor{#6f9bc2}{\Delta W_+}"></span>, <span class="v2-tex" data-tex="\textcolor{#d98a3d}{\Delta W_-}"></span> = CD-1 update of each channel's weight</p>
+          <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\Delta W"></span> = the update as one hyperbolic number; <span class="v2-tex" data-tex="\Delta A,\ \Delta B"></span> = its real part and k part</p>
+        </div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">Worked example, <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, first update:</p>
+
+        <div class="v2-step8-table-wrap">
+          <table class="v2-step8-table">
+            <thead>
+              <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=-1"></span>)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="col-plus"><span class="v2-tex" data-tex="\Delta W_+"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.0062"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.0162"></span></td></tr>
+              <tr><td class="col-minus"><span class="v2-tex" data-tex="\Delta W_-"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.0067"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.0289"></span></td></tr>
+              <tr><td><span class="v2-tex" data-tex="\Delta B"></span></td><td><span class="v2-tex" data-tex="-0.0003"></span></td><td><span class="v2-tex" data-tex="-0.0226"></span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">01e calculation, with every value substituted (<span class="v2-tex" data-tex="\eta=0.05"></span>, <span class="v2-tex" data-tex="\hat{v}_+=0.4885,\ q_+^1=0.4601,\ \hat{v}_-=0.4632,\ q_-^1=0.4652"></span> from Step 5, unchanged from 01c since the sampled hidden state did not change):</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{\Delta W_+ = 0.05 \times ((-0.2222)(0.4458) - (0.4885)(0.4601)) = 0.05 \times (-0.0991 - 0.2247) = 0.05 \times (-0.3238) = -0.0162}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#d98a3d}{\Delta W_- = 0.05 \times ((1.7778)(0.4465) - (0.4632)(0.4652)) = 0.05 \times (0.7940 - 0.2155) = 0.05 \times 0.5785 = 0.0289}"></div>
+      </div>
+
     </div>
 
   </section>
