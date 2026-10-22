@@ -4238,7 +4238,7 @@
         <p class="v2-step1-line">i = movie, j = hidden unit. One hyperbolic weight per (movie, hidden unit) pair: 1000 &times; 128 = 128,000 weights.</p>
 
         <div class="v2-step1-katex" id="v2-step3-wform"></div>
-        <p class="v2-step1-line">Each weight is itself a hyperbolic number: w<sub>ij</sub> is the real part, v<sub>ij</sub> the k part.</p>
+        <p class="v2-step1-line">Each weight is itself a hyperbolic number: w<sub>r,ij</sub> is the real part, w<sub>k,ij</sub> the k part.</p>
         <div class="v2-step1-katex" id="v2-step3-wmatrix"></div>
         <div class="v2-step1-katex" id="v2-step3-wdiag"></div>
 
@@ -5627,32 +5627,32 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       { throwOnError: false, displayMode: false }
     );
     katex.render(
-      "W_{ij} = w_{ij} + v_{ij} \\cdot k",
+      "W_{ij} = w_{r,ij} + w_{k,ij} \\cdot k",
       document.getElementById("v2-step3-wform"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "W_{ij} = \\begin{bmatrix} w_{ij} & v_{ij} \\\\ v_{ij} & w_{ij} \\end{bmatrix}",
+      "W_{ij} = \\begin{bmatrix} w_{r,ij} & w_{k,ij} \\\\ w_{k,ij} & w_{r,ij} \\end{bmatrix}",
       document.getElementById("v2-step3-wmatrix"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "P^{-1} \\cdot \\begin{bmatrix} w_{ij} & v_{ij} \\\\ v_{ij} & w_{ij} \\end{bmatrix} \\cdot P = \\begin{bmatrix} w_{ij}+v_{ij} & 0 \\\\ 0 & w_{ij}-v_{ij} \\end{bmatrix} = \\begin{bmatrix} w_{+,ij} & 0 \\\\ 0 & w_{-,ij} \\end{bmatrix}",
+      "P^{-1} \\cdot \\begin{bmatrix} w_{r,ij} & w_{k,ij} \\\\ w_{k,ij} & w_{r,ij} \\end{bmatrix} \\cdot P = \\begin{bmatrix} w_{r,ij}+w_{k,ij} & 0 \\\\ 0 & w_{r,ij}-w_{k,ij} \\end{bmatrix} = \\begin{bmatrix} w_{+,ij} & 0 \\\\ 0 & w_{-,ij} \\end{bmatrix}",
       document.getElementById("v2-step3-wdiag"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "\\mathbf{W} = A + B \\cdot k",
+      "\\mathbf{W} = w_r + w_k \\cdot k",
       document.getElementById("v2-step3-collect"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      "A = \\left[w_{ij}\\right]",
+      "w_r = \\left[w_{r,ij}\\right]",
       document.getElementById("v2-step3-A-inline"),
       { throwOnError: false, displayMode: false }
     );
     katex.render(
-      "B = \\left[v_{ij}\\right]",
+      "w_k = \\left[w_{k,ij}\\right]",
       document.getElementById("v2-step3-B-inline"),
       { throwOnError: false, displayMode: false }
     );
@@ -5687,12 +5687,12 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
         "\\end{array}\\right] = " + suffix;
     }
     katex.render(
-      wschemaLatex("+", "W_+", "A + B"),
+      wschemaLatex("+", "W_+", "w_r + w_k"),
       document.getElementById("v2-step2-wschema-plus"),
       { throwOnError: false, displayMode: true }
     );
     katex.render(
-      wschemaLatex("-", "W_-", "A - B"),
+      wschemaLatex("-", "W_-", "w_r - w_k"),
       document.getElementById("v2-step2-wschema-minus"),
       { throwOnError: false, displayMode: true }
     );
