@@ -914,6 +914,21 @@
   .v2-step1-values { margin: 0.5rem 0 0.6rem; }
   .v2-step1-line a { color: var(--accent); text-decoration: underline; }
   .v2-step1-indent { margin-left: 1.4rem; }
+  .v2-step1-line-primary { font-size: 1rem; color: var(--ink); }
+  .v2-goal {
+    border-left: 3px solid var(--accent);
+    background: #eef2f6;
+    border-radius: 4px;
+    padding: 0.7rem 1rem;
+    margin: 0.6rem 0 1rem;
+  }
+  .v2-goal-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 0.5rem;
+  }
+  .v2-goal .v2-step1-katex { margin: 0; overflow-x: auto; }
   .v2-step1-katex {
     color: var(--ink);
     margin: 0 0 0.6rem;
@@ -4587,11 +4602,15 @@
         <span class="distwalk-layer-tag">Step 1 &middot; The visible input becomes a hyperbolic number</span>
         <!-- video embed placeholder: 01e Step 1 -->
 
-        <p class="v2-step1-line v2-step1-inline-katex">&#9312; Normalize <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="b"></span> on the same scale, so they can be added</p>
-        <p class="v2-step1-line v2-step1-inline-katex">&#9313; Combine into <span class="v2-tex" data-tex="v = a + b\,k"></span>: the rating and the rater's own mean, together</p>
-        <p class="v2-step1-line v2-step1-inline-katex">&#9314; Split into <span class="v2-tex" data-tex="a + b"></span> (combined height) and <span class="v2-tex" data-tex="a - b"></span> (gap from own mean), each trained with its own weights</p>
+        <div class="v2-goal">
+          <p class="v2-goal-title">Goal: one rating becomes two channels, <span class="v2-tex" data-tex="a + b"></span> and <span class="v2-tex" data-tex="a - b"></span></p>
+          <div class="v2-step1-katex v2-tex-d" data-tex="v = a + b\,k \;\rightarrow\; (a+b,\ a-b)"></div>
+        </div>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="v = a + b\,k"></div>
+        <p class="v2-step1-line v2-step1-line-primary v2-step1-inline-katex">&#9312; <b>Normalize</b> <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="b"></span> on one scale, so they can be added</p>
+        <p class="v2-step1-line v2-step1-line-primary v2-step1-inline-katex">&#9313; <b>Combine</b> into <span class="v2-tex" data-tex="v = a + b\,k"></span>: the rating and the rater's own mean, together</p>
+        <p class="v2-step1-line v2-step1-line-primary v2-step1-inline-katex">&#9314; <b>Split</b> into <span class="v2-tex" data-tex="a + b"></span> (combined height) and <span class="v2-tex" data-tex="a - b"></span> (gap from own mean), each trained with its own weights</p>
+
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step1-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step1-sym-body" hidden>
           <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="v"></span> = this rating as a hyperbolic number</p>
