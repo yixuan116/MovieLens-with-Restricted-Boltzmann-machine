@@ -4670,13 +4670,11 @@
           <p class="v2-step1-line v2-step1-inline-katex">Total input = each rated movie's input &times; its weight, summed, plus the unit's bias: <span class="v2-tex" data-tex="x_j = \sum_{i \in R} v_i W_{ij} + c_j"></span>. Larger <span class="v2-tex" data-tex="x_j"></span> gives <span class="v2-tex" data-tex="h_j"></span> a higher probability of being active.</p>
         </div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">Weights, from <a href="#section-01c">01c</a>:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="W_\pm = w_r \pm w_k"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">Hyperbolic weights, from <a href="#section-01c">01c</a>: <span class="v2-tex" data-tex="W = w_r + w_k\,k"></span>, so <span class="v2-tex" data-tex="W_\pm = w_r \pm w_k"></span></p>
 
         <p class="v2-step1-line v2-step1-inline-katex">Starting weights are random, <span class="v2-tex" data-tex="W_\pm = 0.01 \times \mathcal{N}(0,1)"></span>, drawn separately for each channel; for <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> &times; <span class="v2-tex" data-tex="h_1"></span>, <span class="v2-tex" data-tex="W_+ = 0.01 \times 0.6433 ="></span> <span class="v2-tex v2-random-weight" data-tex="0.0064"></span> and <span class="v2-tex" data-tex="W_- = 0.01 \times (-0.9362) ="></span> <span class="v2-tex v2-random-weight" data-tex="-0.0094"></span>.</p>
 
-        <p class="v2-step1-line v2-step1-inline-katex">Biases:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="c_\pm = c_r \pm c_k"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">Hyperbolic biases: <span class="v2-tex" data-tex="c = c_r + c_k\,k"></span>, so <span class="v2-tex" data-tex="c_\pm = c_r \pm c_k"></span></p>
 
         <p class="v2-step1-line v2-step1-inline-katex">Total input, <span class="v2-tex" data-tex="b"></span> factored out:</p>
         <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{x_+ = \underbrace{\Big[\sum_{i \in R} a_i W_{+,i} + c_+\Big]}_{\text{01c}} + b \sum_{i \in R} W_{+,i}}"></div>
