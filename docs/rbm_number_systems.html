@@ -580,6 +580,14 @@
   .v2-move { color: #2a9d8f; }
   .v2-random-weight, .v2-random-weight .katex, .v2-random-weight .katex * { text-decoration: underline dotted; }
   .v2-step1-sublabel { display: block; color: var(--ink-soft); font-size: 0.85rem; font-weight: 400; font-family: var(--sans); white-space: normal; margin-top: 0.15rem; }
+  .v2-step1-list {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0 0 0.35rem;
+    padding-left: 1.2rem;
+  }
+  .v2-step1-list li { margin: 0 0 0.25rem; }
   .v2-step8-table-result-row td { border-top: 1px solid var(--border-strong); }
   .v2-step8-table td.v2-step8-meaning,
   .v2-step8-table th.v2-step8-meaning { white-space: normal; text-align: left; font-family: var(--sans); min-width: 16rem; }
@@ -4702,7 +4710,15 @@
 
         <p class="v2-step1-line">Dotted underline: random starting weight. R = Rumble in the Bronx.</p>
 
-        <p class="v2-step1-line v2-step1-inline-katex">Reading: <span class="v2-tex" data-tex="b"></span> is added in channel + and subtracted in channel &minus;, and both weight sums are negative, so <span class="v2-tex" data-tex="x_+"></span> drops by <span class="v2-tex" data-tex="0.2183"></span> to <span class="v2-tex" data-tex="-0.4294"></span> while <span class="v2-tex" data-tex="x_-"></span> rises by <span class="v2-tex" data-tex="0.2137"></span> to <span class="v2-tex" data-tex="0.0083"></span>. In Step 3, <span class="v2-tex" data-tex="h_1"></span> therefore has a lower probability of being active in channel + and a higher one in channel &minus;; the actual 0 or 1 is drawn in Step 4. Which channel drops follows the sign of the random starting weights, so before training only the split itself carries meaning.</p>
+        <p class="v2-step1-line">Reading:</p>
+        <ul class="v2-step1-list v2-step1-inline-katex">
+          <li><span class="v2-tex" data-tex="+b"></span> in channel +, <span class="v2-tex" data-tex="-b"></span> in channel &minus;; both weight sums negative</li>
+          <li class="col-plus"><span class="v2-tex" data-tex="x_+"></span>: <span class="v2-tex" data-tex="-0.2111 - 0.2183 = -0.4294"></span></li>
+          <li class="col-minus"><span class="v2-tex" data-tex="x_-"></span>: <span class="v2-tex" data-tex="-0.2054 + 0.2137 = 0.0083"></span></li>
+          <li>vs 01c (<span class="v2-tex" data-tex="b=0"></span>): <span class="v2-tex" data-tex="h_1"></span> less likely active in channel + (<span class="v2-tex" data-tex="0.4474 \to 0.3943"></span>), more likely in channel &minus; (<span class="v2-tex" data-tex="0.4488 \to 0.5021"></span>), computed in Step 3</li>
+          <li>Actual <span class="v2-tex" data-tex="0"></span> or <span class="v2-tex" data-tex="1"></span>: drawn in Step 4</li>
+          <li>Direction follows random starting weights; only the split carries meaning</li>
+        </ul>
       </div>
 
 
