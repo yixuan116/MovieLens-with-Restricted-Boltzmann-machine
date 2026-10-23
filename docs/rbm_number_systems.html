@@ -924,8 +924,6 @@
   .v2-step1-values { margin: 0.5rem 0 0.6rem; }
   .v2-step1-line a { color: var(--accent); text-decoration: underline; }
   .v2-step1-indent { margin-left: 1.4rem; }
-  .v2-step1-line-primary { font-size: 1rem; color: var(--ink); }
-  .v2-step1-line-primary.v2-step1-inline-katex .katex { font-size: 1rem; }
   .v2-goal {
     border-left: 3px solid var(--accent);
     background: #eef2f6;
@@ -934,18 +932,14 @@
     margin: 0.6rem 0 1rem;
   }
   .v2-goal-title {
-    font-size: 1rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
     font-weight: 400;
-    color: var(--ink);
-    margin: 0 0 0.4rem;
+    color: var(--ink-soft);
+    margin: 0 0 0.35rem;
   }
-  .v2-goal .v2-step1-katex { margin: 0; overflow-x: auto; }
-  .v2-goal .v2-step1-katex .katex { font-size: 1rem; }
-  .v2-goal-title .katex { font-size: 1rem; }
-  .v2-goal .katex-display { text-align: left; margin: 0; }
-  .section-1e .v2-step-heading { font-size: 1rem; }
+  .section-1e .v2-step-heading { font-size: 0.95rem; }
   .section-1e .v2-step1-katex .katex { font-size: 0.85rem; }
-  .section-1e .v2-goal .v2-step1-katex .katex { font-size: 1rem; }
   .v2-step1-katex {
     color: var(--ink);
     margin: 0 0 0.6rem;
@@ -4620,13 +4614,13 @@
         <!-- video embed placeholder: 01e Step 1 -->
 
         <div class="v2-goal">
-          <p class="v2-goal-title"><b>Goal:</b> one rating becomes two channels, <span class="v2-tex" data-tex="a + b"></span> and <span class="v2-tex" data-tex="a - b"></span></p>
+          <p class="v2-goal-title v2-step1-inline-katex">Goal: one rating becomes two channels, <span class="v2-tex" data-tex="a + b"></span> and <span class="v2-tex" data-tex="a - b"></span></p>
           <div class="v2-step1-katex v2-tex-d" data-tex="v = a + b\,k \;\rightarrow\; (a+b,\ a-b)"></div>
         </div>
 
-        <p class="v2-step1-line v2-step1-line-primary v2-step1-inline-katex">&#9312; <b>Normalize</b> <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="b"></span> on one scale, so they can be added</p>
-        <p class="v2-step1-line v2-step1-line-primary v2-step1-inline-katex">&#9313; <b>Combine</b> into <span class="v2-tex" data-tex="v = a + b\,k"></span>: the rating and the rater's own mean, together</p>
-        <p class="v2-step1-line v2-step1-line-primary v2-step1-inline-katex">&#9314; <b>Split</b> into <span class="v2-tex" data-tex="a + b"></span> (combined height) and <span class="v2-tex" data-tex="a - b"></span> (gap from own mean), each trained with its own weights</p>
+        <p class="v2-step1-line v2-step1-inline-katex">&#9312; Normalize <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="b"></span> on one scale, so they can be added</p>
+        <p class="v2-step1-line v2-step1-inline-katex">&#9313; Combine into <span class="v2-tex" data-tex="v = a + b\,k"></span>: the rating and the rater's own mean, together</p>
+        <p class="v2-step1-line v2-step1-inline-katex">&#9314; Split into <span class="v2-tex" data-tex="a + b"></span> (combined height) and <span class="v2-tex" data-tex="a - b"></span> (gap from own mean), each trained with its own weights</p>
 
         <button type="button" class="v2-step1-worked-toggle" aria-expanded="false" aria-controls="v2e1-step1-sym-body">Symbols<span aria-hidden="true">&nbsp;&#9432;</span></button>
         <div class="v2-step1-values" id="v2e1-step1-sym-body" hidden>
@@ -4670,7 +4664,7 @@
         <span class="v2-step-heading">Step 2 &middot; Weights and hidden input</span>
 
         <div class="v2-goal">
-          <p class="v2-goal-title"><b>Goal:</b> each channel computes its own hidden input</p>
+          <p class="v2-goal-title v2-step1-inline-katex">Goal: each channel computes its own hidden input</p>
           <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{x_+ = v_+ W_+ + c_+}, \qquad \textcolor{#d98a3d}{x_- = v_- W_- + c_-}"></div>
         </div>
 
@@ -4699,9 +4693,9 @@
               <tr><th></th><th>01c (<span class="v2-tex" data-tex="b=0"></span>)</th><th>01e (<span class="v2-tex" data-tex="b=0.6568"></span>)</th></tr>
             </thead>
             <tbody>
-              <tr><td class="col-plus">Rumble input, <span class="v2-tex" data-tex="a + b"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + 0 = 0.7778"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + b = 1.4346"></span></td></tr>
+              <tr><td class="col-plus">Rumble input, <span class="v2-tex" data-tex="a + b"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + 0 = 0.7778"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + 0.6568 = 1.4346"></span></td></tr>
               <tr><td class="col-plus"><span class="v2-tex" data-tex="x_+"></span> = Rumble + other 529 movies</td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 \times 0.0064 + (-0.2161) = -0.2111"></span></td><td class="col-plus"><span class="v2-tex" data-tex="1.4346 \times 0.0064 + (-0.4386) = -0.4294"></span></td></tr>
-              <tr><td class="col-minus">Rumble input, <span class="v2-tex" data-tex="a - b"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0 = 0.7778"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - b = 0.1210"></span></td></tr>
+              <tr><td class="col-minus">Rumble input, <span class="v2-tex" data-tex="a - b"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0 = 0.7778"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0.6568 = 0.1210"></span></td></tr>
               <tr><td class="col-minus"><span class="v2-tex" data-tex="x_-"></span> = Rumble + other 529 movies</td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 \times (-0.0094) + (-0.1981) = -0.2054"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.1210 \times (-0.0094) + 0.0095 = 0.0083"></span></td></tr>
             </tbody>
           </table>
@@ -4709,7 +4703,7 @@
 
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="x"></span> sums input &times; weight over all 530 movies this user rated; Rumble is one term.</p>
 
-        <p class="v2-step1-line v2-step1-inline-katex"><b>Reading:</b> <span class="col-plus"><span class="v2-tex" data-tex="a + b"></span> is larger than <span class="v2-tex" data-tex="a"></span>, but this user's channel + weights to <span class="v2-tex" data-tex="h_1"></span> sum to <span class="v2-tex" data-tex="-0.3323"></span>, so <span class="v2-tex" data-tex="x_+"></span> falls and <span class="v2-tex" data-tex="h_1"></span> is less likely to be active in channel + (<span class="v2-tex" data-tex="0.4474 \to 0.3943"></span>).</span> <span class="col-minus"><span class="v2-tex" data-tex="a - b"></span> is smaller than <span class="v2-tex" data-tex="a"></span> and the channel &minus; weights sum to <span class="v2-tex" data-tex="-0.3254"></span>, so subtracting pushes <span class="v2-tex" data-tex="x_-"></span> above 0 and <span class="v2-tex" data-tex="h_1"></span> is more likely to be active in channel &minus; (<span class="v2-tex" data-tex="0.4488 \to 0.5021"></span>).</span></p>
+        <p class="v2-step1-line v2-step1-inline-katex">Reading: <span class="col-plus"><span class="v2-tex" data-tex="a + b"></span> is larger than <span class="v2-tex" data-tex="a"></span>, but this user's channel + weights to <span class="v2-tex" data-tex="h_1"></span> sum to <span class="v2-tex" data-tex="-0.3323"></span>, so <span class="v2-tex" data-tex="x_+"></span> falls and <span class="v2-tex" data-tex="h_1"></span> is less likely to be active in channel + (<span class="v2-tex" data-tex="0.4474 \to 0.3943"></span>).</span> <span class="col-minus"><span class="v2-tex" data-tex="a - b"></span> is smaller than <span class="v2-tex" data-tex="a"></span> and the channel &minus; weights sum to <span class="v2-tex" data-tex="-0.3254"></span>, so subtracting pushes <span class="v2-tex" data-tex="x_-"></span> above 0 and <span class="v2-tex" data-tex="h_1"></span> is more likely to be active in channel &minus; (<span class="v2-tex" data-tex="0.4488 \to 0.5021"></span>).</span></p>
       </div>
 
 
@@ -4717,7 +4711,7 @@
         <span class="v2-step-heading">Step 3 &middot; Hidden activation as a hyperbolic probability</span>
 
         <div class="v2-goal">
-          <p class="v2-goal-title"><b>Goal:</b> two channel probabilities combine into one probability in <span class="v2-tex" data-tex="\mathbb{D}^+"></span></p>
+          <p class="v2-goal-title v2-step1-inline-katex">Goal: two channel probabilities combine into one probability in <span class="v2-tex" data-tex="\mathbb{D}^+"></span></p>
           <div class="v2-step1-katex v2-tex-d" data-tex="q = \dfrac{\textcolor{#6f9bc2}{q_+} + \textcolor{#d98a3d}{q_-}}{2} + \dfrac{\textcolor{#6f9bc2}{q_+} - \textcolor{#d98a3d}{q_-}}{2}\,k \in \mathbb{D}^+"></div>
         </div>
 
@@ -4755,7 +4749,7 @@
         <span class="v2-step-heading">Step 4 &middot; Hidden state</span>
 
         <div class="v2-goal">
-          <p class="v2-goal-title"><b>Goal:</b> each channel draws its own state; together they give four hyperbolic states</p>
+          <p class="v2-goal-title v2-step1-inline-katex">Goal: each channel draws its own state; together they give four hyperbolic states</p>
           <div class="v2-step1-katex v2-tex-d" data-tex="s \in \{0, 1, e_+, e_-\}"></div>
         </div>
 
@@ -4798,7 +4792,7 @@
         <span class="v2-step-heading">Step 5 &middot; Back to the visible layer</span>
 
         <div class="v2-goal">
-          <p class="v2-goal-title"><b>Goal:</b> the reconstruction returns as one hyperbolic number; the real part is the rating</p>
+          <p class="v2-goal-title v2-step1-inline-katex">Goal: the reconstruction returns as one hyperbolic number; the real part is the rating</p>
           <div class="v2-step1-katex v2-tex-d" data-tex="\hat{v} = \dfrac{\textcolor{#6f9bc2}{\hat{v}_+} + \textcolor{#d98a3d}{\hat{v}_-}}{2} + \dfrac{\textcolor{#6f9bc2}{\hat{v}_+} - \textcolor{#d98a3d}{\hat{v}_-}}{2}\,k"></div>
         </div>
 
@@ -4852,7 +4846,7 @@
         <span class="v2-step-heading">Step 6 &middot; Training</span>
 
         <div class="v2-goal">
-          <p class="v2-goal-title"><b>Goal:</b> CD-1 updates each channel; the update recombines into one hyperbolic weight</p>
+          <p class="v2-goal-title v2-step1-inline-katex">Goal: CD-1 updates each channel; the update recombines into one hyperbolic weight</p>
           <div class="v2-step1-katex v2-tex-d" data-tex="\Delta W = \dfrac{\textcolor{#6f9bc2}{\Delta W_+} + \textcolor{#d98a3d}{\Delta W_-}}{2} + \dfrac{\textcolor{#6f9bc2}{\Delta W_+} - \textcolor{#d98a3d}{\Delta W_-}}{2}\,k"></div>
         </div>
 
