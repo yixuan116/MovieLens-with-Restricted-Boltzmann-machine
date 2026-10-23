@@ -579,6 +579,7 @@
   .col-minus { color: #d98a3d; }
   .v2-move { color: #2a9d8f; }
   .v2-random-weight, .v2-random-weight .katex, .v2-random-weight .katex * { text-decoration: underline dotted; }
+  .v2-step1-sublabel { display: block; color: var(--ink-soft); font-size: 0.85rem; font-weight: 400; font-family: var(--sans); white-space: normal; margin-top: 0.15rem; }
   .v2-step8-table-result-row td { border-top: 1px solid var(--border-strong); }
   .v2-step8-table td.v2-step8-meaning,
   .v2-step8-table th.v2-step8-meaning { white-space: normal; text-align: left; font-family: var(--sans); min-width: 16rem; }
@@ -4638,18 +4639,16 @@
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
             <thead>
-              <tr><th></th><th class="v2-step8-formula">Formula</th><th>User 6976 (<span class="v2-tex" data-tex="\mu_u=2.8504"></span>)</th><th>User 24127 (<span class="v2-tex" data-tex="\mu_u=3.4557"></span>)</th><th>User 54160 (<span class="v2-tex" data-tex="\mu_u=4.4634"></span>)</th></tr>
+              <tr><th></th><th class="v2-step8-formula">Formula</th><th>User 6976 (<span class="v2-tex" data-tex="\mu_u=2.8504"></span>)<span class="v2-step1-sublabel">strictest</span></th><th>User 24127 (<span class="v2-tex" data-tex="\mu_u=3.4557"></span>)<span class="v2-step1-sublabel">middle</span></th><th>User 54160 (<span class="v2-tex" data-tex="\mu_u=4.4634"></span>)<span class="v2-step1-sublabel">most generous</span></th></tr>
             </thead>
             <tbody>
               <tr><td><span class="v2-tex" data-tex="a"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a = \dfrac{\text{rating} - r_{min}}{r_{max} - r_{min}} = \dfrac{\text{rating} - 0.5}{5.0 - 0.5} = \dfrac{\text{rating} - 0.5}{4.5}"></span></td><td><span class="v2-tex" data-tex="a = \dfrac{4.0 - 0.5}{5.0 - 0.5} = \dfrac{3.5}{4.5} = 0.7778"></span></td><td><span class="v2-tex" data-tex="a = \dfrac{4.0 - 0.5}{5.0 - 0.5} = \dfrac{3.5}{4.5} = 0.7778"></span></td><td><span class="v2-tex" data-tex="a = \dfrac{4.0 - 0.5}{5.0 - 0.5} = \dfrac{3.5}{4.5} = 0.7778"></span></td></tr>
               <tr><td><span class="v2-tex" data-tex="b"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="b = \dfrac{\mu_u - r_{min}}{r_{max} - r_{min}} = \dfrac{\mu_u - 0.5}{5.0 - 0.5} = \dfrac{\mu_u - 0.5}{4.5}"></span></td><td><span class="v2-tex" data-tex="b = \dfrac{2.8504 - 0.5}{5.0 - 0.5} = \dfrac{2.3504}{4.5} = 0.5223"></span></td><td><span class="v2-tex" data-tex="b = \dfrac{3.4557 - 0.5}{5.0 - 0.5} = \dfrac{2.9557}{4.5} = 0.6568"></span></td><td><span class="v2-tex" data-tex="b = \dfrac{4.4634 - 0.5}{5.0 - 0.5} = \dfrac{3.9634}{4.5} = 0.8808"></span></td></tr>
               <tr><td class="col-plus">channel +</td><td class="v2-step8-formula col-plus"><span class="v2-tex" data-tex="a + b"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + 0.5223 = 1.3001"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + 0.6568 = 1.4346"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 + 0.8808 = 1.6585"></span></td></tr>
-              <tr><td class="col-minus">channel &minus;</td><td class="v2-step8-formula col-minus"><span class="v2-tex" data-tex="a - b"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0.5223 = 0.2555"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0.6568 = 0.1210"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0.8808 = -0.1030"></span></td></tr>
+              <tr><td class="col-minus">channel &minus;</td><td class="v2-step8-formula col-minus"><span class="v2-tex" data-tex="a - b = \dfrac{4.0 - 0.5}{5.0 - 0.5} - \dfrac{\mu_u - 0.5}{5.0 - 0.5} = \dfrac{4.0 - \mu_u}{4.5}"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0.5223 = 0.2555"></span><span class="v2-step1-sublabel">above own mean</span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0.6568 = 0.1210"></span><span class="v2-step1-sublabel">above own mean</span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 - 0.8808 = -0.1030"></span><span class="v2-step1-sublabel">below own mean</span></td></tr>
             </tbody>
           </table>
         </div>
-
-        <p class="v2-step1-line v2-step1-inline-katex">All three users rated <span class="v2-movie-tag label-rumble">Rumble in the Bronx</span> <span class="v2-tex" data-tex="4.0"></span>, so <span class="v2-tex" data-tex="a"></span> is identical; <span class="v2-tex" data-tex="b"></span> differs with each user's own mean.</p>
 
         <p class="v2-step1-line v2-step1-inline-katex">In 01c, <span class="v2-tex" data-tex="b = 0"></span>, so <span class="v2-tex" data-tex="\textcolor{#6f9bc2}{a + b} = \textcolor{#d98a3d}{a - b} = 0.7778"></span>. Now the two channels differ from the first step.</p>
 
