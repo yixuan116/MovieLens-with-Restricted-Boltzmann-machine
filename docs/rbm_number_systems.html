@@ -4685,8 +4685,8 @@
         <p class="v2-step1-line v2-step1-inline-katex">Hyperbolic biases: <span class="v2-tex" data-tex="c = c_r + c_k\,k"></span>, so <span class="v2-tex" data-tex="c_\pm = c_r \pm c_k"></span></p>
 
         <p class="v2-step1-line v2-step1-inline-katex">Total input, <span class="v2-tex" data-tex="b"></span> factored out:</p>
-        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{x_+ = \underbrace{\Big[\sum_{i \in R} a_i W_{+,i} + c_+\Big]}_{\text{01c}} + b \sum_{i \in R} W_{+,i}}"></div>
-        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#d98a3d}{x_- = \underbrace{\Big[\sum_{i \in R} a_i W_{-,i} + c_-\Big]}_{\text{01c}} - b \sum_{i \in R} W_{-,i}}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#6f9bc2}{x_+ = \sum_{i \in R} a_i W_{+,i} + c_+}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\textcolor{#d98a3d}{x_- = b \sum_{i \in R} W_{-,i} + c_-}"></div>
 
         <p class="v2-step1-line v2-step1-inline-katex">No cross terms: <a href="#section-01c">01c Step 2</a>.</p>
 
@@ -4695,15 +4695,14 @@
         <div class="v2-step8-table-wrap">
           <table class="v2-step8-table">
             <thead>
-              <tr><th></th><th class="v2-step8-formula">Formula</th><th class="col-plus">channel +</th><th class="col-minus">channel &minus;</th></tr>
+              <tr><th></th><th class="col-plus">channel +</th><th class="col-minus">channel &minus;</th></tr>
             </thead>
             <tbody>
-              <tr><td>Rumble term</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="a_R\, W_{\pm,R}"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 \times"></span> <span class="v2-tex v2-random-weight" data-tex="0.0064"></span> <span class="v2-tex" data-tex="= 0.0050"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.7778 \times"></span> <span class="v2-tex v2-random-weight" data-tex="(-0.0094)"></span> <span class="v2-tex" data-tex="= -0.0073"></span></td></tr>
-              <tr><td>Other 529 movies</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="\sum_{i \in R,\, i \neq R} a_i W_{\pm,i}"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.2161"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.1981"></span></td></tr>
-              <tr><td>01c part</td><td class="v2-step8-formula">Rumble term + other 529 + <span class="v2-tex" data-tex="c_\pm"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.0050 - 0.2161 + 0 = -0.2111"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.0073 - 0.1981 + 0 = -0.2054"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="\sum_R W_\pm"></span></td><td class="v2-step8-formula"><span class="v2-tex" data-tex="W_{\pm,R} + \sum_{i \in R,\, i \neq R} W_{\pm,i}"></span></td><td class="col-plus"><span class="v2-tex v2-random-weight" data-tex="0.0064"></span> <span class="v2-tex" data-tex="+"></span> <span class="v2-tex v2-random-weight" data-tex="(-0.3388)"></span> <span class="v2-tex" data-tex="= -0.3323"></span></td><td class="col-minus"><span class="v2-tex v2-random-weight" data-tex="-0.0094"></span> <span class="v2-tex" data-tex="+"></span> <span class="v2-tex v2-random-weight" data-tex="(-0.3160)"></span> <span class="v2-tex" data-tex="= -0.3254"></span></td></tr>
-              <tr><td><span class="v2-tex" data-tex="b"></span> term</td><td class="v2-step8-formula"><span class="v2-tex" data-tex="\pm b \textstyle\sum_R W_\pm"></span></td><td class="col-plus"><span class="v2-tex" data-tex="+0.6568 \times"></span> <span class="v2-tex v2-random-weight" data-tex="(-0.3323)"></span> <span class="v2-tex" data-tex="= -0.2183"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.6568 \times"></span> <span class="v2-tex v2-random-weight" data-tex="(-0.3254)"></span> <span class="v2-tex" data-tex="= +0.2137"></span></td></tr>
-              <tr class="v2-step8-table-result-row"><td><span class="v2-tex" data-tex="x_\pm"></span></td><td class="v2-step8-formula">01c part + <span class="v2-tex" data-tex="b"></span> term</td><td class="col-plus"><span class="v2-tex" data-tex="-0.2111 + (-0.2183) = -0.4294"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.2054 + 0.2137 = 0.0083"></span></td></tr>
+              <tr><td>Input per rated movie</td><td class="col-plus"><span class="v2-tex" data-tex="a_i"></span>, varies by movie (Rumble: <span class="v2-tex" data-tex="0.7778"></span>)</td><td class="col-minus"><span class="v2-tex" data-tex="b = 0.6568"></span>, same for all 530</td></tr>
+              <tr><td>Rumble term</td><td class="col-plus"><span class="v2-tex" data-tex="0.7778 \times"></span> <span class="v2-tex v2-random-weight" data-tex="0.0064"></span> <span class="v2-tex" data-tex="= 0.0050"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.6568 \times"></span> <span class="v2-tex v2-random-weight" data-tex="(-0.0094)"></span> <span class="v2-tex" data-tex="= -0.0061"></span></td></tr>
+              <tr><td>Other 529 movies</td><td class="col-plus"><span class="v2-tex" data-tex="-0.2161"></span></td><td class="col-minus"><span class="v2-tex" data-tex="0.6568 \times"></span> <span class="v2-tex v2-random-weight" data-tex="(-0.3160)"></span> <span class="v2-tex" data-tex="= -0.2076"></span></td></tr>
+              <tr class="v2-step8-table-result-row"><td><span class="v2-tex" data-tex="x_\pm"></span></td><td class="col-plus"><span class="v2-tex" data-tex="0.0050 - 0.2161 + 0 = -0.2111"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.0061 - 0.2076 + 0 = -0.2137"></span></td></tr>
+              <tr><td>01c <span class="v2-tex" data-tex="x_\pm"></span></td><td class="col-plus"><span class="v2-tex" data-tex="-0.2111"></span></td><td class="col-minus"><span class="v2-tex" data-tex="-0.2054"></span></td></tr>
             </tbody>
           </table>
         </div>
@@ -4712,12 +4711,8 @@
 
         <p class="v2-step1-line">Reading:</p>
         <ul class="v2-step1-list v2-step1-inline-katex">
-          <li><span class="v2-tex" data-tex="+b"></span> in channel +, <span class="v2-tex" data-tex="-b"></span> in channel &minus;; both weight sums negative</li>
-          <li class="col-plus"><span class="v2-tex" data-tex="x_+"></span>: <span class="v2-tex" data-tex="-0.2111 - 0.2183 = -0.4294"></span></li>
-          <li class="col-minus"><span class="v2-tex" data-tex="x_-"></span>: <span class="v2-tex" data-tex="-0.2054 + 0.2137 = 0.0083"></span></li>
-          <li>vs 01c (<span class="v2-tex" data-tex="b=0"></span>): <span class="v2-tex" data-tex="h_1"></span> less likely active in channel + (<span class="v2-tex" data-tex="0.4474 \to 0.3943"></span>), more likely in channel &minus; (<span class="v2-tex" data-tex="0.4488 \to 0.5021"></span>), computed in Step 3</li>
-          <li>Actual <span class="v2-tex" data-tex="0"></span> or <span class="v2-tex" data-tex="1"></span>: drawn in Step 4</li>
-          <li>Direction follows random starting weights; only the split carries meaning</li>
+          <li class="col-plus">Channel + keeps each movie's rating <span class="v2-tex" data-tex="a_i"></span>, so <span class="v2-tex" data-tex="x_+"></span> stays at <span class="v2-tex" data-tex="-0.2111"></span>.</li>
+          <li class="col-minus">Channel &minus; receives the user's mean <span class="v2-tex" data-tex="b = 0.6568"></span> on every rated movie, so <span class="v2-tex" data-tex="x_-"></span> moves from <span class="v2-tex" data-tex="-0.2054"></span> to <span class="v2-tex" data-tex="-0.2137"></span>.</li>
         </ul>
       </div>
 
