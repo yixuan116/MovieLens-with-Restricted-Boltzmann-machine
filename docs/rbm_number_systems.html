@@ -4817,7 +4817,7 @@
         <div class="v2-step1-katex v2-tex-d" data-tex="a_{u,i} = \begin{cases} \dfrac{r_{u,i} - 0.5}{4.5} &amp; \text{training rating} \\ 0 &amp; \text{no rating or test rating} \end{cases}"></div>
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="r_{u,i}"></span> = user u's rating of movie i, from 0.5 to 5.0 stars; <span class="v2-tex" data-tex="a"></span> = normalized training rating</p>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="M_{u,i} = \begin{cases} 1 &amp; \text{training rating} \\ 0 &amp; \text{otherwise} \end{cases}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="M = \begin{bmatrix} M_{1,1} &amp; \cdots &amp; M_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ M_{1000,1} &amp; \cdots &amp; M_{1000,1000} \end{bmatrix}_{1000 \text{ users} \times 1000 \text{ movies}}, \qquad M_{u,i} = \begin{cases} 1 &amp; \text{training rating} \\ 0 &amp; \text{otherwise} \end{cases}"></div>
         <p class="v2-step1-line v2-step1-inline-katex">M marks which cells hold a training rating</p>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="b_u = \dfrac{\mu_u - 0.5}{4.5}"></div>
