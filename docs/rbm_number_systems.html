@@ -1824,6 +1824,41 @@
     gap: 1.3rem;
   }
 
+  /* scorecard */
+
+  .scorecard-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .scorecard-card {
+    border: 1px solid var(--border-strong);
+    padding: 1.2rem 1.8rem;
+    text-align: center;
+    min-width: 14rem;
+  }
+
+  .scorecard-label {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-faint);
+    margin: 0 0 0.5rem;
+  }
+
+  .scorecard-numbers {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--ink);
+  }
+
   /* ---------- section navigator ---------- */
   .section-nav { position: fixed; z-index: 40; font-family: var(--sans); }
   .snav-list { list-style: none; margin: 0; padding: 0; }
@@ -4772,6 +4807,15 @@
     </div>
 
     <div class="section-body" id="section-4-body">
+
+      <div>
+        <div class="scorecard-row">
+          <div class="scorecard-card">
+            <p class="scorecard-label">&#8477; Real Baseline</p>
+            <p class="scorecard-numbers"><span>RMSE 0.8431</span><span>MAE 0.6481</span></p>
+          </div>
+        </div>
+      </div>
 
     </div>
 
