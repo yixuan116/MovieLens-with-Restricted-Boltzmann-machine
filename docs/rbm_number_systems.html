@@ -1824,6 +1824,9 @@
     gap: 1.3rem;
   }
 
+  .section-4 .v2-step-heading { font-size: 0.95rem; }
+  .section-4 .v2-step1-katex .katex { font-size: 0.85rem; }
+
   /* scorecard */
 
   .scorecard-row {
@@ -4802,11 +4805,36 @@
     <section class="section-4" id="section-4">
 
     <div class="section-head-2">
-      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Hyperbolic Decoupling: One Rating, Two Channels</h2>
+      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Fully Hyperbolic RBM on 1,000 &times; 1,000</h2>
       <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-4-body" aria-label="Collapse section 4">&#8964;</button>
     </div>
 
     <div class="section-body" id="section-4-body">
+
+      <div class="v2-step1">
+        <span class="v2-step-heading">Step 1 &middot; Visible input</span>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="a_{u,i} = \begin{cases} \dfrac{r_{u,i} - 0.5}{4.5} &amp; \text{training rating} \\ 0 &amp; \text{no rating or test rating} \end{cases}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="r_{u,i}"></span> = user u's rating of movie i, from 0.5 to 5.0 stars; <span class="v2-tex" data-tex="a"></span> = normalized training rating</p>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="M_{u,i} = \begin{cases} 1 &amp; \text{training rating} \\ 0 &amp; \text{otherwise} \end{cases}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex">M marks which cells hold a training rating</p>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="b_u = \dfrac{\mu_u - 0.5}{4.5}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\mu_u"></span> = user u's mean training rating; <span class="v2-tex" data-tex="b_u"></span> = its normalized value, one number per user</p>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="V_+ = a \odot M = \begin{bmatrix} a_{1,1} &amp; \cdots &amp; a_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ a_{1000,1} &amp; \cdots &amp; a_{1000,1000} \end{bmatrix}_{1000 \text{ users} \times 1000 \text{ movies}}"></div>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="V_- = b \odot M = \begin{bmatrix} b_1 M_{1,1} &amp; \cdots &amp; b_1 M_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ b_{1000} M_{1000,1} &amp; \cdots &amp; b_{1000} M_{1000,1000} \end{bmatrix}_{1000 \text{ users} \times 1000 \text{ movies}}"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\odot"></span> = entrywise multiplication</p>
+        <p class="v2-step1-line v2-step1-inline-katex">&#8477; uses <span class="v2-tex" data-tex="V_+"></span> and <span class="v2-tex" data-tex="M"></span>. &#120123; adds <span class="v2-tex" data-tex="V_-"></span>.</p>
+      </div>
+
+      <div class="v2-step1">
+        <span class="v2-step-heading">&#8477; baseline</span>
+        <p class="v2-step1-line v2-step1-inline-katex">Real RBM on <span class="v2-tex" data-tex="V_+"></span> and <span class="v2-tex" data-tex="M"></span>: 128 hidden units, CD-1, 50 epochs.</p>
+      </div>
 
       <div>
         <div class="scorecard-row">
@@ -4833,7 +4861,7 @@
       <li><a href="#section-01e" data-target="section-01e" data-body="section-01e-body"><span class="snav-num">01e</span><span class="snav-title">Fully Hyperbolic RBM</span></a></li>
       <li><a href="#section-2" data-target="section-2" data-body="section-2-body"><span class="snav-num">02</span><span class="snav-title">Data Selection</span></a></li>
       <li><a href="#section-3" data-target="section-3" data-body="section-3-body"><span class="snav-num">03</span><span class="snav-title">Train / Test Split</span></a></li>
-      <li><a href="#section-4" data-target="section-4" data-body="section-4-body"><span class="snav-num">04</span><span class="snav-title">Hyperbolic Decoupling</span></a></li>
+      <li><a href="#section-4" data-target="section-4" data-body="section-4-body"><span class="snav-num">04</span><span class="snav-title">Fully Hyperbolic RBM on 1,000 &times; 1,000</span></a></li>
   </ol>
 </nav>
 
