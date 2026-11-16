@@ -1551,6 +1551,23 @@
     text-wrap: balance;
   }
 
+  .subset-charts-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin: 0.75rem 0 0.5rem;
+  }
+
+  .subset-charts-title {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .subset-charts-head .collapse-toggle { margin-left: auto; }
+
   .funnel {
     display: flex;
     flex-direction: column;
@@ -4959,7 +4976,12 @@
 
     <p class="density-banner" id="density-banner">Density: 0.53% (raw) &rarr; <span id="density-value">0.00</span>% (subset)</p>
 
-    <div id="section2-charts">
+    <div class="subset-charts-head">
+      <h3 class="subset-charts-title">Subset checks (5 charts)</h3>
+      <button type="button" class="collapse-toggle" id="subset-charts-toggle" aria-expanded="false" aria-controls="section2-charts" aria-label="Expand subset check charts">&#8964;</button>
+    </div>
+
+    <div id="section2-charts" hidden>
       <div class="chart-grid">
 
         <div class="chart-row full">
@@ -5417,6 +5439,23 @@ var CHART_DATA = {"density_100":[[1.0,1.0,1.0,0.9900000095367432,1.0,1.0,0.99000
       var expanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', String(!expanded));
       body.hidden = expanded;
+    });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  var toggle = document.getElementById('subset-charts-toggle');
+  if (!toggle) return;
+  var chartIds = ['chart-heatmap', 'chart-rating-dist', 'chart-longtail', 'chart-genre', 'chart-timespan'];
+  toggle.addEventListener('click', function () {
+    if (toggle.getAttribute('aria-expanded') !== 'true') return;
+    requestAnimationFrame(function () {
+      chartIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && window.Plotly) Plotly.Plots.resize(el);
+      });
     });
   });
 })();
