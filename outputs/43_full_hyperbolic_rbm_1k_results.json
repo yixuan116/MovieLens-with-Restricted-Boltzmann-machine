@@ -1,0 +1,32 @@
+{
+  "r_baseline": {
+    "rmse": 0.8430788893567558,
+    "mae": 0.6481009713057181
+  },
+  "d_hyperbolic": {
+    "rmse": 1.0425607619926538,
+    "mae": 0.813542291680603
+  },
+  "diff_d_minus_r": {
+    "rmse": 0.199481872635898,
+    "mae": 0.1654413203748849
+  },
+  "correction_term": {
+    "mean": 0.020572934299707413,
+    "std": 0.373444527387619
+  },
+  "mean_abs_B": {
+    "start": 0.0,
+    "after_training": 0.005537398159503937
+  },
+  "n_train": 492055,
+  "n_test": 123474,
+  "n_users": 1000,
+  "n_movies": 1000,
+  "n_hidden": 128,
+  "batch_size": 100,
+  "epochs": 50,
+  "lr": 0.05,
+  "seed_weights_init": 44,
+  "seed_shuffle": 44
+}
