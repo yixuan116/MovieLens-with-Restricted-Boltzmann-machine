@@ -4889,14 +4889,6 @@
 
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="w^{\pm}_{i,j}"></span> = strength of the link between movie i and hidden unit j; 128 = number of hidden units, the features the model learns</p>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="W = W_+\,e_+ + W_-\,e_- = \underbrace{\dfrac{W_+ + W_-}{2}}_{A} + \underbrace{\dfrac{W_+ - W_-}{2}}_{B}\,k"></div>
-
-        <p class="v2-step1-line v2-step1-inline-katex">Each link carries one hyperbolic weight. <span class="v2-tex" data-tex="B"></span> is the part where the two channels differ, and &#8477; has no <span class="v2-tex" data-tex="B"></span>.</p>
-
-        <div class="v2-step1-katex v2-tex-d" data-tex="X_\pm = V_\pm W_\pm + c_\pm = \begin{bmatrix} x^\pm_{1,1} &amp; \cdots &amp; x^\pm_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ x^\pm_{1000,1} &amp; \cdots &amp; x^\pm_{1000,128} \end{bmatrix}_{1k\ \text{users} \;\times\; 128\ \text{hidden}}"></div>
-
-        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="x^{\pm}_{u,j}"></span> = total input from user u's ratings to hidden unit j; <span class="v2-tex" data-tex="c_\pm"></span> = hidden bias, one number per hidden unit, starting at 0</p>
-
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="e_+ e_- = 0"></span>, so <span class="v2-tex" data-tex="V_+"></span> meets only <span class="v2-tex" data-tex="W_+"></span> and <span class="v2-tex" data-tex="V_-"></span> meets only <span class="v2-tex" data-tex="W_-"></span>.</p>
       </div>
 
@@ -4904,6 +4896,13 @@
         <span class="v2-step-heading">Step 3 &middot; CD-1 training and hidden layer</span>
 
         <p class="v2-step1-line">Each epoch shuffles the 1k users and splits them into batches: 1k users &divide; 100 users per batch = 10 batches. Both channels see the same order. One batch gives one update, so 50 epochs &times; 10 batches = 500 updates.</p>
+
+        <div class="subset-charts-head">
+          <h3 class="subset-charts-title">CD-1 steps (4 rows)</h3>
+          <button type="button" class="collapse-toggle" id="cd1-steps-toggle" aria-expanded="false" aria-controls="cd1-steps-body" aria-label="Expand CD-1 steps table">&#8964;</button>
+        </div>
+
+        <div id="cd1-steps-body" hidden>
 
         <div class="v2-weights-table-wrap">
           <table class="v2-weights-table">
@@ -4947,15 +4946,17 @@
 
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="V^0_\pm"></span> = the batch's rows of <span class="v2-tex" data-tex="V_\pm"></span>; <span class="v2-tex" data-tex="\sigma(x) = 1/(1+e^{-x})"></span>; <span class="v2-tex" data-tex="S^0_\pm"></span> = each hidden unit set to 1 with probability <span class="v2-tex" data-tex="H^0_\pm"></span>, otherwise 0; <span class="v2-tex" data-tex="d_\pm"></span> = visible bias, one number per movie, starting at 0; <span class="v2-tex" data-tex="\varepsilon = 0.05"></span> = learning rate; <span class="v2-tex" data-tex="100"></span> = users per batch, which turns the sum into an average; <span class="v2-tex" data-tex="\Sigma_u"></span> = sum over the 100 users in the batch</p>
 
+        </div>
+
         <div class="v2-step1-katex v2-tex-d" data-tex="\Delta W = \Delta W_+\,e_+ + \Delta W_-\,e_-"></div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">The two channels together make one hyperbolic update. Row 4 is where <span class="v2-tex" data-tex="B"></span> stops being 0: <span class="v2-tex" data-tex="\Delta W_+"></span> is driven by <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="\Delta W_-"></span> by <span class="v2-tex" data-tex="b"></span>, and their difference becomes <span class="v2-tex" data-tex="B"></span>.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">The two channels together make one hyperbolic update. The update is where <span class="v2-tex" data-tex="B"></span> stops being 0: <span class="v2-tex" data-tex="\Delta W_+"></span> is driven by <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="\Delta W_-"></span> by <span class="v2-tex" data-tex="b"></span>, and their difference becomes <span class="v2-tex" data-tex="B"></span>.</p>
 
         <p class="v2-step1-line">After 500 updates, the trained weights give every user's hidden layer:</p>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="H_\pm = \sigma(V_\pm W_\pm + c_\pm) = \begin{bmatrix} h^\pm_{1,1} &amp; \cdots &amp; h^\pm_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ h^\pm_{1000,1} &amp; \cdots &amp; h^\pm_{1000,128} \end{bmatrix}_{1k\ \text{users} \;\times\; 128\ \text{hidden}}"></div>
 
-        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="h^{\pm}_{u,j}"></span> = probability that hidden unit j turns on for user u; no Bernoulli sampling here, the probabilities are used directly</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="h^{\pm}_{u,j}"></span> = probability that hidden unit j turns on for user u; <span class="v2-tex" data-tex="c_\pm"></span> = hidden bias, one number per hidden unit, starting at 0; no Bernoulli sampling here, the probabilities are used directly</p>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="H = H_+\,e_+ + H_-\,e_-"></div>
 
