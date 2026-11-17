@@ -1677,6 +1677,8 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
   .density-banner.visible { opacity: 1; transform: translateY(0); }
+  .density-banner p { margin: 0.2rem 0 0 0; }
+  .density-banner p:first-child { margin-top: 0; }
 
   #section2-charts {
     min-height: 2rem;
@@ -1796,6 +1798,10 @@
     font-size: 1.9rem;
     color: var(--accent);
     font-variant-numeric: tabular-nums;
+  }
+
+  .result-stat .stat-label .keep-case {
+    text-transform: none;
   }
 
   .result-stat .stat-label {
@@ -4728,12 +4734,17 @@
       <div class="funnel-layer" id="layer-3" style="--w: 24%;">
         <div class="funnel-bar">
           <span class="funnel-count">1,000 users &times; 1,000 movies</span>
+          <span class="funnel-label">1k &times; 1k subset</span>
         </div>
       </div>
 
     </div>
 
-    <p class="density-banner" id="density-banner">Ratings / (users &times; movies): 0.53% (total) &rarr; <span id="density-value">0.00</span>% (subset)</p>
+    <div class="density-banner" id="density-banner">
+      <p>Ratings / (users &times; movies)</p>
+      <p>Total: 20,000,263 / (138,493 &times; 27,278) = 20,000,263 / 3,777,812,054 = 0.53%</p>
+      <p>1k &times; 1k subset: 615,529 / (1,000 &times; 1,000) = 615,529 / 1,000,000 = <span id="density-value">0.00</span>%</p>
+    </div>
 
     <div class="subset-charts-head">
       <h3 class="subset-charts-title">Subset checks (5 charts)</h3>
@@ -4802,10 +4813,15 @@
           <span class="stat-value">492,055</span>
           <span class="stat-label">train 80%</span>
         </div>
-        <span class="result-sep">&middot;</span>
+        <span class="result-sep">+</span>
         <div class="result-stat">
           <span class="stat-value">123,474</span>
           <span class="stat-label">test 20%</span>
+        </div>
+        <span class="result-sep">=</span>
+        <div class="result-stat">
+          <span class="stat-value">615,529</span>
+          <span class="stat-label"><span class="keep-case">1k &times; 1k</span> subset ratings</span>
         </div>
       </div>
 
@@ -4817,7 +4833,7 @@
     <section class="section-4" id="section-4">
 
     <div class="section-head-2">
-      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Hyperbolic RBM on the 1,000 Users &times; 1,000 Movies Subset</h2>
+      <h2><span class="section-num">04</span>&nbsp;&middot;&nbsp;Hyperbolic RBM on the 1k &times; 1k Subset</h2>
       <button type="button" class="collapse-toggle" aria-expanded="true" aria-controls="section-4-body" aria-label="Collapse section 4">&#8964;</button>
     </div>
 
@@ -4829,7 +4845,7 @@
         <span class="v2-step-heading">Step 1 &middot; Visible input</span>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="V = V_+\,e_+ + V_-\,e_- \qquad V_+ = a \odot M \qquad V_- = b \odot M"></div>
-        <p class="v2-step1-line">All matrices are 1000 users &times; 1000 movies; &#8857; multiplies cell by cell.</p>
+        <p class="v2-step1-line">All matrices are 1k users &times; 1k movies; &#8857; multiplies cell by cell.</p>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="a_{u,i} = \begin{cases} \dfrac{r_{u,i} - 0.5}{4.5} &amp; \text{training rating} \\ 0 &amp; \text{no rating or test rating} \end{cases}"></div>
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="a_{u,i}"></span> = normalized training rating; <span class="v2-tex" data-tex="r_{u,i}"></span> = user u's rating of movie i, from 0.5 to 5.0 stars</p>
@@ -4837,7 +4853,7 @@
         <div class="v2-step1-katex v2-tex-d" data-tex="b_u = \dfrac{\mu_u - 0.5}{4.5}"></div>
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\mu_u"></span> = user u's mean training rating</p>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="M = \begin{bmatrix} M_{1,1} &amp; \cdots &amp; M_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ M_{1000,1} &amp; \cdots &amp; M_{1000,1000} \end{bmatrix}_{1000 \text{ users} \;\times\; 1000 \text{ movies}}, \qquad M_{u,i} = \begin{cases} 1 &amp; \text{training rating} \\ 0 &amp; \text{otherwise} \end{cases}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="M = \begin{bmatrix} M_{1,1} &amp; \cdots &amp; M_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ M_{1000,1} &amp; \cdots &amp; M_{1000,1000} \end{bmatrix}_{1k \text{ users} \;\times\; 1k \text{ movies}}, \qquad M_{u,i} = \begin{cases} 1 &amp; \text{training rating} \\ 0 &amp; \text{otherwise} \end{cases}"></div>
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="M"></span> = binary mask of training ratings</p>
 
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\odot"></span> = entrywise multiplication</p>
@@ -4848,7 +4864,7 @@
         <span class="v2-step-heading">Step 2 &middot; Hyperbolic weights</span>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="W = A + Bk = W_+\,e_+ + W_-\,e_- \qquad A = \dfrac{W_+ + W_-}{2} \qquad B = \dfrac{W_+ - W_-}{2}"></div>
-        <p class="v2-step1-line">All weight matrices are 1000 movies &times; 128 hidden; B is the hyperbolic part of W.</p>
+        <p class="v2-step1-line">All weight matrices are 1k movies &times; 128 hidden; B is the hyperbolic part of W.</p>
 
         <div class="v2-weights-table-wrap">
           <table class="v2-weights-table">
@@ -4867,8 +4883,8 @@
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\mathcal{N}(0,\ 0.01^2)"></span> = normal distribution with mean 0 and standard deviation 0.01, so starting weights sit roughly between &minus;0.03 and 0.03</p>
 
         <div class="v2-weights-row">
-          <div class="v2-step1-katex v2-tex-d" data-tex="\underset{\text{from } a}{W_+} = \begin{bmatrix} w^+_{1,1} &amp; \cdots &amp; w^+_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ w^+_{1000,1} &amp; \cdots &amp; w^+_{1000,128} \end{bmatrix}_{1000\ \text{movies} \;\times\; 128\ \text{hidden}}"></div>
-          <div class="v2-step1-katex v2-tex-d" data-tex="\underset{\text{from } b}{W_-} = \begin{bmatrix} w^-_{1,1} &amp; \cdots &amp; w^-_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ w^-_{1000,1} &amp; \cdots &amp; w^-_{1000,128} \end{bmatrix}_{1000\ \text{movies} \;\times\; 128\ \text{hidden}}"></div>
+          <div class="v2-step1-katex v2-tex-d" data-tex="\underset{\text{from } a}{W_+} = \begin{bmatrix} w^+_{1,1} &amp; \cdots &amp; w^+_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ w^+_{1000,1} &amp; \cdots &amp; w^+_{1000,128} \end{bmatrix}_{1k\ \text{movies} \;\times\; 128\ \text{hidden}}"></div>
+          <div class="v2-step1-katex v2-tex-d" data-tex="\underset{\text{from } b}{W_-} = \begin{bmatrix} w^-_{1,1} &amp; \cdots &amp; w^-_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ w^-_{1000,1} &amp; \cdots &amp; w^-_{1000,128} \end{bmatrix}_{1k\ \text{movies} \;\times\; 128\ \text{hidden}}"></div>
         </div>
 
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="w^{\pm}_{i,j}"></span> = strength of the link between movie i and hidden unit j; 128 = number of hidden units, the features the model learns</p>
@@ -4877,7 +4893,7 @@
 
         <p class="v2-step1-line v2-step1-inline-katex">Each link carries one hyperbolic weight. <span class="v2-tex" data-tex="B"></span> is the part where the two channels differ, and &#8477; has no <span class="v2-tex" data-tex="B"></span>.</p>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="X_\pm = V_\pm W_\pm + c_\pm = \begin{bmatrix} x^\pm_{1,1} &amp; \cdots &amp; x^\pm_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ x^\pm_{1000,1} &amp; \cdots &amp; x^\pm_{1000,128} \end{bmatrix}_{1000\ \text{users} \;\times\; 128\ \text{hidden}}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="X_\pm = V_\pm W_\pm + c_\pm = \begin{bmatrix} x^\pm_{1,1} &amp; \cdots &amp; x^\pm_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ x^\pm_{1000,1} &amp; \cdots &amp; x^\pm_{1000,128} \end{bmatrix}_{1k\ \text{users} \;\times\; 128\ \text{hidden}}"></div>
 
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="x^{\pm}_{u,j}"></span> = total input from user u's ratings to hidden unit j; <span class="v2-tex" data-tex="c_\pm"></span> = hidden bias, one number per hidden unit, starting at 0</p>
 
@@ -4887,7 +4903,7 @@
       <div class="v2-step1" id="section-4-step3">
         <span class="v2-step-heading">Step 3 &middot; CD-1 training and hidden layer</span>
 
-        <p class="v2-step1-line">Each epoch shuffles the 1000 users and splits them into batches: 1000 users &divide; 100 users per batch = 10 batches. Both channels see the same order. One batch gives one update, so 50 epochs &times; 10 batches = 500 updates.</p>
+        <p class="v2-step1-line">Each epoch shuffles the 1k users and splits them into batches: 1k users &divide; 100 users per batch = 10 batches. Both channels see the same order. One batch gives one update, so 50 epochs &times; 10 batches = 500 updates.</p>
 
         <div class="v2-weights-table-wrap">
           <table class="v2-weights-table">
@@ -4904,7 +4920,7 @@
               <tr>
                 <td>2 &middot; Reconstruct visible</td>
                 <td><span class="v2-tex" data-tex="V^1_\pm = \sigma(S^0_\pm W_\pm^{\top} + d_\pm) \odot M"></span></td>
-                <td>100 users &times; 1000 movies</td>
+                <td>100 users &times; 1k movies</td>
                 <td>Eq 1, sigmoid in place of softmax</td>
               </tr>
               <tr>
@@ -4916,13 +4932,13 @@
               <tr>
                 <td>4 &middot; Update</td>
                 <td><span class="v2-tex" data-tex="\Delta W_\pm = \frac{\varepsilon}{100}\big[(V^0_\pm)^{\top} H^0_\pm - (V^1_\pm)^{\top} H^1_\pm\big]"></span></td>
-                <td>1000 movies &times; 128 hidden</td>
+                <td>1k movies &times; 128 hidden</td>
                 <td>Eq 6</td>
               </tr>
               <tr>
                 <td></td>
                 <td><span class="v2-tex" data-tex="\Delta d_\pm = \frac{\varepsilon}{100}\sum_{u}(V^0_\pm - V^1_\pm)"></span>; <span class="v2-tex" data-tex="\Delta c_\pm = \frac{\varepsilon}{100}\sum_{u}(H^0_\pm - H^1_\pm)"></span></td>
-                <td>1000 movies; 128 hidden</td>
+                <td>1k movies; 128 hidden</td>
                 <td>Eq 6</td>
               </tr>
             </tbody>
@@ -4937,7 +4953,7 @@
 
         <p class="v2-step1-line">After 500 updates, the trained weights give every user's hidden layer:</p>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="H_\pm = \sigma(V_\pm W_\pm + c_\pm) = \begin{bmatrix} h^\pm_{1,1} &amp; \cdots &amp; h^\pm_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ h^\pm_{1000,1} &amp; \cdots &amp; h^\pm_{1000,128} \end{bmatrix}_{1000\ \text{users} \;\times\; 128\ \text{hidden}}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="H_\pm = \sigma(V_\pm W_\pm + c_\pm) = \begin{bmatrix} h^\pm_{1,1} &amp; \cdots &amp; h^\pm_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ h^\pm_{1000,1} &amp; \cdots &amp; h^\pm_{1000,128} \end{bmatrix}_{1k\ \text{users} \;\times\; 128\ \text{hidden}}"></div>
 
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="h^{\pm}_{u,j}"></span> = probability that hidden unit j turns on for user u; no Bernoulli sampling here, the probabilities are used directly</p>
 
@@ -4951,7 +4967,7 @@
 
         <p class="v2-step1-line">Each user's training row goes in, and every movie comes back out:</p>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="\hat{V}_\pm = \sigma(H_\pm W_\pm^{\top} + d_\pm) = \begin{bmatrix} \hat{v}^\pm_{1,1} &amp; \cdots &amp; \hat{v}^\pm_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ \hat{v}^\pm_{1000,1} &amp; \cdots &amp; \hat{v}^\pm_{1000,1000} \end{bmatrix}_{1000\ \text{users} \;\times\; 1000\ \text{movies}}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="\hat{V}_\pm = \sigma(H_\pm W_\pm^{\top} + d_\pm) = \begin{bmatrix} \hat{v}^\pm_{1,1} &amp; \cdots &amp; \hat{v}^\pm_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ \hat{v}^\pm_{1000,1} &amp; \cdots &amp; \hat{v}^\pm_{1000,1000} \end{bmatrix}_{1k\ \text{users} \;\times\; 1k\ \text{movies}}"></div>
 
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\hat{v}^{\pm}_{u,j}"></span> = reconstructed value of user u at movie j, filled in for every movie, rated or not (Netflix Eq 9, 10)</p>
 
@@ -5001,7 +5017,7 @@
       <li><a href="#section-01e" data-target="section-01e" data-body="section-01e-body"><span class="snav-num">01e</span><span class="snav-title">Fully Hyperbolic RBM</span></a></li>
       <li><a href="#section-2" data-target="section-2" data-body="section-2-body"><span class="snav-num">02</span><span class="snav-title">Data Selection</span></a></li>
       <li><a href="#section-3" data-target="section-3" data-body="section-3-body"><span class="snav-num">03</span><span class="snav-title">Train / Test Split</span></a></li>
-      <li><a href="#section-4" data-target="section-4" data-body="section-4-body"><span class="snav-num">04</span><span class="snav-title">Hyperbolic RBM on the 1,000 Users &times; 1,000 Movies Subset</span></a></li>
+      <li><a href="#section-4" data-target="section-4" data-body="section-4-body"><span class="snav-num">04</span><span class="snav-title">Hyperbolic RBM on the 1k &times; 1k Subset</span></a></li>
       <li class="snav-sub"><a href="#section-4-step1" data-target="section-4-step1" data-body="section-4-body"><span class="snav-title">Step 1 &middot; Visible input</span></a></li>
       <li class="snav-sub"><a href="#section-4-step2" data-target="section-4-step2" data-body="section-4-body"><span class="snav-title">Step 2 &middot; Hyperbolic weights</span></a></li>
       <li class="snav-sub"><a href="#section-4-step3" data-target="section-4-step3" data-body="section-4-body"><span class="snav-title">Step 3 &middot; CD-1 training and hidden layer</span></a></li>
