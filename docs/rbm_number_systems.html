@@ -4877,6 +4877,68 @@
       </div>
 
       <div class="v2-step1">
+        <span class="v2-step-heading">Step 3 &middot; CD-1 training and hidden layer</span>
+
+        <p class="v2-step1-line">Each epoch shuffles the 1000 users and splits them into batches: 1000 users &divide; 100 users per batch = 10 batches. Both channels see the same order. One batch gives one update, so 50 epochs &times; 10 batches = 500 updates.</p>
+
+        <div class="v2-weights-table-wrap">
+          <table class="v2-weights-table">
+            <thead>
+              <tr><th></th><th>Formula</th><th>Size</th><th>Netflix 2007</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 &middot; Hidden from data</td>
+                <td><span class="v2-tex" data-tex="H^0_\pm = \sigma(V^0_\pm W_\pm + c_\pm)"></span>; <span class="v2-tex" data-tex="S^0_\pm \sim \text{Bernoulli}(H^0_\pm)"></span></td>
+                <td>100 users &times; 128 hidden</td>
+                <td>Eq 2</td>
+              </tr>
+              <tr>
+                <td>2 &middot; Reconstruct visible</td>
+                <td><span class="v2-tex" data-tex="V^1_\pm = \sigma(S^0_\pm W_\pm^{\top} + d_\pm) \odot M"></span></td>
+                <td>100 users &times; 1000 movies</td>
+                <td>Eq 1, sigmoid in place of softmax</td>
+              </tr>
+              <tr>
+                <td>3 &middot; Hidden from reconstruction</td>
+                <td><span class="v2-tex" data-tex="H^1_\pm = \sigma(V^1_\pm W_\pm + c_\pm)"></span></td>
+                <td>100 users &times; 128 hidden</td>
+                <td>Eq 2</td>
+              </tr>
+              <tr>
+                <td>4 &middot; Update</td>
+                <td><span class="v2-tex" data-tex="\Delta W_\pm = \frac{\varepsilon}{100}\big[(V^0_\pm)^{\top} H^0_\pm - (V^1_\pm)^{\top} H^1_\pm\big]"></span></td>
+                <td>1000 movies &times; 128 hidden</td>
+                <td>Eq 6</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><span class="v2-tex" data-tex="\Delta d_\pm = \frac{\varepsilon}{100}\sum_{u}(V^0_\pm - V^1_\pm)"></span>; <span class="v2-tex" data-tex="\Delta c_\pm = \frac{\varepsilon}{100}\sum_{u}(H^0_\pm - H^1_\pm)"></span></td>
+                <td>1000 movies; 128 hidden</td>
+                <td>Eq 6</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="V^0_\pm"></span> = the batch's rows of <span class="v2-tex" data-tex="V_\pm"></span>; <span class="v2-tex" data-tex="\sigma(x) = 1/(1+e^{-x})"></span>; <span class="v2-tex" data-tex="S^0_\pm"></span> = each hidden unit set to 1 with probability <span class="v2-tex" data-tex="H^0_\pm"></span>, otherwise 0; <span class="v2-tex" data-tex="d_\pm"></span> = visible bias, one number per movie, starting at 0; <span class="v2-tex" data-tex="\varepsilon = 0.05"></span> = learning rate; <span class="v2-tex" data-tex="100"></span> = users per batch, which turns the sum into an average; <span class="v2-tex" data-tex="\Sigma_u"></span> = sum over the 100 users in the batch</p>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="\Delta W = \Delta W_+\,e_+ + \Delta W_-\,e_-"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex">The two channels together make one hyperbolic update. Step 4 is where <span class="v2-tex" data-tex="B"></span> stops being 0: <span class="v2-tex" data-tex="\Delta W_+"></span> is driven by <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="\Delta W_-"></span> by <span class="v2-tex" data-tex="b"></span>, and their difference becomes <span class="v2-tex" data-tex="B"></span>.</p>
+
+        <p class="v2-step1-line">After 500 updates, the trained weights give every user's hidden layer:</p>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="H_\pm = \sigma(V_\pm W_\pm + c_\pm) = \begin{bmatrix} h^\pm_{1,1} &amp; \cdots &amp; h^\pm_{1,128} \\ \vdots &amp; \ddots &amp; \vdots \\ h^\pm_{1000,1} &amp; \cdots &amp; h^\pm_{1000,128} \end{bmatrix}_{1000\ \text{users} \;\times\; 128\ \text{hidden}}"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="h^{\pm}_{u,j}"></span> = probability that hidden unit j turns on for user u; no Bernoulli sampling here, the probabilities are used directly</p>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="H = H_+\,e_+ + H_-\,e_-"></div>
+
+        <p class="v2-step1-line">One hyperbolic hidden value per user and unit. Visible, weights and hidden are now all in &#120123;.</p>
+      </div>
+
+      <div class="v2-step1">
         <span class="v2-step-heading">&#8477; baseline</span>
         <p class="v2-step1-line v2-step1-inline-katex">Real RBM on <span class="v2-tex" data-tex="V_+"></span> and <span class="v2-tex" data-tex="M"></span>: 128 hidden units, CD-1, 50 epochs.</p>
       </div>
