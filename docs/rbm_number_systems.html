@@ -4848,16 +4848,15 @@
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="a"></span> = normalized rating, <span class="v2-tex" data-tex="b"></span> = user's mean; both are defined below.</p>
         <p class="v2-step1-line">All matrices are 1k users &times; 1k movies; &#8857; multiplies cell by cell.</p>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="a_{u,i} = \begin{cases} \dfrac{r_{u,i} - 0.5}{4.5} &amp; \text{training rating} \\ 0 &amp; \text{no rating or test rating} \end{cases}"></div>
-        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="a_{u,i}"></span> = normalized training rating; <span class="v2-tex" data-tex="r_{u,i}"></span> = user u's rating of movie i, from 0.5 to 5.0 stars</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="a_{u,i} = \begin{cases} \dfrac{r_{u,i} - 0.5}{5.0 - 0.5} &amp; \text{training rating} \\ 0 &amp; \text{no rating or test rating} \end{cases}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="r_{u,i}"></span> = user u's rating of movie i, from 0.5 to 5.0 stars</p>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="b_u = \dfrac{\mu_u - 0.5}{4.5}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="b_u = \dfrac{\mu_u - 0.5}{5.0 - 0.5}"></div>
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\mu_u"></span> = user u's mean training rating</p>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="M = \begin{bmatrix} M_{1,1} &amp; \cdots &amp; M_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ M_{1000,1} &amp; \cdots &amp; M_{1000,1000} \end{bmatrix}_{1k \text{ users} \;\times\; 1k \text{ movies}}, \qquad M_{u,i} = \begin{cases} 1 &amp; \text{training rating} \\ 0 &amp; \text{otherwise} \end{cases}"></div>
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="M"></span> = binary mask of training ratings</p>
 
-        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\odot"></span> = entrywise multiplication</p>
         <p class="v2-step1-line v2-step1-inline-katex">&#8477; uses <span class="v2-tex" data-tex="V_+"></span> and <span class="v2-tex" data-tex="M"></span>. &#120123; adds <span class="v2-tex" data-tex="V_-"></span>.</p>
       </div>
 
@@ -4865,7 +4864,7 @@
         <span class="v2-step-heading">Step 2 &middot; Hyperbolic weights</span>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="W = A + Bk = W_+\,e_+ + W_-\,e_- \qquad A = \dfrac{W_+ + W_-}{2} \qquad B = \dfrac{W_+ - W_-}{2}"></div>
-        <p class="v2-step1-line">All weight matrices are 1k movies &times; 128 hidden; B is the hyperbolic part of W.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">All weight matrices are 1k movies &times; 128 hidden; <span class="v2-tex" data-tex="A"></span> is the real part and <span class="v2-tex" data-tex="B"></span> is the hyperbolic imaginary part of <span class="v2-tex" data-tex="W"></span>.</p>
 
         <div class="v2-weights-table-wrap">
           <table class="v2-weights-table">
