@@ -28,5 +28,39 @@
   "epochs": 50,
   "lr": 0.05,
   "seed_weights_init": 44,
-  "seed_shuffle": 44
+  "seed_shuffle": 44,
+  "diagnostic_e_minus": {
+    "note": "diagnostic only, fitted on the test set -- not a reported result",
+    "corr_C_R": -0.3746217512587071,
+    "best_scale_no_intercept": {
+      "lambda": -0.849580074328127,
+      "rmse": 0.7808999691302422,
+      "mae": 0.5928031206970932
+    },
+    "best_scale_with_intercept": {
+      "alpha": -0.03899682555682273,
+      "lambda": -0.8438448512152492,
+      "rmse": 0.7799310707982797,
+      "mae": 0.594756442538109
+    },
+    "per_user_std_v_hat_minus": {
+      "n_users": 1000,
+      "mean": 0.01029437966644764,
+      "median": 0.010394563898444176,
+      "mean_stars": 0.04632470849901438,
+      "median_stars": 0.04677553754299879
+    },
+    "within_user_correlation": {
+      "v_hat_minus": {
+        "n_users": 1000,
+        "median": 0.07914695048669707,
+        "mean": 0.08417867395012797
+      },
+      "v_hat_plus_reference": {
+        "n_users": 1000,
+        "median": 0.5025214883227775,
+        "mean": 0.48918003858100134
+      }
+    }
+  }
 }
