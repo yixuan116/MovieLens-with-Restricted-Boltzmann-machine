@@ -4839,7 +4839,7 @@
         <span class="v2-step-heading">Step 1 &middot; Visible input</span>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="V = (a \odot M)\,e_+ + (b \odot M)\,e_- = V_+\,e_+ + V_-\,e_-"></div>
-        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="a"></span> = normalized rating, <span class="v2-tex" data-tex="b"></span> = user's mean; both are defined below.</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="a"></span> = normalized rating, <span class="v2-tex" data-tex="b"></span> = user's mean; the two channels let the model learn how far each rating sits from that user's own mean.</p>
         <p class="v2-step1-line">All matrices are 1k users &times; 1k movies; &#8857; multiplies cell by cell.</p>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="a_{u,i} = \begin{cases} \dfrac{r_{u,i} - 0.5}{5.0 - 0.5} &amp; \text{training rating} \\ 0 &amp; \text{no rating or test rating} \end{cases}"></div>
