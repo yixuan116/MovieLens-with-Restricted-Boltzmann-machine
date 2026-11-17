@@ -1,0 +1,27 @@
+{
+  "note": "no training in this notebook; loads notebook 43's saved weights and rebuilds the start weights with the same seed (44)",
+  "seed_weights_init": 44,
+  "n_users": 1000,
+  "n_movies": 1000,
+  "n_hidden": 128,
+  "mean_abs_W_plus": {
+    "start": 0.007977690547704697,
+    "end": 0.015931950882077217
+  },
+  "mean_abs_W_minus": {
+    "start": 0.007977690547704697,
+    "end": 0.00939586665481329
+  },
+  "mean_abs_B": {
+    "start": 0.0,
+    "end": 0.005537398159503937
+  },
+  "free_energy_plus_channel": {
+    "start": -88.47666931152344,
+    "end": -298.1157531738281
+  },
+  "free_energy_minus_channel": {
+    "start": -88.55567169189453,
+    "end": -267.788818359375
+  }
+}
