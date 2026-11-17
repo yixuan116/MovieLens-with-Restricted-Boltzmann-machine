@@ -1885,6 +1885,7 @@
   .snav-list a:hover, .snav-list a:focus-visible { color: var(--accent); border-left-color: var(--accent); outline: none; }
   .snav-list a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
   .snav-num { font-family: var(--mono); font-size: 0.75rem; min-width: 2.2em; }
+  .snav-list .snav-sub a { padding-left: 1.8rem; }
   .snav-toggle { display: none; }
   @media (min-width: 1480px) {
     .section-nav { top: 6rem; left: calc(50% + 540px); width: 200px; }
@@ -4824,7 +4825,7 @@
 
       <p class="v2-step1-line">Inputs, weights, biases and hidden units are all hyperbolic numbers.</p>
 
-      <div class="v2-step1">
+      <div class="v2-step1" id="section-4-step1">
         <span class="v2-step-heading">Step 1 &middot; Visible input</span>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="V = V_+\,e_+ + V_-\,e_- \qquad V_+ = a \odot M \qquad V_- = b \odot M"></div>
@@ -4843,7 +4844,7 @@
         <p class="v2-step1-line v2-step1-inline-katex">&#8477; uses <span class="v2-tex" data-tex="V_+"></span> and <span class="v2-tex" data-tex="M"></span>. &#120123; adds <span class="v2-tex" data-tex="V_-"></span>.</p>
       </div>
 
-      <div class="v2-step1">
+      <div class="v2-step1" id="section-4-step2">
         <span class="v2-step-heading">Step 2 &middot; Hyperbolic weights</span>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="W = A + Bk = W_+\,e_+ + W_-\,e_- \qquad A = \dfrac{W_+ + W_-}{2} \qquad B = \dfrac{W_+ - W_-}{2}"></div>
@@ -4883,7 +4884,7 @@
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="e_+ e_- = 0"></span>, so <span class="v2-tex" data-tex="V_+"></span> meets only <span class="v2-tex" data-tex="W_+"></span> and <span class="v2-tex" data-tex="V_-"></span> meets only <span class="v2-tex" data-tex="W_-"></span>.</p>
       </div>
 
-      <div class="v2-step1">
+      <div class="v2-step1" id="section-4-step3">
         <span class="v2-step-heading">Step 3 &middot; CD-1 training and hidden layer</span>
 
         <p class="v2-step1-line">Each epoch shuffles the 1000 users and splits them into batches: 1000 users &divide; 100 users per batch = 10 batches. Both channels see the same order. One batch gives one update, so 50 epochs &times; 10 batches = 500 updates.</p>
@@ -4945,7 +4946,7 @@
         <p class="v2-step1-line">One hyperbolic hidden value per user and unit. Visible, weights and hidden are now all in &#120123;.</p>
       </div>
 
-      <div class="v2-step1">
+      <div class="v2-step1" id="section-4-step4">
         <span class="v2-step-heading">Step 4 &middot; Prediction</span>
 
         <p class="v2-step1-line">Each user's training row goes in, and every movie comes back out:</p>
@@ -5001,6 +5002,10 @@
       <li><a href="#section-2" data-target="section-2" data-body="section-2-body"><span class="snav-num">02</span><span class="snav-title">Data Selection</span></a></li>
       <li><a href="#section-3" data-target="section-3" data-body="section-3-body"><span class="snav-num">03</span><span class="snav-title">Train / Test Split</span></a></li>
       <li><a href="#section-4" data-target="section-4" data-body="section-4-body"><span class="snav-num">04</span><span class="snav-title">Hyperbolic RBM on the 1,000 Users &times; 1,000 Movies Subset</span></a></li>
+      <li class="snav-sub"><a href="#section-4-step1" data-target="section-4-step1" data-body="section-4-body"><span class="snav-title">Step 1 &middot; Visible input</span></a></li>
+      <li class="snav-sub"><a href="#section-4-step2" data-target="section-4-step2" data-body="section-4-body"><span class="snav-title">Step 2 &middot; Hyperbolic weights</span></a></li>
+      <li class="snav-sub"><a href="#section-4-step3" data-target="section-4-step3" data-body="section-4-body"><span class="snav-title">Step 3 &middot; CD-1 training and hidden layer</span></a></li>
+      <li class="snav-sub"><a href="#section-4-step4" data-target="section-4-step4" data-body="section-4-body"><span class="snav-title">Step 4 &middot; Prediction</span></a></li>
   </ol>
 </nav>
 
