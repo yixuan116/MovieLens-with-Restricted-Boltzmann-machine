@@ -1870,6 +1870,14 @@
     color: var(--ink);
   }
 
+  .scorecard-note {
+    font-family: var(--sans);
+    font-size: 0.74rem;
+    font-weight: 400;
+    color: var(--ink-faint);
+    margin: 0.5rem 0 0;
+  }
+
   /* ---------- section navigator ---------- */
   .section-nav { position: fixed; z-index: 40; font-family: var(--sans); }
   .snav-list { list-style: none; margin: 0; padding: 0; }
@@ -4925,7 +4933,7 @@
 
         <div class="v2-step1-katex v2-tex-d" data-tex="\Delta W = \Delta W_+\,e_+ + \Delta W_-\,e_-"></div>
 
-        <p class="v2-step1-line v2-step1-inline-katex">The two channels together make one hyperbolic update. Step 4 is where <span class="v2-tex" data-tex="B"></span> stops being 0: <span class="v2-tex" data-tex="\Delta W_+"></span> is driven by <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="\Delta W_-"></span> by <span class="v2-tex" data-tex="b"></span>, and their difference becomes <span class="v2-tex" data-tex="B"></span>.</p>
+        <p class="v2-step1-line v2-step1-inline-katex">The two channels together make one hyperbolic update. Row 4 is where <span class="v2-tex" data-tex="B"></span> stops being 0: <span class="v2-tex" data-tex="\Delta W_+"></span> is driven by <span class="v2-tex" data-tex="a"></span> and <span class="v2-tex" data-tex="\Delta W_-"></span> by <span class="v2-tex" data-tex="b"></span>, and their difference becomes <span class="v2-tex" data-tex="B"></span>.</p>
 
         <p class="v2-step1-line">After 500 updates, the trained weights give every user's hidden layer:</p>
 
@@ -4939,6 +4947,26 @@
       </div>
 
       <div class="v2-step1">
+        <span class="v2-step-heading">Step 4 &middot; Prediction</span>
+
+        <p class="v2-step1-line">Each user's training row goes in, and every movie comes back out:</p>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="\hat{V}_\pm = \sigma(H_\pm W_\pm^{\top} + d_\pm) = \begin{bmatrix} \hat{v}^\pm_{1,1} &amp; \cdots &amp; \hat{v}^\pm_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ \hat{v}^\pm_{1000,1} &amp; \cdots &amp; \hat{v}^\pm_{1000,1000} \end{bmatrix}_{1000\ \text{users} \;\times\; 1000\ \text{movies}}"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\hat{v}^{\pm}_{u,j}"></span> = reconstructed value of user u at movie j, filled in for every movie, rated or not (Netflix Eq 9, 10)</p>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="\hat{r}_+ = 4.5\,\hat{v}^+_{u,j} + 0.5, \qquad 4.5 = 5.0 - 0.5"></div>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="\hat{r} = \hat{r}_+ + 4.5\,(b_u - \hat{v}^-_{u,j}), \quad \text{clipped to } [0.5,\ 5.0]"></div>
+
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="b_u - \hat{v}^{-}_{u,j}"></span> = how far the model pulls user u's level toward the crowd. <span class="v2-tex" data-tex="e_-"></span> measures it, and &#120123; adds it back. &#8477; has only <span class="v2-tex" data-tex="e_+"></span>, so it has nothing to measure this with.</p>
+
+        <div class="v2-step1-katex v2-tex-d" data-tex="\text{RMSE} = \sqrt{\tfrac{1}{N}\textstyle\sum (r - \hat{r})^2}, \qquad \text{MAE} = \tfrac{1}{N}\textstyle\sum |r - \hat{r}|, \qquad N = 123{,}474 \text{ test ratings}"></div>
+
+        <p class="v2-step1-line">RMSE and MAE are both in stars, and lower is better.</p>
+      </div>
+
+      <div class="v2-step1">
         <span class="v2-step-heading">&#8477; baseline</span>
         <p class="v2-step1-line v2-step1-inline-katex">Real RBM on <span class="v2-tex" data-tex="V_+"></span> and <span class="v2-tex" data-tex="M"></span>: 128 hidden units, CD-1, 50 epochs.</p>
       </div>
@@ -4948,6 +4976,11 @@
           <div class="scorecard-card">
             <p class="scorecard-label">&#8477; Real Baseline</p>
             <p class="scorecard-numbers"><span>RMSE 0.8431</span><span>MAE 0.6481</span></p>
+          </div>
+          <div class="scorecard-card">
+            <p class="scorecard-label">&#120123; Fully Hyperbolic</p>
+            <p class="scorecard-numbers"><span>RMSE 0.7829</span><span>MAE 0.5940</span></p>
+            <p class="scorecard-note">7.1% lower RMSE, 8.3% lower MAE</p>
           </div>
         </div>
       </div>
