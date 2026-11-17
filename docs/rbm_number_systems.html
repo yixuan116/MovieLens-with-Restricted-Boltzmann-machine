@@ -4827,18 +4827,17 @@
       <div class="v2-step1">
         <span class="v2-step-heading">Step 1 &middot; Visible input</span>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="a_{u,i} = \begin{cases} \dfrac{r_{u,i} - 0.5}{4.5} &amp; \text{training rating} \\ 0 &amp; \text{no rating or test rating} \end{cases}"></div>
-        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="r_{u,i}"></span> = user u's rating of movie i, from 0.5 to 5.0 stars; <span class="v2-tex" data-tex="a"></span> = normalized training rating</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="V = V_+\,e_+ + V_-\,e_- \qquad V_+ = a \odot M \qquad V_- = b \odot M"></div>
+        <p class="v2-step1-line">All matrices are 1000 users &times; 1000 movies; &#8857; multiplies cell by cell.</p>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="M = \begin{bmatrix} M_{1,1} &amp; \cdots &amp; M_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ M_{1000,1} &amp; \cdots &amp; M_{1000,1000} \end{bmatrix}_{1000 \text{ users} \;\times\; 1000 \text{ movies}}, \qquad M_{u,i} = \begin{cases} 1 &amp; \text{training rating} \\ 0 &amp; \text{otherwise} \end{cases}"></div>
-        <p class="v2-step1-line v2-step1-inline-katex">M marks which cells hold a training rating</p>
+        <div class="v2-step1-katex v2-tex-d" data-tex="a_{u,i} = \begin{cases} \dfrac{r_{u,i} - 0.5}{4.5} &amp; \text{training rating} \\ 0 &amp; \text{no rating or test rating} \end{cases}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="a_{u,i}"></span> = normalized training rating; <span class="v2-tex" data-tex="r_{u,i}"></span> = user u's rating of movie i, from 0.5 to 5.0 stars</p>
 
         <div class="v2-step1-katex v2-tex-d" data-tex="b_u = \dfrac{\mu_u - 0.5}{4.5}"></div>
-        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\mu_u"></span> = user u's mean training rating; <span class="v2-tex" data-tex="b_u"></span> = its normalized value, one number per user</p>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\mu_u"></span> = user u's mean training rating</p>
 
-        <div class="v2-step1-katex v2-tex-d" data-tex="V_+ = a \odot M = \begin{bmatrix} a_{1,1} &amp; \cdots &amp; a_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ a_{1000,1} &amp; \cdots &amp; a_{1000,1000} \end{bmatrix}_{1000 \text{ users} \;\times\; 1000 \text{ movies}}"></div>
-
-        <div class="v2-step1-katex v2-tex-d" data-tex="V_- = b \odot M = \begin{bmatrix} b_1 M_{1,1} &amp; \cdots &amp; b_1 M_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ b_{1000} M_{1000,1} &amp; \cdots &amp; b_{1000} M_{1000,1000} \end{bmatrix}_{1000 \text{ users} \;\times\; 1000 \text{ movies}}"></div>
+        <div class="v2-step1-katex v2-tex-d" data-tex="M = \begin{bmatrix} M_{1,1} &amp; \cdots &amp; M_{1,1000} \\ \vdots &amp; \ddots &amp; \vdots \\ M_{1000,1} &amp; \cdots &amp; M_{1000,1000} \end{bmatrix}_{1000 \text{ users} \;\times\; 1000 \text{ movies}}, \qquad M_{u,i} = \begin{cases} 1 &amp; \text{training rating} \\ 0 &amp; \text{otherwise} \end{cases}"></div>
+        <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="M"></span> = binary mask of training ratings</p>
 
         <p class="v2-step1-line v2-step1-inline-katex"><span class="v2-tex" data-tex="\odot"></span> = entrywise multiplication</p>
         <p class="v2-step1-line v2-step1-inline-katex">&#8477; uses <span class="v2-tex" data-tex="V_+"></span> and <span class="v2-tex" data-tex="M"></span>. &#120123; adds <span class="v2-tex" data-tex="V_-"></span>.</p>
