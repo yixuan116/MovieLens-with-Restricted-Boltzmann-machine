@@ -4788,7 +4788,7 @@
 
     <div class="section-body" id="section-3-body">
 
-      <p class="split-statement">Per user, the earliest 80% of ratings train the model; the latest 20% are the exam.</p>
+      <p class="split-statement">Per user, the earliest 80% of ratings train the model; the latest 20% are the test.</p>
 
       <div class="split-compare">
         <span class="compare-tag good">&#9989; Chronological split: model only sees the past</span>
@@ -4799,17 +4799,12 @@
       <div class="result-numbers">
         <div class="result-stat">
           <span class="stat-value">492,055</span>
-          <span class="stat-label">train</span>
+          <span class="stat-label">train 80%</span>
         </div>
         <span class="result-sep">&middot;</span>
         <div class="result-stat">
           <span class="stat-value">123,474</span>
-          <span class="stat-label">test</span>
-        </div>
-        <span class="result-sep">&middot;</span>
-        <div class="result-stat">
-          <span class="stat-value">0/1000</span>
-          <span class="stat-label">leakage</span>
+          <span class="stat-label">test 20%</span>
         </div>
       </div>
 
