@@ -1677,8 +1677,6 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
   .density-banner.visible { opacity: 1; transform: translateY(0); }
-  .density-banner p { margin: 0.2rem 0 0 0; }
-  .density-banner p:first-child { margin-top: 0; }
 
   #section2-charts {
     min-height: 2rem;
@@ -4740,11 +4738,7 @@
 
     </div>
 
-    <div class="density-banner" id="density-banner">
-      <p>Ratings / (users &times; movies)</p>
-      <p>Total: 20,000,263 / (138,493 &times; 27,278) = 20,000,263 / 3,777,812,054 = 0.53%</p>
-      <p>1k &times; 1k subset: 615,529 / (1,000 &times; 1,000) = 615,529 / 1,000,000 = <span id="density-value">0.00</span>%</p>
-    </div>
+    <p class="density-banner" id="density-banner">Ratings / (users &times; movies): 0.53% (total) &rarr; <span id="density-value">0.00</span>% (1k &times; 1k subset)</p>
 
     <div class="subset-charts-head">
       <h3 class="subset-charts-title">Subset checks (5 charts)</h3>
